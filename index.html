@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="<!-- figma:lang -->">
+  <head>
+    <!-- figma:head-start -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title><!-- figma:title --></title>
+
+    <!-- PWA: installable web app (iPadOS "Add to Home Screen") -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#b0703c" />
+    <meta name="application-name" content="Accessible Kiosk Draft" />
+
+    <!-- Apple-specific: iPadOS uses these for the home-screen icon and full-screen launch -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Accessible Kiosk Draft" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/icon-192.png" />
+    <!-- figma:head-end -->
+  </head>
+  <body>
+    <!-- figma:body-start -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- figma:body-end -->
+  </body>
+</html>

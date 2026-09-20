@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', 'Noto Sans', 'Noto Sans SC', 'Noto Sans Tamil', system-ui, sans-serif;
+  --font-display: 'Outfit', 'Inter', 'Noto Sans SC', 'Noto Sans Tamil', system-ui, sans-serif;
+
+  --color-background: #f4efe9;
+  --color-foreground: #21201d;
+
+  --color-card: #ffffff;
+  --color-card-foreground: #21201d;
+
+  --color-primary: #b0703c;
+  --color-primary-foreground: #ffffff;
+  --color-primary-soft: #f7ead9;
+
+  --color-secondary: #ece5db;
+  --color-secondary-foreground: #4a453e;
+
+  --color-muted: #ece5db;
+  --color-muted-foreground: #6b655c;
+
+  --color-success: #3d8168;
+  --color-success-soft: #e4f0ea;
+  --color-warning: #c98a1e;
+  --color-warning-soft: #fbf1dc;
+
+  --color-border: #ded5c8;
+  --color-ring: #b0703c;
+
+  --focus-yellow: #ffd700;
+  --reading-cyan: #00e5ff;
+
+  --radius: 1rem;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  /* Lock the shell to the visible viewport — prevents the page from scrolling
+     past the kiosk chrome on iPadOS when the soft keyboard or status bar
+     shifts the layout. Individual panels may still scroll internally. */
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  font-size: 20px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* High-contrast keyboard focus ring — spec §2.2: 4px solid yellow */
+:where(button, a, input, [tabindex]):focus-visible {
+  outline: 4px solid var(--focus-yellow);
+  outline-offset: 3px;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+/* Speech-synchronized visual state — spec §5.3 */
+
+/* Interactive controls: whole container glows as a single actionable unit */
+.is-active-reading {
+  border-color: var(--focus-yellow) !important;
+  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.45), 0 12px 28px -10px rgba(33, 32, 29, 0.35) !important;
+  transform: translateY(-2px);
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Static text blocks: cyan reading ring encapsulates the text directly */
+.is-speech-reading {
+  outline: 4px solid var(--reading-cyan) !important;
+  outline-offset: 4px !important;
+  border-radius: 8px;
+  transition: outline 0.15s ease-in-out;
+}
+
+/* Hide scrollbars until scrolling */
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-active-reading {
+    transform: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
