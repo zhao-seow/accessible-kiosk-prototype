@@ -2,6 +2,8 @@ node_modules/
 dist/
 build/
 .cache/
+.claude/
+.pnpm-store/
 .env*
 .vite/
 vite.config.*.timestamp-*
