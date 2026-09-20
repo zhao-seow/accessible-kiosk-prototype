@@ -3,7 +3,7 @@ import { KioskChrome } from "../components/KioskChrome";
 import { ActionCard } from "../components/ActionCard";
 import { Icon } from "../components/Icons";
 import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION } from "../kiosk/copy";
+import { SESSION, expandPhoneForSpeech } from "../kiosk/copy";
 import { useReadAloud } from "../hooks/useSpeech";
 
 export function PaymentSuccess() {
@@ -11,12 +11,15 @@ export function PaymentSuccess() {
   const [confirmed, setConfirmed] = useState<null | "sms" | "print">(null);
 
   const confirmMessage = confirmed === "sms" ? t.psSmsConfirm : t.psPrintConfirm;
+  // Speak the phone number digit by digit while still displaying it normally.
+  const confirmSpeech =
+    confirmed === "sms" ? confirmMessage.replace(SESSION.mobile, expandPhoneForSpeech(SESSION.mobile)) : confirmMessage;
 
   const confirmPRef = useRef<HTMLParagraphElement>(null);
   const continueRef = useRef<HTMLButtonElement>(null);
 
   // After the confirmation text finishes reading, auto-advance to Continue.
-  const confirmRead = useReadAloud(confirmMessage, "static", {
+  const confirmRead = useReadAloud(confirmSpeech, "static", {
     onEnd: () => {
       if (document.activeElement === confirmPRef.current) continueRef.current?.focus();
     },
@@ -80,7 +83,7 @@ export function PaymentSuccess() {
                 icon="mobile"
                 title={t.psSms}
                 desc={SESSION.mobile}
-                speech={`${t.psSms} to mobile number ${SESSION.mobile}, button. Press Enter to receive your receipt by S M S.`}
+                speech={`${t.psSms} to mobile number ${expandPhoneForSpeech(SESSION.mobile)}, button. Press Enter to receive your receipt by S M S.`}
                 onSelect={() => choose("sms")}
               />
               <ActionCard

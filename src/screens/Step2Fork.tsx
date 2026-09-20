@@ -6,7 +6,7 @@ export function Step2Fork() {
   const { goTo, t } = useKiosk();
 
   return (
-    <KioskChrome title={t.s2Welcome} titleSpeech={t.s2WelcomeSpeech} announce={t.s2Announce}>
+    <KioskChrome title={t.s2Welcome} titleSpeech={t.s2WelcomeSpeech} announce={t.s2Announce} skipAutoFocus>
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center gap-10">
         <p className="text-2xl text-muted-foreground">{t.s2Subtitle}</p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

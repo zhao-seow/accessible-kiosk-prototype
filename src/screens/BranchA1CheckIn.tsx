@@ -2,7 +2,7 @@ import { KioskChrome } from "../components/KioskChrome";
 import { ActionCard } from "../components/ActionCard";
 import { Icon } from "../components/Icons";
 import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION } from "../kiosk/copy";
+import { SESSION, expandPhoneForSpeech } from "../kiosk/copy";
 import { useReadAloud } from "../hooks/useSpeech";
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
@@ -63,7 +63,7 @@ export function BranchA1CheckIn() {
               icon="mobile"
               title={t.a1SmsTitle}
               desc={t.a1SmsDesc}
-              speech={`${t.a1SmsTitle} to mobile number ${SESSION.mobile}, button. Press Enter to receive your queue ticket on your phone.`}
+              speech={`${t.a1SmsTitle} to mobile number ${expandPhoneForSpeech(SESSION.mobile)}, button. Press Enter to receive your queue ticket on your phone.`}
               onSelect={() => finish("sms")}
             />
             <ActionCard

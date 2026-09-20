@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import { Icon, type IconName } from "./Icons";
 import { useReadAloud } from "../hooks/useSpeech";
 import { useTapGuard } from "../hooks/useMotorFilters";
@@ -17,9 +17,10 @@ interface ActionCardProps {
   // prefixed with "Option X of N:" so users know how many choices there are.
   optionIndex?: number;
   optionCount?: number;
+  buttonRef?: Ref<HTMLButtonElement>;
 }
 
-export function ActionCard({ icon, title, desc, badge, speech, onSelect, selected, large, optionIndex, optionCount }: ActionCardProps) {
+export function ActionCard({ icon, title, desc, badge, speech, onSelect, selected, large, optionIndex, optionCount, buttonRef }: ActionCardProps) {
   const { t } = useKiosk();
   const fullSpeech =
     optionIndex && optionCount ? `${t.optionOf(optionIndex, optionCount)}${speech}` : speech;
@@ -28,6 +29,7 @@ export function ActionCard({ icon, title, desc, badge, speech, onSelect, selecte
 
   return (
     <button
+      ref={buttonRef}
       type="button"
       onFocus={start}
       onBlur={stop}

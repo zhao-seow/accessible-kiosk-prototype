@@ -15,6 +15,10 @@ interface KioskChromeProps {
   // first content element. Used by pages that need the details read aloud first
   // (e.g. the check-in summary: appointment time, clinic, queue number).
   intro?: string;
+  // When true, focus stays on the title heading after it's read instead of
+  // auto-advancing to the first content control. Used by screens where the
+  // user should choose when to move on via Tab, not be jumped there.
+  skipAutoFocus?: boolean;
   headerLeft?: ReactNode;
   children: ReactNode;
 }
@@ -54,7 +58,7 @@ function FooterButton({
   );
 }
 
-export function KioskChrome({ title, titleSpeech, intro, headerLeft, children }: KioskChromeProps) {
+export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLeft, children }: KioskChromeProps) {
   const { step, back, startOver, requestHelp, voiceGuide, t } = useKiosk();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const mainRef = useRef<HTMLElement>(null);
@@ -101,6 +105,7 @@ export function KioskChrome({ title, titleSpeech, intro, headerLeft, children }:
       // call triggered by focusing the heading above, so the title speaks once.
       // If the page supplies `intro`, read those contents first, then jump focus.
       speakTitle(() => {
+        if (skipAutoFocus) return;
         if (intro) {
           speak(intro, {
             onEnd: () => focusFirstContent(),

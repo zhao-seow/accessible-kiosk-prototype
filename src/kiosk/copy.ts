@@ -153,6 +153,10 @@ export interface Copy {
   tySubtitle: string;
   tyAnnounce: string;
   tyFollowUpHeading: string;
+  tySms: string;
+  tyPrint: string;
+  tySmsConfirm: string;
+  tyPrintConfirm: string;
 }
 
 const en: Copy = {
@@ -280,6 +284,10 @@ const en: Copy = {
   tySubtitle: "Your payment is complete. Have a good day.",
   tyAnnounce: "Thank you. Heading level 1. Your payment is complete. Have a good day. Press Tab to start over for the next patient.",
   tyFollowUpHeading: "Your follow-up appointment is booked:",
+  tySms: "Send via SMS",
+  tyPrint: "Print slip",
+  tySmsConfirm: `Your appointment slip will be sent by S M S to ${SESSION.mobile}.`,
+  tyPrintConfirm: "Your appointment slip is printing from the printer below.",
 };
 
 const zh: Copy = {
@@ -399,6 +407,10 @@ const zh: Copy = {
   tySubtitle: "您的付款已完成。祝您有美好的一天。",
   tyAnnounce: "谢谢。标题一级。您的付款已完成。祝您有美好的一天。按 Tab 键为下一位病人重新开始。",
   tyFollowUpHeading: "您的复诊预约已确认：",
+  tySms: "以短信发送",
+  tyPrint: "打印纸质票",
+  tySmsConfirm: `您的复诊单将以短信发送至 ${SESSION.mobile}。`,
+  tyPrintConfirm: "您的复诊单正在下方的打印机打印。",
 };
 
 const ms: Copy = {
@@ -526,6 +538,10 @@ const ms: Copy = {
   tySubtitle: "Pembayaran anda telah selesai. Semoga hari anda baik.",
   tyAnnounce: "Terima kasih. Tajuk tahap 1. Pembayaran anda telah selesai. Semoga hari anda baik. Tekan Tab untuk mula semula bagi pesakit seterusnya.",
   tyFollowUpHeading: "Temu janji susulan anda telah ditempah:",
+  tySms: "Hantar melalui SMS",
+  tyPrint: "Cetak slip",
+  tySmsConfirm: `Slip temu janji anda akan dihantar melalui S M S ke ${SESSION.mobile}.`,
+  tyPrintConfirm: "Slip temu janji anda sedang dicetak dari pencetak di bawah.",
 };
 
 const ta: Copy = {
@@ -653,6 +669,10 @@ const ta: Copy = {
   tySubtitle: "உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும்.",
   tyAnnounce: "நன்றி. தலைப்பு நிலை 1. உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும். அடுத்த நோயாளிக்கு மீண்டும் தொடங்க Tab-ஐ அழுத்தவும்.",
   tyFollowUpHeading: "உங்கள் தொடர் சந்திப்பு பதிவு செய்யப்பட்டது:",
+  tySms: "SMS மூலம் அனுப்பு",
+  tyPrint: "சீட்டை அச்சிடு",
+  tySmsConfirm: `உங்கள் சந்திப்பு சீட்டு S M S மூலம் ${SESSION.mobile} க்கு அனுப்பப்படும்.`,
+  tyPrintConfirm: "உங்கள் சந்திப்பு சீட்டு கீழே உள்ள அச்சுப்பொறியில் அச்சிடப்படுகிறது.",
 };
 
 const dict: Record<Lang, Copy> = { en, zh, ms, ta };
@@ -674,6 +694,10 @@ export const expandDateForSpeech = (date: string): string =>
     .replace(/\bAug\b/g, "August").replace(/\bSep\b/g, "September").replace(/\bOct\b/g, "October")
     .replace(/\bNov\b/g, "November").replace(/\bDec\b/g, "December")
     .replace(/·/g, "at");
+
+// "9123 1234" -> "9, 1, 2, 3, 1, 2, 3, 4" so TTS reads phone numbers digit by digit.
+export const expandPhoneForSpeech = (phone: string): string =>
+  phone.replace(/\D/g, "").split("").join(", ");
 
 export const moneySpeech = (value: string, t: Copy): string => {
   const negative = value.trim().startsWith("-");
