@@ -2,7 +2,12 @@
 // Network-first for navigations (so the kiosk always gets the latest UI when
 // online), with a cached app-shell fallback so it still launches offline.
 const CACHE = "kiosk-shell-v1";
-const SHELL = ["/", "/index.html", "/manifest.webmanifest", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png"];
+// self.registration.scope is the absolute URL of the directory this worker was
+// registered against (e.g. https://host/accessible-kiosk-prototype/), so the
+// shell list stays correct whether the app is served from the domain root or
+// a GitHub Pages subpath.
+const BASE = self.registration.scope;
+const SHELL = [BASE, `${BASE}index.html`, `${BASE}manifest.webmanifest`, `${BASE}apple-touch-icon.png`, `${BASE}icon-192.png`, `${BASE}icon-512.png`];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -24,10 +29,10 @@ self.addEventListener("fetch", (event) => {
       fetch(request)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE).then((cache) => cache.put("/index.html", copy));
+          caches.open(CACHE).then((cache) => cache.put(`${BASE}index.html`, copy));
           return res;
         })
-        .catch(() => caches.match("/index.html").then((r) => r || caches.match("/"))),
+        .catch(() => caches.match(`${BASE}index.html`).then((r) => r || caches.match(BASE))),
     );
     return;
   }
