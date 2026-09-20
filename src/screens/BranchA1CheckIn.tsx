@@ -63,7 +63,7 @@ export function BranchA1CheckIn() {
               icon="mobile"
               title={t.a1SmsTitle}
               desc={t.a1SmsDesc}
-              speech={`${t.a1SmsTitle} to mobile number ${expandPhoneForSpeech(SESSION.mobile)}, button. Press Enter to receive your queue ticket on your phone.`}
+              speech={`${t.asButton(t.a1SmsTitle)}${t.toMobileNumber(expandPhoneForSpeech(SESSION.mobile))} ${t.pressEnterTo(t.a1SmsAction)}`}
               onSelect={() => finish("sms")}
             />
             <ActionCard
@@ -72,7 +72,7 @@ export function BranchA1CheckIn() {
               icon="printer"
               title={t.a1PrintTitle}
               desc={t.a1PrintDesc}
-              speech={`${t.a1PrintTitle}, button. Press Enter to print a paper ticket from the printer below.`}
+              speech={`${t.asButton(t.a1PrintTitle)} ${t.pressEnterTo(t.a1PrintAction)}`}
               onSelect={() => finish("print")}
             />
           </div>

@@ -17,7 +17,7 @@ export function Step2Fork() {
             icon="clinic"
             title={t.s2ClinicTitle}
             desc={t.s2ClinicDesc}
-            speech={`${t.s2ClinicTitle}, button. Press Enter to check in for your appointment.`}
+            speech={`${t.asButton(t.s2ClinicTitle)} ${t.pressEnterTo(t.s2ClinicAction)}`}
             onSelect={() => goTo("q1")}
           />
           <ActionCard
@@ -27,7 +27,7 @@ export function Step2Fork() {
             icon="bill"
             title={t.s2BillTitle}
             badge={t.s2BillOutstanding}
-            speech={`${t.s2BillTitle}, button. Outstanding balance ${t.s2BillAmountSpeech}. Press Enter to review and pay.`}
+            speech={`${t.asButton(t.s2BillTitle)} ${t.s2BillOutstandingSpeech(t.s2BillAmountSpeech)} ${t.pressEnterTo(t.s2BillAction)}`}
             onSelect={() => goTo("payment")}
           />
         </div>

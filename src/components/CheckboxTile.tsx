@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Icon } from "./Icons";
 import { useSpeech } from "../hooks/useSpeech";
 import { useTapGuard } from "../hooks/useMotorFilters";
+import { useKiosk } from "../kiosk/KioskContext";
 
 interface CheckboxTileProps {
   label: string;
@@ -11,13 +12,14 @@ interface CheckboxTileProps {
 
 export function CheckboxTile({ label, checked, onToggle }: CheckboxTileProps) {
   const { speak } = useSpeech();
+  const { t } = useKiosk();
   const [reading, setReading] = useState(false);
 
   // Speak "<label>, checkbox, checked/unchecked. Press Space to toggle." — speak()
   // calls speechSynthesis.cancel() first, so a state change mid-announcement
   // interrupts the previous one and reads the new state immediately (not "polite").
   const announce = (isChecked: boolean) => {
-    speak(`${label}, checkbox, ${isChecked ? "checked" : "unchecked"}. Press Space to toggle.`, {
+    speak(`${t.checkboxState(label, isChecked)} ${t.pressSpaceToToggle}`, {
       onStart: () => setReading(true),
       onEnd: () => setReading(false),
       onError: () => setReading(false),

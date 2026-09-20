@@ -12,7 +12,7 @@ export function ThankYou() {
 
   const slot = followUp != null ? SESSION.followUp[followUp] : null;
   const detailsSpeech = slot
-    ? `${t.tyFollowUpHeading} Appointment 1 of 2, ${t.b2LabLabel}: ${expandDateForSpeech(slot.lab)}. Appointment 2 of 2, ${t.b2ConsultLabel}: ${expandDateForSpeech(slot.consult)}.`
+    ? `${t.tyFollowUpHeading} ${t.appt1Of2}${t.b2LabLabel}: ${expandDateForSpeech(slot.lab)}. ${t.appt2Of2}${t.b2ConsultLabel}: ${expandDateForSpeech(slot.consult)}.`
     : "";
   const detailsRead = useReadAloud(detailsSpeech, "static");
 
@@ -84,7 +84,7 @@ export function ThankYou() {
               icon="mobile"
               title={t.tySms}
               desc={SESSION.mobile}
-              speech={`${t.tySms} to mobile number ${expandPhoneForSpeech(SESSION.mobile)}, button. Press Enter to receive your appointment slip by S M S.`}
+              speech={`${t.asButton(t.tySms)}${t.toMobileNumber(expandPhoneForSpeech(SESSION.mobile))} ${t.pressEnterTo(t.tySmsAction)}`}
               onSelect={() => choose("sms")}
             />
             <ActionCard
@@ -92,7 +92,7 @@ export function ThankYou() {
               optionCount={2}
               icon="printer"
               title={t.tyPrint}
-              speech={`${t.tyPrint}, button. Press Enter to print a paper slip from the printer below.`}
+              speech={`${t.asButton(t.tyPrint)} ${t.pressEnterTo(t.tyPrintAction)}`}
               onSelect={() => choose("print")}
             />
           </div>
@@ -121,7 +121,7 @@ export function ThankYou() {
                 buttonRef={startOverRef}
                 icon="back"
                 title={t.startOver}
-                speech={`${t.startOver}, button. Press Enter to reset the kiosk.`}
+                speech={`${t.asButton(t.startOver)} ${t.pressEnterTo(t.startOverAction)}`}
                 onSelect={startOver}
               />
             </div>

@@ -106,8 +106,8 @@ export function BranchB1Payment() {
             {t.b1MethodHeading}
           </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <ActionCard optionIndex={1} optionCount={2} icon="credit" title={t.b1Credit} desc={t.b1CreditDesc} speech={`${t.b1Credit}, button. Press Enter to pay using the card terminal to the left of the keyboard.`} onSelect={() => pay("credit")} />
-            <ActionCard optionIndex={2} optionCount={2} icon="paynow" title={t.b1PayNow} desc={t.b1PayNowDesc} speech={`${t.b1PayNow}, button. Press Enter to display a Q R code to scan with your mobile banking app.`} onSelect={() => pay("paynow")} />
+            <ActionCard optionIndex={1} optionCount={2} icon="credit" title={t.b1Credit} desc={t.b1CreditDesc} speech={`${t.asButton(t.b1Credit)} ${t.pressEnterTo(t.b1CreditAction)}`} onSelect={() => pay("credit")} />
+            <ActionCard optionIndex={2} optionCount={2} icon="paynow" title={t.b1PayNow} desc={t.b1PayNowDesc} speech={`${t.asButton(t.b1PayNow)} ${t.pressEnterTo(t.b1PayNowAction)}`} onSelect={() => pay("paynow")} />
           </div>
         </div>
       </div>

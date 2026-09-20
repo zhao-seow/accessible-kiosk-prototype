@@ -19,6 +19,7 @@ interface SpeakRequest {
   text: string;
   bcp47: string;
   families: string[];
+  priority?: boolean;
   onStart?: () => void;
   onEnd?: () => void;
   onError?: () => void;
@@ -38,6 +39,9 @@ class SpeechController {
   private heartbeatTimer: ReturnType<typeof setInterval> | null = null;
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private bufferTimer: ReturnType<typeof setTimeout> | null = null;
+  // True while a priority utterance (e.g. the Voice Guide on/off announcement) is
+  // speaking, so an ordinary onFocus-triggered speak() can't cancel it mid-sentence.
+  private priorityActive = false;
   rate = 1.0;
 
   private startHeartbeat() {
@@ -67,8 +71,15 @@ class SpeechController {
     );
   }
 
-  speak({ text, bcp47, families, onStart, onEnd, onError }: SpeakRequest) {
+  speak({ text, bcp47, families, priority, onStart, onEnd, onError }: SpeakRequest) {
     if (!text || !text.trim()) return;
+
+    // A priority utterance (Voice Guide on/off) is speaking — wait for it to finish
+    // instead of cancelling it, so a Tab press right after toggling can't cut it off.
+    if (this.priorityActive && !priority) {
+      setTimeout(() => this.speak({ text, bcp47, families, priority, onStart, onEnd, onError }), 50);
+      return;
+    }
 
     // 1. Debounce rapid calls (user tabbing quickly through controls). Clear both
     // the debounce AND any pending post-cancel buffer, so a fast second call can
@@ -102,6 +113,8 @@ class SpeechController {
         this.activeUtterance = u;
         (window as unknown as { __kioskUtteranceAnchor?: SpeechSynthesisUtterance }).__kioskUtteranceAnchor = u;
 
+        if (priority) this.priorityActive = true;
+
         u.onstart = () => {
           this.startHeartbeat();
           onStart?.();
@@ -109,6 +122,7 @@ class SpeechController {
         u.onend = () => {
           this.stopHeartbeat();
           this.clearAnchor();
+          if (priority) this.priorityActive = false;
           onEnd?.();
         };
         u.onerror = (e) => {
@@ -117,6 +131,7 @@ class SpeechController {
             console.warn("TTS error:", e.error);
           }
           this.clearAnchor();
+          if (priority) this.priorityActive = false;
           onError?.();
         };
 
@@ -149,6 +164,7 @@ const controller =
 interface SpeakOpts {
   lang?: Lang; // speak in this language's voice instead of the active one
   force?: boolean; // speak even when Voice Guide is off (used by the toggle itself)
+  priority?: boolean; // protect this utterance from being cancelled by other speech
   onStart?: () => void;
   onEnd?: () => void;
   onError?: () => void;
@@ -166,6 +182,7 @@ export function useSpeech() {
         text,
         bcp47: bcp,
         families: langFamiliesFor(bcp),
+        priority: opts.priority,
         onStart: opts.onStart,
         onEnd: opts.onEnd,
         onError: opts.onError,

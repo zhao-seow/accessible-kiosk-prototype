@@ -32,7 +32,7 @@ export function Step3bSymptoms() {
           <ChoiceButton
             tone="primary"
             label={t.continue}
-            speech={`${t.continue}, button. Press Enter to proceed to question 3.`}
+            speech={`${t.asButton(t.continue)} ${t.pressEnterTo(t.q2ContinueAction)}`}
             onSelect={() => goTo("q3")}
           />
         </div>

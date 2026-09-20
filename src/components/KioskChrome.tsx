@@ -152,7 +152,7 @@ export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLe
       <footer className="flex items-center justify-between gap-4 border-t border-border px-10 py-4">
         <div>
           {hasBack(step) ? (
-            <FooterButton label={t.back} icon="back" speech={`${t.back}, button. Press Enter to return to the previous screen.`} onClick={back} />
+            <FooterButton label={t.back} icon="back" speech={`${t.asButton(t.back)} ${t.pressEnterTo(t.backAction)}`} onClick={back} />
           ) : null}
         </div>
         <div className="flex items-center gap-4">

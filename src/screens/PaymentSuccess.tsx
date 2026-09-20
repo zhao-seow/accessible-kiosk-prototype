@@ -24,7 +24,7 @@ export function PaymentSuccess() {
       if (document.activeElement === confirmPRef.current) continueRef.current?.focus();
     },
   });
-  const continueRead = useReadAloud(`${t.continue}, button. Press Enter to continue.`, "interactive");
+  const continueRead = useReadAloud(`${t.asButton(t.continue)} ${t.pressEnterTo(t.continueAction)}`, "interactive");
 
   const choose = (method: "sms" | "print") => {
     setConfirmed(method);
@@ -83,7 +83,7 @@ export function PaymentSuccess() {
                 icon="mobile"
                 title={t.psSms}
                 desc={SESSION.mobile}
-                speech={`${t.psSms} to mobile number ${expandPhoneForSpeech(SESSION.mobile)}, button. Press Enter to receive your receipt by S M S.`}
+                speech={`${t.asButton(t.psSms)}${t.toMobileNumber(expandPhoneForSpeech(SESSION.mobile))} ${t.pressEnterTo(t.psSmsAction)}`}
                 onSelect={() => choose("sms")}
               />
               <ActionCard
@@ -91,7 +91,7 @@ export function PaymentSuccess() {
                 optionCount={2}
                 icon="printer"
                 title={t.psPrint}
-                speech={`${t.psPrint}, button. Press Enter to print a paper receipt from the printer below.`}
+                speech={`${t.asButton(t.psPrint)} ${t.pressEnterTo(t.psPrintAction)}`}
                 onSelect={() => choose("print")}
               />
             </div>

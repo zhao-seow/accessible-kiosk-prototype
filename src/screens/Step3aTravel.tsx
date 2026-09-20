@@ -18,13 +18,13 @@ export function Step3aTravel() {
           <ChoiceButton
             label={t.yes}
             selected={travelled === true}
-            speech={`${t.yes}, button. Press Enter to select Yes and proceed to question 2.`}
+            speech={`${t.asButton(t.yes)} ${t.pressEnterTo(t.q1YesAction)}`}
             onSelect={() => choose(true)}
           />
           <ChoiceButton
             label={t.no}
             selected={travelled === false}
-            speech={`${t.no}, button. Press Enter to select No and proceed to question 2.`}
+            speech={`${t.asButton(t.no)} ${t.pressEnterTo(t.q1NoAction)}`}
             onSelect={() => choose(false)}
           />
         </div>

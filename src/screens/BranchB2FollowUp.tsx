@@ -11,7 +11,7 @@ function OptionCard({ index, total, onSelect }: { index: number; total: number; 
   const selected = followUp === index;
   const labSpeech = expandDateForSpeech(slot.lab);
   const consultSpeech = expandDateForSpeech(slot.consult);
-  const speech = `${t.optionOf(index + 1, total)}Appointment 1 of 2, ${t.b2LabLabel}: ${labSpeech}. Appointment 2 of 2, ${t.b2ConsultLabel}: ${consultSpeech}. ${t.b2Select(index + 1)}, button. Press Enter to book.`;
+  const speech = `${t.optionOf(index + 1, total)}${t.appt1Of2}${t.b2LabLabel}: ${labSpeech}. ${t.appt2Of2}${t.b2ConsultLabel}: ${consultSpeech}. ${t.asButton(t.b2Select(index + 1))} ${t.pressEnterTo(t.b2BookAction)}`;
   const { start, stop, readingClass } = useReadAloud(speech, "interactive");
   const guarded = useTapGuard(onSelect);
 
@@ -68,8 +68,8 @@ export function BranchB2FollowUp() {
     setFollowUp(null);
     goTo("thankYou");
   };
-  const noteRead = useReadAloud(`${t.b2Note} Press Tab to review your options.`, "static");
-  const skip = useReadAloud(`${t.b2Skip}, button. Press Enter to book later using the HealthHub app.`, "interactive");
+  const noteRead = useReadAloud(`${t.b2Note} ${t.b2NoteInstruction}`, "static");
+  const skip = useReadAloud(`${t.asButton(t.b2Skip)} ${t.pressEnterTo(t.b2SkipAction)}`, "interactive");
 
   return (
     <KioskChrome title={t.b2Title} announce={t.b2Announce}>

@@ -1,9 +1,10 @@
 import { useKiosk } from "../kiosk/KioskContext";
 import { Icon } from "./Icons";
-import { useReadAloud } from "../hooks/useSpeech";
+import { useSpeech, useReadAloud } from "../hooks/useSpeech";
 
 export function VoiceGuideToggle() {
   const { voiceGuide, toggleVoiceGuide, lang, t } = useKiosk();
+  const { speak } = useSpeech();
   const status = voiceGuide ? t.on : t.off;
   const speech = `${t.voiceGuide}: ${status}. ${voiceGuide ? t.vgTurnOff : t.vgTurnOn}`;
   // Always announce — this is the entry point to the assistive layer, so it must
@@ -13,9 +14,12 @@ export function VoiceGuideToggle() {
 
   const handleToggle = () => {
     window.speechSynthesis?.cancel();
+    const next = !voiceGuide;
     toggleVoiceGuide();
-    // Focus follows the screen: on Step 1, turning on moves focus to the English
-    // language button; turning off leaves focus on this toggle.
+    // Announce the new state before moving on — focus stays put (this toggle
+    // isn't a target of chained auto-focus elsewhere), so the normal onFocus
+    // speech won't re-fire on its own since focus never moved.
+    speak(`${t.voiceGuide}: ${next ? t.on : t.off}.`, { force: true, priority: true, lang });
   };
 
   return (

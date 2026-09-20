@@ -23,7 +23,7 @@ export function ReceiptDelivery() {
 
         <div className="flex w-full justify-center">
           <div className="w-full max-w-md">
-            <ActionCard icon="printer" title={t.startOver} speech={`${t.startOver}, button. Press Enter to reset the kiosk.`} onSelect={startOver} />
+            <ActionCard icon="printer" title={t.startOver} speech={`${t.asButton(t.startOver)} ${t.pressEnterTo(t.startOverAction)}`} onSelect={startOver} />
           </div>
         </div>
       </div>

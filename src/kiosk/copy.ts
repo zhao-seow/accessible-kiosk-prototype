@@ -46,6 +46,36 @@ export interface Copy {
   curCent: string;
   curMinus: string;
 
+  // Reusable spoken-boilerplate helpers so screen speech is fully translated.
+  pressEnterTo: (action: string) => string;
+  asButton: (label: string) => string;
+  toMobileNumber: (digits: string) => string;
+  checkboxState: (label: string, checked: boolean) => string;
+  pressSpaceToToggle: string;
+  a1SmsAction: string;
+  a1PrintAction: string;
+  b1CreditAction: string;
+  b1PayNowAction: string;
+  b2BookAction: string;
+  b2SkipAction: string;
+  b2NoteInstruction: string;
+  psSmsAction: string;
+  psPrintAction: string;
+  tySmsAction: string;
+  tyPrintAction: string;
+  startOverAction: string;
+  backAction: string;
+  continueAction: string;
+  q1YesAction: string;
+  q1NoAction: string;
+  q2ContinueAction: string;
+  selectAction: string;
+  appt1Of2: string;
+  appt2Of2: string;
+  s2ClinicAction: string;
+  s2BillAction: string;
+  s2BillOutstandingSpeech: (amount: string) => string;
+
   // Step 1
   s1Instruction: string;
   s1NricLabel: string;
@@ -179,6 +209,35 @@ const en: Copy = {
   curCent: "cents",
   curMinus: "minus",
 
+  pressEnterTo: (action) => `Press Enter to ${action}.`,
+  asButton: (label) => `${label}, button.`,
+  toMobileNumber: (digits) => ` to mobile number ${digits},`,
+  checkboxState: (label, checked) => `${label}, checkbox, ${checked ? "checked" : "unchecked"}.`,
+  pressSpaceToToggle: "Press Space to toggle.",
+  a1SmsAction: "receive your queue ticket on your phone",
+  a1PrintAction: "print a paper ticket from the printer below",
+  b1CreditAction: "pay using the card terminal to the left of the keyboard",
+  b1PayNowAction: "display a Q R code to scan with your mobile banking app",
+  b2BookAction: "book",
+  b2SkipAction: "book later using the HealthHub app",
+  b2NoteInstruction: "Press Tab to review your options.",
+  psSmsAction: "receive your receipt by S M S",
+  psPrintAction: "print a paper receipt from the printer below",
+  tySmsAction: "receive your appointment slip by S M S",
+  tyPrintAction: "print a paper slip from the printer below",
+  startOverAction: "reset the kiosk",
+  backAction: "return to the previous screen",
+  continueAction: "continue",
+  q1YesAction: "select Yes and proceed to question 2",
+  q1NoAction: "select No and proceed to question 2",
+  q2ContinueAction: "proceed to question 3",
+  selectAction: "select",
+  appt1Of2: "Appointment 1 of 2, ",
+  appt2Of2: "Appointment 2 of 2, ",
+  s2ClinicAction: "check in for your appointment",
+  s2BillAction: "review and pay",
+  s2BillOutstandingSpeech: (amount) => `Outstanding balance ${amount}.`,
+
   s1Instruction: "Select your language, then scan your card or type your NRIC below.",
   s1NricLabel: "NRIC number",
   s1NricHint: "Type your 9-character NRIC and press Enter, or rest your card face-down on the scanner below.",
@@ -310,6 +369,35 @@ const zh: Copy = {
   curCent: "分",
   curMinus: "负",
 
+  pressEnterTo: (action) => `按 Enter 键${action}。`,
+  asButton: (label) => `${label}，按钮。`,
+  toMobileNumber: (digits) => `，发送至手机号码 ${digits}，`,
+  checkboxState: (label, checked) => `${label}，复选框，${checked ? "已选中" : "未选中"}。`,
+  pressSpaceToToggle: "按空格键切换。",
+  a1SmsAction: "接收手机上的轮候票",
+  a1PrintAction: "从下方打印机打印纸质票",
+  b1CreditAction: "使用键盘左侧的读卡终端付款",
+  b1PayNowAction: "显示二维码以用手机银行应用扫描",
+  b2BookAction: "预约",
+  b2SkipAction: "稍后通过 HealthHub 应用预约",
+  b2NoteInstruction: "按 Tab 键查看您的选项。",
+  psSmsAction: "以短信接收您的收据",
+  psPrintAction: "从下方打印机打印纸质收据",
+  tySmsAction: "以短信接收您的复诊单",
+  tyPrintAction: "从下方打印机打印纸质复诊单",
+  startOverAction: "重置服务机",
+  backAction: "返回上一屏幕",
+  continueAction: "继续",
+  q1YesAction: "选择“是”并前往第2题",
+  q1NoAction: "选择“否”并前往第2题",
+  q2ContinueAction: "前往第3题",
+  selectAction: "选择",
+  appt1Of2: "第1项预约，共2项，",
+  appt2Of2: "第2项预约，共2项，",
+  s2ClinicAction: "为您的预约报到",
+  s2BillAction: "查看并付款",
+  s2BillOutstandingSpeech: (amount) => `未付款项 ${amount}。`,
+
   s1Instruction: "请选择语言，然后扫描您的证件或在下方输入身份证号码。",
   s1NricLabel: "身份证号码",
   s1NricHint: "请输入9位身份证号码并按 Enter 键，或将证件正面朝下放在下方的扫描器上。",
@@ -432,6 +520,35 @@ const ms: Copy = {
   curDollar: "dolar",
   curCent: "sen",
   curMinus: "tolak",
+
+  pressEnterTo: (action) => `Tekan Enter untuk ${action}.`,
+  asButton: (label) => `${label}, butang.`,
+  toMobileNumber: (digits) => ` ke nombor mudah alih ${digits},`,
+  checkboxState: (label, checked) => `${label}, kotak semak, ${checked ? "ditanda" : "tidak ditanda"}.`,
+  pressSpaceToToggle: "Tekan Ruang untuk togol.",
+  a1SmsAction: "menerima tiket giliran anda di telefon anda",
+  a1PrintAction: "mencetak tiket kertas dari pencetak di bawah",
+  b1CreditAction: "membayar menggunakan terminal kad di sebelah kiri papan kekunci",
+  b1PayNowAction: "memaparkan kod Q R untuk diimbas dengan aplikasi perbankan mudah alih anda",
+  b2BookAction: "menempah",
+  b2SkipAction: "menempah kemudian menggunakan aplikasi HealthHub",
+  b2NoteInstruction: "Tekan Tab untuk menyemak pilihan anda.",
+  psSmsAction: "menerima resit anda melalui S M S",
+  psPrintAction: "mencetak resit kertas dari pencetak di bawah",
+  tySmsAction: "menerima slip temu janji anda melalui S M S",
+  tyPrintAction: "mencetak slip kertas dari pencetak di bawah",
+  startOverAction: "menetapkan semula kiosk",
+  backAction: "kembali ke skrin sebelumnya",
+  continueAction: "teruskan",
+  q1YesAction: "memilih Ya dan meneruskan ke soalan 2",
+  q1NoAction: "memilih Tidak dan meneruskan ke soalan 2",
+  q2ContinueAction: "meneruskan ke soalan 3",
+  selectAction: "memilih",
+  appt1Of2: "Temu janji 1 daripada 2, ",
+  appt2Of2: "Temu janji 2 daripada 2, ",
+  s2ClinicAction: "daftar masuk untuk temu janji anda",
+  s2BillAction: "menyemak dan membayar",
+  s2BillOutstandingSpeech: (amount) => `Tertunggak ${amount}.`,
 
   s1Instruction: "Pilih bahasa anda, kemudian imbas kad atau taip nombor NRIC di bawah.",
   s1NricLabel: "Nombor NRIC",
@@ -563,6 +680,35 @@ const ta: Copy = {
   curDollar: "டாலர்",
   curCent: "சதம்",
   curMinus: "கழித்தல்",
+
+  pressEnterTo: (action) => `${action} Enter-ஐ அழுத்தவும்.`,
+  asButton: (label) => `${label}, பொத்தான்.`,
+  toMobileNumber: (digits) => ` மொபைல் எண் ${digits}-க்கு,`,
+  checkboxState: (label, checked) => `${label}, செக்பாக்ஸ், ${checked ? "தேர்ந்தெடுக்கப்பட்டது" : "தேர்ந்தெடுக்கப்படவில்லை"}.`,
+  pressSpaceToToggle: "மாற்ற Space-ஐ அழுத்தவும்.",
+  a1SmsAction: "உங்கள் தொலைபேசியில் வரிசை டிக்கெட்டைப் பெற",
+  a1PrintAction: "கீழே உள்ள அச்சுப்பொறியிலிருந்து காகித டிக்கெட்டை அச்சிட",
+  b1CreditAction: "விசைப்பலகையின் இடதுபுறத்தில் உள்ள கார்டு முனையம் மூலம் செலுத்த",
+  b1PayNowAction: "உங்கள் மொபைல் வங்கி செயலியால் ஸ்கேன் செய்ய Q R குறியீட்டைக் காட்ட",
+  b2BookAction: "முன்பதிவு செய்ய",
+  b2SkipAction: "HealthHub செயலி மூலம் பின்னர் முன்பதிவு செய்ய",
+  b2NoteInstruction: "உங்கள் விருப்பங்களைப் பார்க்க Tab-ஐ அழுத்தவும்.",
+  psSmsAction: "S M S மூலம் உங்கள் ரசீதைப் பெற",
+  psPrintAction: "கீழே உள்ள அச்சுப்பொறியிலிருந்து காகித ரசீதை அச்சிட",
+  tySmsAction: "S M S மூலம் உங்கள் சந்திப்பு சீட்டைப் பெற",
+  tyPrintAction: "கீழே உள்ள அச்சுப்பொறியிலிருந்து காகித சீட்டை அச்சிட",
+  startOverAction: "கியோஸ்கை மீட்டமைக்க",
+  backAction: "முந்தைய திரைக்குத் திரும்ப",
+  continueAction: "தொடர",
+  q1YesAction: "ஆம் என்பதைத் தேர்ந்தெடுத்து கேள்வி 2-க்குச் செல்ல",
+  q1NoAction: "இல்லை என்பதைத் தேர்ந்தெடுத்து கேள்வி 2-க்குச் செல்ல",
+  q2ContinueAction: "கேள்வி 3-க்குச் செல்ல",
+  selectAction: "தேர்ந்தெடுக்க",
+  appt1Of2: "சந்திப்பு 1 / 2, ",
+  appt2Of2: "சந்திப்பு 2 / 2, ",
+  s2ClinicAction: "உங்கள் சந்திப்புக்காக பதிவு செய்ய",
+  s2BillAction: "பார்த்து செலுத்த",
+  s2BillOutstandingSpeech: (amount) => `நிலுவை ${amount}.`,
 
   s1Instruction: "உங்கள் மொழியைத் தேர்ந்தெடுத்து, உங்கள் அட்டையை ஸ்கேன் செய்யவும் அல்லது கீழே NRIC-ஐ தட்டச்சு செய்யவும்.",
   s1NricLabel: "NRIC எண்",
