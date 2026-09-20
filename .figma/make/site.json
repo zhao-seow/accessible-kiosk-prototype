@@ -1,0 +1,11 @@
+{
+  "title": "Accessible Kiosk Draft 2",
+  "description": "Enables patients to easily check in and make payments at hospital kiosks with an accessible, user-friendly interface tailored for all users.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
