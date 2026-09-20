@@ -10,8 +10,10 @@ export default defineConfig(({ mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === 'development'
 
+  const base = process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/'
+
   return {
-    base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/',
+    base,
     build: {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,
@@ -23,6 +25,7 @@ export default defineConfig(({ mode }) => {
       figmaErrorOverlayReplay(),
       figmaReactRefreshBoundaryFallback(),
       figmaMakeKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
+      figmaPwaManifest(base),
     ],
     resolve: {
       alias: {
@@ -295,6 +298,48 @@ function figmaReactRefreshBoundaryFallback(): Plugin {
       }
 
       return null
+    },
+  }
+}
+
+/**
+ * Generates manifest.webmanifest with start_url/scope/icon paths anchored to
+ * the actual deploy base (e.g. "/accessible-kiosk-prototype/"). iOS resolves
+ * a PWA's relative start_url/scope against the manifest's own URL, but in
+ * practice this is unreliable across iOS versions — explicit absolute paths
+ * that include the GitHub Pages subpath are the safe choice.
+ */
+function figmaPwaManifest(base: string): Plugin {
+  const manifest = {
+    name: 'Accessible Kiosk Draft',
+    short_name: 'Accessible Kiosk Draft',
+    description: 'Self-service check-in and payment kiosk.',
+    id: base,
+    start_url: base,
+    scope: base,
+    display: 'standalone',
+    orientation: 'landscape',
+    background_color: '#f4efe9',
+    theme_color: '#b0703c',
+    icons: [
+      { src: `${base}icon-192.png`, sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: `${base}icon-512.png`, sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: `${base}icon-512.png`, sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+    ],
+  }
+  const source = JSON.stringify(manifest, null, 2)
+
+  return {
+    name: 'figma-pwa-manifest',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.split('?')[0] !== '/manifest.webmanifest') return next()
+        res.setHeader('Content-Type', 'application/manifest+json')
+        res.end(source)
+      })
+    },
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'manifest.webmanifest', source })
     },
   }
 }
