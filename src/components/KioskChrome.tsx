@@ -97,7 +97,14 @@ export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLe
   // Heading-first focus + entry announcement. When Voice Guide is on, read the
   // title, then automatically move focus to the content and read the question.
   useEffect(() => {
-    if (!title) return;
+    mainRef.current?.scrollTo({ top: 0 });
+    if (!title) {
+      // No heading on this screen (e.g. the identify screen) — still reset focus to
+      // the top of the page instead of leaving it on whatever was focused before
+      // (e.g. the Start Over button that triggered the navigation).
+      focusFirstContent();
+      return;
+    }
     headingRef.current?.focus({ preventScroll: true });
     if (voiceGuide) {
       // Read the title, then jump focus to the first content element (which reads
