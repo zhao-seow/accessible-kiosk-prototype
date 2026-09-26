@@ -144,6 +144,7 @@ export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLe
           <h1
             ref={headingRef}
             tabIndex={0}
+            data-screen-heading="true"
             onFocus={() => speakTitle()}
             className={[
               "mb-5 font-display text-5xl font-bold leading-tight text-foreground outline-none",

@@ -168,6 +168,11 @@ export interface Copy {
   psAnnounce: string;
   psSmsConfirm: string;
   psPrintConfirm: string;
+  psSmsTitle: string;
+  psPrintTitle: string;
+  psPaidLabel: string;
+  psStatusLabel: string;
+  psStatusSuccess: string;
 
   // Receipt
   rcTitle: string;
@@ -177,6 +182,12 @@ export interface Copy {
   rcPrint: string;
   rcDone: string;
   rcAnnounce: string;
+  rcSmsTitle: string;
+  rcPrintTitle: string;
+  rcSmsConfirm: string;
+  rcPrintConfirm: string;
+  rcStaffGuidance: string;
+  rcStaffGuidanceSub: string;
 
   // Payment flow end — thank you
   tyTitle: string;
@@ -187,6 +198,8 @@ export interface Copy {
   tyPrint: string;
   tySmsConfirm: string;
   tyPrintConfirm: string;
+  tySmsTitle: string;
+  tyPrintTitle: string;
 }
 
 const en: Copy = {
@@ -313,14 +326,14 @@ const en: Copy = {
   piContinueHint: "Tap anywhere or press Enter once payment is complete.",
 
   b2Title: "Select Follow-Up Appointment",
-  b2Note: "Doctor requested a Fasting Blood Lab and a Review Consultation.",
+  b2Note: "Doctor requested a Fasting Blood Lab.",
   b2Option: (n) => `Option ${n}`,
   b2LabLabel: "Fasting Lab",
   b2ConsultLabel: "Consultation",
   b2Select: (n) => `Select Option ${n}`,
   b2Skip: "Skip — book later via HealthHub",
   b2Announce:
-    "Payment successful. Select follow-up appointment. Heading level 1. The doctor has requested a Fasting Blood Lab and a Review Consultation. Three pre-arranged options are available. Press Tab to review options.",
+    "Payment successful. Select follow-up appointment. Heading level 1. The doctor has requested a Fasting Blood Lab. Three pre-arranged options are available. Press Tab to review options.",
 
   psTitle: "Payment Successful",
   psSubtitle: `You paid ${SESSION.outstanding}. How would you like your receipt?`,
@@ -330,6 +343,11 @@ const en: Copy = {
   psAnnounce: `Payment successful. Heading level 1. You paid ${SESSION.outstanding}. How would you like your receipt? Press Tab to send it by S M S or print a paper receipt.`,
   psSmsConfirm: `Your receipt will be sent by S M S to ${SESSION.mobile}.`,
   psPrintConfirm: "Your receipt is printing from the printer below.",
+  psSmsTitle: "Receipt Sent via SMS",
+  psPrintTitle: "Printing Receipt...",
+  psPaidLabel: "Amount paid",
+  psStatusLabel: "Status",
+  psStatusSuccess: "Paid in full",
 
   rcTitle: "You're all set",
   rcQueueLabel: "Your queue number",
@@ -337,7 +355,13 @@ const en: Copy = {
   rcSms: "Send via SMS",
   rcPrint: "Print paper slip",
   rcDone: "Done",
-  rcAnnounce: `You are all set. Heading level 1. Your queue number is ${SESSION.queueNumber}. Please take a seat and watch the clinic display. Press Tab to send your ticket by S M S or print a paper slip.`,
+  rcAnnounce: `You are all set. Heading level 1. Your queue number is ${SESSION.queueNumber}. Please take a seat and watch the clinic display.`,
+  rcSmsTitle: "Queue Ticket Sent via SMS",
+  rcPrintTitle: "Printing Paper Slip...",
+  rcSmsConfirm: `Your queue ticket has been sent by S M S to ${SESSION.mobile}.`,
+  rcPrintConfirm: "Your queue ticket is printing from the printer below the shelf.",
+  rcStaffGuidance: "A staff will be with you shortly to guide you to the clinic.",
+  rcStaffGuidanceSub: "Please remain seated in the waiting area.",
 
   tyTitle: "Thank you",
   tySubtitle: "Your payment is complete. Have a good day.",
@@ -347,6 +371,8 @@ const en: Copy = {
   tyPrint: "Print slip",
   tySmsConfirm: `Your appointment slip will be sent by S M S to ${SESSION.mobile}.`,
   tyPrintConfirm: "Your appointment slip is printing from the printer below.",
+  tySmsTitle: "Appointment Slip Sent via SMS",
+  tyPrintTitle: "Printing Appointment Slip...",
 };
 
 const zh: Copy = {
@@ -466,13 +492,13 @@ const zh: Copy = {
   piContinueHint: "付款完成后，轻触屏幕任意处或按 Enter 键继续。",
 
   b2Title: "选择复诊预约",
-  b2Note: "医生要求进行空腹血液检查及复诊咨询。",
+  b2Note: "医生要求进行空腹血液检查。",
   b2Option: (n) => `方案 ${n}`,
   b2LabLabel: "空腹检查",
   b2ConsultLabel: "复诊",
   b2Select: (n) => `选择方案 ${n}`,
   b2Skip: "跳过——稍后通过 HealthHub 预约",
-  b2Announce: "付款成功。选择复诊预约。标题一级。医生要求进行空腹血液检查及复诊咨询。现有三个预设方案。按 Tab 键浏览方案。",
+  b2Announce: "付款成功。选择复诊预约。标题一级。医生要求进行空腹血液检查。现有三个预设方案。按 Tab 键浏览方案。",
 
   psTitle: "付款成功",
   psSubtitle: `您已支付 ${SESSION.outstanding}。您希望如何领取收据？`,
@@ -482,6 +508,11 @@ const zh: Copy = {
   psAnnounce: `付款成功。标题一级。您已支付 ${SESSION.outstanding}。您希望如何领取收据？按 Tab 键以短信发送或打印纸质收据。`,
   psSmsConfirm: `您的收据将以短信发送至 ${SESSION.mobile}。`,
   psPrintConfirm: "您的收据正在下方的打印机打印。",
+  psSmsTitle: "收据已通过短信发送",
+  psPrintTitle: "正在打印收据...",
+  psPaidLabel: "已付金额",
+  psStatusLabel: "付款状态",
+  psStatusSuccess: "已全额支付",
 
   rcTitle: "已全部完成",
   rcQueueLabel: "您的轮候号码",
@@ -489,7 +520,13 @@ const zh: Copy = {
   rcSms: "以短信发送",
   rcPrint: "打印纸质票",
   rcDone: "完成",
-  rcAnnounce: `已全部完成。标题一级。您的轮候号码是 ${SESSION.queueNumber}。请就座并留意诊所显示屏。按 Tab 键以短信发送轮候票或打印纸质票。`,
+  rcAnnounce: `已全部完成。标题一级。您的轮候号码是 ${SESSION.queueNumber}。请就座并留意诊所显示屏。`,
+  rcSmsTitle: "轮候票已通过短信发送",
+  rcPrintTitle: "正在打印纸质票...",
+  rcSmsConfirm: `您的轮候票已通过短信发送至 ${SESSION.mobile}。`,
+  rcPrintConfirm: "您的轮候票正在下方的打印机打印。",
+  rcStaffGuidance: "工作人员将很快前来引导您前往诊室。",
+  rcStaffGuidanceSub: "请在候诊区就座等待。",
 
   tyTitle: "谢谢",
   tySubtitle: "您的付款已完成。祝您有美好的一天。",
@@ -499,6 +536,8 @@ const zh: Copy = {
   tyPrint: "打印纸质票",
   tySmsConfirm: `您的复诊单将以短信发送至 ${SESSION.mobile}。`,
   tyPrintConfirm: "您的复诊单正在下方的打印机打印。",
+  tySmsTitle: "复诊单已通过短信发送",
+  tyPrintTitle: "正在打印复诊单...",
 };
 
 const ms: Copy = {
@@ -625,14 +664,14 @@ const ms: Copy = {
   piContinueHint: "Ketik di mana-mana atau tekan Enter setelah pembayaran selesai.",
 
   b2Title: "Pilih Temu Janji Susulan",
-  b2Note: "Doktor meminta Ujian Makmal Darah Berpuasa dan Perundingan Semakan.",
+  b2Note: "Doktor meminta Ujian Makmal Darah Berpuasa.",
   b2Option: (n) => `Pilihan ${n}`,
   b2LabLabel: "Makmal Puasa",
   b2ConsultLabel: "Perundingan",
   b2Select: (n) => `Pilih Pilihan ${n}`,
   b2Skip: "Langkau — tempah kemudian melalui HealthHub",
   b2Announce:
-    "Pembayaran berjaya. Pilih temu janji susulan. Tajuk tahap 1. Doktor telah meminta Ujian Makmal Darah Berpuasa dan Perundingan Semakan. Tiga pilihan telah disediakan. Tekan Tab untuk menyemak pilihan.",
+    "Pembayaran berjaya. Pilih temu janji susulan. Tajuk tahap 1. Doktor telah meminta Ujian Makmal Darah Berpuasa. Tiga pilihan telah disediakan. Tekan Tab untuk menyemak pilihan.",
 
   psTitle: "Pembayaran Berjaya",
   psSubtitle: `Anda telah membayar ${SESSION.outstanding}. Bagaimana anda mahu resit anda?`,
@@ -642,6 +681,11 @@ const ms: Copy = {
   psAnnounce: `Pembayaran berjaya. Tajuk tahap 1. Anda telah membayar ${SESSION.outstanding}. Bagaimana anda mahu resit anda? Tekan Tab untuk menghantar melalui S M S atau mencetak resit kertas.`,
   psSmsConfirm: `Resit anda akan dihantar melalui S M S ke ${SESSION.mobile}.`,
   psPrintConfirm: "Resit anda sedang dicetak dari pencetak di bawah.",
+  psSmsTitle: "Resit Dihantar Melalui SMS",
+  psPrintTitle: "Sedang Mencetak Resit...",
+  psPaidLabel: "Jumlah dibayar",
+  psStatusLabel: "Status pembayaran",
+  psStatusSuccess: "Dibayar penuh",
 
   rcTitle: "Anda telah selesai",
   rcQueueLabel: "Nombor giliran anda",
@@ -649,7 +693,13 @@ const ms: Copy = {
   rcSms: "Hantar melalui SMS",
   rcPrint: "Cetak slip kertas",
   rcDone: "Selesai",
-  rcAnnounce: `Anda telah selesai. Tajuk tahap 1. Nombor giliran anda ialah ${SESSION.queueNumber}. Sila duduk dan perhatikan paparan klinik. Tekan Tab untuk menghantar tiket melalui S M S atau mencetak slip kertas.`,
+  rcAnnounce: `Anda telah selesai. Tajuk tahap 1. Nombor giliran anda ialah ${SESSION.queueNumber}. Sila duduk dan perhatikan paparan klinik.`,
+  rcSmsTitle: "Tiket Giliran Dihantar Melalui SMS",
+  rcPrintTitle: "Sedang Mencetak Slip Kertas...",
+  rcSmsConfirm: `Tiket giliran anda telah dihantar melalui SMS ke ${SESSION.mobile}.`,
+  rcPrintConfirm: "Tiket giliran anda sedang dicetak dari pencetak di bawah rak.",
+  rcStaffGuidance: "Seorang kakitangan akan bersama anda sebentar lagi untuk membimbing anda ke klinik.",
+  rcStaffGuidanceSub: "Sila duduk di kawasan menunggu.",
 
   tyTitle: "Terima kasih",
   tySubtitle: "Pembayaran anda telah selesai. Semoga hari anda baik.",
@@ -659,6 +709,8 @@ const ms: Copy = {
   tyPrint: "Cetak slip",
   tySmsConfirm: `Slip temu janji anda akan dihantar melalui S M S ke ${SESSION.mobile}.`,
   tyPrintConfirm: "Slip temu janji anda sedang dicetak dari pencetak di bawah.",
+  tySmsTitle: "Slip Temu Janji Dihantar Melalui SMS",
+  tyPrintTitle: "Sedang Mencetak Slip Temu Janji...",
 };
 
 const ta: Copy = {
@@ -785,14 +837,14 @@ const ta: Copy = {
   piContinueHint: "கட்டணம் முடிந்ததும் திரையில் எங்கு வேண்டுமானாலும் தட்டவும் அல்லது Enter அழுத்தவும்.",
 
   b2Title: "தொடர் சந்திப்பு(களை)த் தேர்ந்தெடுக்கவும்",
-  b2Note: "மருத்துவர் பட்டினி இரத்த பரிசோதனை மற்றும் மறுஆய்வு ஆலோசனையைக் கோரினார்.",
+  b2Note: "மருத்துவர் பட்டினி இரத்த பரிசோதனையைக் கோரினார்.",
   b2Option: (n) => `விருப்பம் ${n}`,
   b2LabLabel: "பட்டினி பரிசோதனை",
   b2ConsultLabel: "ஆலோசனை",
   b2Select: (n) => `விருப்பம் ${n} தேர்ந்தெடு`,
   b2Skip: "தவிர் — பின்னர் HealthHub மூலம் முன்பதிவு செய்யவும்",
   b2Announce:
-    "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது. தொடர் சந்திப்பைத் தேர்ந்தெடுக்கவும். தலைப்பு நிலை 1. மருத்துவர் பட்டினி இரத்த பரிசோதனை மற்றும் மறுஆய்வு ஆலோசனையைக் கோரினார். மூன்று விருப்பங்கள் உள்ளன. விருப்பங்களைப் பார்க்க Tab-ஐ அழுத்தவும்.",
+    "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது. தொடர் சந்திப்பைத் தேர்ந்தெடுக்கவும். தலைப்பு நிலை 1. மருத்துவர் பட்டினி இரத்த பரிசோதனையைக் கோரினார். மூன்று விருப்பங்கள் உள்ளன. விருப்பங்களைப் பார்க்க Tab-ஐ அழுத்தவும்.",
 
   psTitle: "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது",
   psSubtitle: `நீங்கள் ${SESSION.outstanding} செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்?`,
@@ -802,6 +854,11 @@ const ta: Copy = {
   psAnnounce: `கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது. தலைப்பு நிலை 1. நீங்கள் ${SESSION.outstanding} செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்? S M S மூலம் அனுப்ப அல்லது காகித ரசீதை அச்சிட Tab-ஐ அழுத்தவும்.`,
   psSmsConfirm: `உங்கள் ரசீது ${SESSION.mobile} க்கு S M S மூலம் அனுப்பப்படும்.`,
   psPrintConfirm: "உங்கள் ரசீது கீழே உள்ள அச்சுப்பொறியில் அச்சிடப்படுகிறது.",
+  psSmsTitle: "ரசீது SMS மூலம் அனுப்பப்பட்டது",
+  psPrintTitle: "ரசீது அச்சிடப்படுகிறது...",
+  psPaidLabel: "செலுத்தப்பட்ட தொகை",
+  psStatusLabel: "கட்டண நிலை",
+  psStatusSuccess: "முழுமையாக செலுத்தப்பட்டது",
 
   rcTitle: "அனைத்தும் தயார்",
   rcQueueLabel: "உங்கள் வரிசை எண்",
@@ -809,7 +866,13 @@ const ta: Copy = {
   rcSms: "SMS மூலம் அனுப்பு",
   rcPrint: "காகித சீட்டை அச்சிடு",
   rcDone: "முடிந்தது",
-  rcAnnounce: `அனைத்தும் தயார். தலைப்பு நிலை 1. உங்கள் வரிசை எண் ${SESSION.queueNumber}. தயவுசெய்து அமர்ந்து மருத்துவமனை திரையைக் கவனியுங்கள். உங்கள் டிக்கெட்டை S M S மூலம் அனுப்ப அல்லது காகித சீட்டை அச்சிட Tab-ஐ அழுத்தவும்.`,
+  rcAnnounce: `அனைத்தும் தயார். தலைப்பு நிலை 1. உங்கள் வரிசை எண் ${SESSION.queueNumber}. தயவுசெய்து அமர்ந்து மருத்துவமனை திரையைக் கவனியுங்கள்.`,
+  rcSmsTitle: "வரிசைச் சீட்டு SMS மூலம் அனுப்பப்பட்டது",
+  rcPrintTitle: "காகித சீட்டு அச்சிடப்படுகிறது...",
+  rcSmsConfirm: `உங்கள் வரிசைச் சீட்டு ${SESSION.mobile} என்ற எண்ணிற்கு எஸ்எம்எஸ் மூலம் அனுப்பப்பட்டுள்ளது.`,
+  rcPrintConfirm: "அலமாரியின் கீழே உள்ள அச்சுப்பொறியிலிருந்து உங்கள் வரிசைச் சீட்டு அச்சிடப்படுகிறது.",
+  rcStaffGuidance: "உங்களை மருந்தகத்திற்கு வழிநடத்த ஒரு ஊழியர் விரைவில் உங்களிடம் வருவார்.",
+  rcStaffGuidanceSub: "தயவுசெய்து காத்திருப்பு பகுதியில் அமர்ந்திருக்கவும்.",
 
   tyTitle: "நன்றி",
   tySubtitle: "உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும்.",
@@ -819,6 +882,8 @@ const ta: Copy = {
   tyPrint: "சீட்டை அச்சிடு",
   tySmsConfirm: `உங்கள் சந்திப்பு சீட்டு S M S மூலம் ${SESSION.mobile} க்கு அனுப்பப்படும்.`,
   tyPrintConfirm: "உங்கள் சந்திப்பு சீட்டு கீழே உள்ள அச்சுப்பொறியில் அச்சிடப்படுகிறது.",
+  tySmsTitle: "சந்திப்பு சீட்டு SMS மூலம் அனுப்பப்பட்டது",
+  tyPrintTitle: "சந்திப்பு சீட்டு அச்சிடப்படுகிறது...",
 };
 
 const dict: Record<Lang, Copy> = { en, zh, ms, ta };

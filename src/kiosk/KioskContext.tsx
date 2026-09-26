@@ -13,6 +13,7 @@ interface SessionState {
   symptoms: SymptomKey[];
   fever: "yes" | "no" | "notSure" | null;
   paymentMethod: string | null;
+  ticketDelivery: "sms" | "print" | null;
   followUp: number | null;
   helpRequested: boolean;
 }
@@ -25,6 +26,7 @@ const initialState: SessionState = {
   symptoms: [],
   fever: null,
   paymentMethod: null,
+  ticketDelivery: null,
   followUp: null,
   helpRequested: false,
 };
@@ -44,6 +46,7 @@ interface KioskContextValue extends SessionState {
   toggleSymptom: (s: SymptomKey) => void;
   setFever: (v: "yes" | "no" | "notSure") => void;
   setPaymentMethod: (m: string) => void;
+  setTicketDelivery: (d: "sms" | "print" | null) => void;
   setFollowUp: (n: number | null) => void;
   requestHelp: () => void;
   dismissHelp: () => void;
@@ -107,6 +110,7 @@ export function KioskProvider({ children }: { children: ReactNode }) {
         }),
       setFever: (fever) => patch({ fever }),
       setPaymentMethod: (paymentMethod) => patch({ paymentMethod }),
+      setTicketDelivery: (ticketDelivery) => patch({ ticketDelivery }),
       setFollowUp: (followUp) => patch({ followUp }),
       requestHelp: () => patch({ helpRequested: true }),
       dismissHelp: () => patch({ helpRequested: false }),

@@ -58,9 +58,13 @@ body {
 }
 
 /* High-contrast keyboard focus ring — spec §2.2: 4px solid yellow */
-:where(button, a, input, [tabindex]):focus-visible {
-  outline: 4px solid var(--focus-yellow);
-  outline-offset: 3px;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible,
+.is-keyboard-focus {
+  outline: 4px solid var(--focus-yellow) !important;
+  outline-offset: 3px !important;
   border-radius: calc(var(--radius) - 2px);
 }
 
@@ -78,7 +82,7 @@ body {
 .is-speech-reading {
   outline: 4px solid var(--reading-cyan) !important;
   outline-offset: 4px !important;
-  border-radius: 8px;
+  border-radius: inherit;
   transition: outline 0.15s ease-in-out;
 }
 
