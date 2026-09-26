@@ -3,20 +3,53 @@ import { KioskChrome } from "../components/KioskChrome";
 import { Icon } from "../components/Icons";
 import { useKiosk } from "../kiosk/KioskContext";
 import { LANGUAGES, type Lang } from "../kiosk/i18n";
-import { useReadAloud, useSpeech } from "../hooks/useSpeech";
+import { type SpeechContent, useReadAloud, useSpeech } from "../hooks/useSpeech";
 
-// Per-language on-focus announcements, each spoken in its own language's voice.
-// English carries the screen-level "please select your language" lead-in.
-function langAnnounce(code: Lang, selected: boolean): string {
+// Dual-voice on-focus announcements:
+// For non-English languages, the English voice announces the language name first,
+// followed by the assigned language voice reading the native name and instructions.
+function langAnnounce(code: Lang, selected: boolean): SpeechContent {
   switch (code) {
     case "en":
-      return `Please select your language. English, ${selected ? "currently selected. " : ""}Press Enter to select. Press Tab to move to the next language.`;
+      return [
+        {
+          text: `Please select your language. English, ${selected ? "currently selected. " : ""}Press Enter to select. Press Tab to move to the next language.`,
+          lang: "en",
+        },
+      ];
     case "zh":
-      return `中文, chinese, 按钮。${selected ? "已选择。" : ""}按 Enter 键选择。`;
+      return [
+        {
+          text: `Chinese${selected ? ", currently selected." : "."}`,
+          lang: "en",
+        },
+        {
+          text: `中文，按钮。${selected ? "已选择。" : ""}按 Enter 键选择。`,
+          lang: "zh",
+        },
+      ];
     case "ms":
-      return `Bahasa Melayu, Malay, butang. ${selected ? "sedang dipilih. " : ""}Tekan Enter untuk pilih.`;
+      return [
+        {
+          text: `Malay${selected ? ", currently selected." : "."}`,
+          lang: "en",
+        },
+        {
+          text: `Bahasa Melayu, butang. ${selected ? "sedang dipilih. " : ""}Tekan Enter untuk pilih.`,
+          lang: "ms",
+        },
+      ];
     case "ta":
-      return `தமிழ், Tamil, பொத்தான். ${selected ? "தற்போது தேர்ந்தெடுக்கப்பட்டது. " : ""}தேர்ந்தெடுக்க Enter-ஐ அழுத்தவும்.`;
+      return [
+        {
+          text: `Tamil${selected ? ", currently selected." : "."}`,
+          lang: "en",
+        },
+        {
+          text: `தமிழ், பொத்தான். ${selected ? "தற்போது தேர்ந்தெடுக்கப்பட்டது. " : ""}தேர்ந்தெடுக்க Enter-ஐ அழுத்தவும்.`,
+          lang: "ta",
+        },
+      ];
   }
 }
 
@@ -33,8 +66,7 @@ function LangButton({
   onSelect: () => void;
   buttonRef?: React.Ref<HTMLButtonElement>;
 }) {
-  // Announce in this button's own language, not the active app language.
-  const { start, stop, readingClass } = useReadAloud(langAnnounce(code, active), "interactive", { lang: code });
+  const { start, stop, readingClass } = useReadAloud(langAnnounce(code, active), "interactive");
   return (
     <button
       ref={buttonRef}

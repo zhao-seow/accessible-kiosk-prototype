@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useKiosk } from "../kiosk/KioskContext";
 import { bcp47ForLang, langFamiliesFor, type Lang } from "../kiosk/i18n";
 
@@ -15,10 +15,21 @@ function useVoicesReady() {
   }, []);
 }
 
-interface SpeakRequest {
+export interface SpeechSegment {
+  text: string;
+  lang?: Lang;
+}
+
+export type SpeechContent = string | SpeechSegment[];
+
+export interface SpeechSegmentResolved {
   text: string;
   bcp47: string;
   families: string[];
+}
+
+interface SequenceRequest {
+  segments: SpeechSegmentResolved[];
   priority?: boolean;
   onStart?: () => void;
   onEnd?: () => void;
@@ -39,6 +50,8 @@ class SpeechController {
   private heartbeatTimer: ReturnType<typeof setInterval> | null = null;
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private bufferTimer: ReturnType<typeof setTimeout> | null = null;
+  private nextSegmentTimer: ReturnType<typeof setTimeout> | null = null;
+  private sequenceId = 0;
   // True while a priority utterance (e.g. the Voice Guide on/off announcement) is
   // speaking, so an ordinary onFocus-triggered speak() can't cancel it mid-sentence.
   private priorityActive = false;
@@ -71,73 +84,125 @@ class SpeechController {
     );
   }
 
-  speak({ text, bcp47, families, priority, onStart, onEnd, onError }: SpeakRequest) {
-    if (!text || !text.trim()) return;
+  speakSequence({ segments, priority, onStart, onEnd, onError }: SequenceRequest) {
+    const valid = segments.filter((s) => s.text && s.text.trim());
+    if (valid.length === 0) return;
 
     // A priority utterance (Voice Guide on/off) is speaking — wait for it to finish
     // instead of cancelling it, so a Tab press right after toggling can't cut it off.
     if (this.priorityActive && !priority) {
-      setTimeout(() => this.speak({ text, bcp47, families, priority, onStart, onEnd, onError }), 50);
+      setTimeout(() => this.speakSequence({ segments: valid, priority, onStart, onEnd, onError }), 50);
       return;
     }
 
-    // 1. Debounce rapid calls (user tabbing quickly through controls). Clear both
-    // the debounce AND any pending post-cancel buffer, so a fast second call can
-    // never fire an orphaned speak() during the 40ms window (overlap deadlock).
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
     if (this.bufferTimer) clearTimeout(this.bufferTimer);
+    if (this.nextSegmentTimer) clearTimeout(this.nextSegmentTimer);
     this.stopHeartbeat();
 
+    const seqId = ++this.sequenceId;
+
     this.debounceTimer = setTimeout(() => {
-      // 2. Flush any previous speech.
+      // Flush any previous speech.
       this.synth.cancel();
 
-      // 3. Small buffer so Blink/WebKit can reset the audio thread.
+      // Small buffer so Blink/WebKit can reset the audio thread.
       this.bufferTimer = setTimeout(() => {
         this.synth.resume();
-
-        const u = new SpeechSynthesisUtterance(text);
-        u.rate = this.rate;
-        u.volume = 1;
-        u.pitch = 1;
-
-        const match = this.pickVoice(bcp47, families);
-        if (match) {
-          u.voice = match;
-          u.lang = match.lang;
-        } else {
-          u.lang = bcp47;
-        }
-
-        // Anchor to prevent GC mid-speech.
-        this.activeUtterance = u;
-        (window as unknown as { __kioskUtteranceAnchor?: SpeechSynthesisUtterance }).__kioskUtteranceAnchor = u;
-
-        if (priority) this.priorityActive = true;
-
-        u.onstart = () => {
-          this.startHeartbeat();
-          onStart?.();
-        };
-        u.onend = () => {
-          this.stopHeartbeat();
-          this.clearAnchor();
-          if (priority) this.priorityActive = false;
-          onEnd?.();
-        };
-        u.onerror = (e) => {
-          this.stopHeartbeat();
-          if (e.error !== "canceled" && e.error !== "interrupted") {
-            console.warn("TTS error:", e.error);
-          }
-          this.clearAnchor();
-          if (priority) this.priorityActive = false;
-          onError?.();
-        };
-
-        this.synth.speak(u);
+        this.playSegment(valid, 0, seqId, priority, onStart, onEnd, onError);
       }, 40);
     }, 30);
+  }
+
+  private playSegment(
+    segments: SpeechSegmentResolved[],
+    index: number,
+    seqId: number,
+    priority?: boolean,
+    onStart?: () => void,
+    onEnd?: () => void,
+    onError?: () => void,
+  ) {
+    if (seqId !== this.sequenceId) return;
+    if (index >= segments.length) {
+      this.stopHeartbeat();
+      this.clearAnchor();
+      if (priority) this.priorityActive = false;
+      onEnd?.();
+      return;
+    }
+
+    const seg = segments[index];
+    const u = new SpeechSynthesisUtterance(seg.text);
+    u.rate = this.rate;
+    u.volume = 1;
+    u.pitch = 1;
+
+    const match = this.pickVoice(seg.bcp47, seg.families);
+    if (match) {
+      u.voice = match;
+      u.lang = match.lang;
+    } else {
+      u.lang = seg.bcp47;
+    }
+
+    // Anchor to prevent GC mid-speech.
+    this.activeUtterance = u;
+    (window as unknown as { __kioskUtteranceAnchor?: SpeechSynthesisUtterance }).__kioskUtteranceAnchor = u;
+
+    if (priority) this.priorityActive = true;
+
+    u.onstart = () => {
+      if (seqId !== this.sequenceId) return;
+      this.startHeartbeat();
+      if (index === 0) onStart?.();
+    };
+
+    u.onend = () => {
+      if (seqId !== this.sequenceId) return;
+      if (index + 1 < segments.length) {
+        // Small pause between segments for natural cadence & voice switching
+        this.nextSegmentTimer = setTimeout(() => {
+          this.playSegment(segments, index + 1, seqId, priority, onStart, onEnd, onError);
+        }, 50);
+      } else {
+        this.stopHeartbeat();
+        this.clearAnchor();
+        if (priority) this.priorityActive = false;
+        onEnd?.();
+      }
+    };
+
+    u.onerror = (e) => {
+      if (seqId !== this.sequenceId) return;
+      this.stopHeartbeat();
+      if (e.error !== "canceled" && e.error !== "interrupted") {
+        console.warn("TTS error:", e.error);
+      }
+      this.clearAnchor();
+      if (priority) this.priorityActive = false;
+      onError?.();
+    };
+
+    this.synth.speak(u);
+  }
+
+  speak(req: {
+    text: string;
+    bcp47: string;
+    families: string[];
+    priority?: boolean;
+    onStart?: () => void;
+    onEnd?: () => void;
+    onError?: () => void;
+  }) {
+    this.speakSequence({
+      segments: [{ text: req.text, bcp47: req.bcp47, families: req.families }],
+      priority: req.priority,
+      onStart: req.onStart,
+      onEnd: req.onEnd,
+      onError: req.onError,
+    });
   }
 
   private clearAnchor() {
@@ -146,11 +211,14 @@ class SpeechController {
   }
 
   stop() {
+    this.sequenceId++;
     this.stopHeartbeat();
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
     if (this.bufferTimer) clearTimeout(this.bufferTimer);
+    if (this.nextSegmentTimer) clearTimeout(this.nextSegmentTimer);
     this.synth.cancel();
     this.clearAnchor();
+    this.priorityActive = false;
   }
 
   setRate(rate: number) {
@@ -175,13 +243,29 @@ export function useSpeech() {
   useVoicesReady();
 
   const speak = useCallback(
-    (text?: string, opts: SpeakOpts = {}): boolean => {
-      if ((!voiceGuide && !opts.force) || !text || !controller) return false;
-      const bcp = bcp47ForLang(opts.lang ?? lang);
-      controller.speak({
-        text,
-        bcp47: bcp,
-        families: langFamiliesFor(bcp),
+    (content?: SpeechContent, opts: SpeakOpts = {}): boolean => {
+      if ((!voiceGuide && !opts.force) || !content || !controller) return false;
+
+      const rawSegments: SpeechSegment[] = Array.isArray(content)
+        ? content
+        : [{ text: content, lang: opts.lang }];
+
+      const resolved: SpeechSegmentResolved[] = rawSegments
+        .filter((s) => s.text && s.text.trim())
+        .map((s) => {
+          const l = s.lang ?? opts.lang ?? lang;
+          const bcp = bcp47ForLang(l);
+          return {
+            text: s.text,
+            bcp47: bcp,
+            families: langFamiliesFor(bcp),
+          };
+        });
+
+      if (resolved.length === 0) return false;
+
+      controller.speakSequence({
+        segments: resolved,
         priority: opts.priority,
         onStart: opts.onStart,
         onEnd: opts.onEnd,
@@ -210,17 +294,20 @@ interface ReadAloudOpts {
  *   - "static"      → cyan text reading ring (.is-speech-reading)
  */
 export function useReadAloud(
-  text: string | undefined,
+  content: SpeechContent | undefined,
   kind: "interactive" | "static",
   opts: ReadAloudOpts = {},
 ) {
   const { speak, enabled } = useSpeech();
   const [reading, setReading] = useState(false);
 
+  const contentRef = useRef(content);
+  contentRef.current = content;
+
   const onEnd = opts.onEnd;
   const start = useCallback(() => {
     if (!enabled && !opts.always) return;
-    speak(text, {
+    speak(contentRef.current, {
       lang: opts.lang,
       force: opts.always,
       onStart: () => setReading(true),
@@ -230,7 +317,7 @@ export function useReadAloud(
       },
       onError: () => setReading(false),
     });
-  }, [enabled, speak, text, opts.always, opts.lang, onEnd]);
+  }, [enabled, speak, opts.always, opts.lang, onEnd]);
 
   const stop = useCallback(() => setReading(false), []);
 
