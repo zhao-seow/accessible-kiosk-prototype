@@ -21,9 +21,18 @@ export type IconName =
   | "clock"
   | "speaker"
   | "flask"
-  | "calendar";
+  | "calendar"
+  | "chevron"
+  | "pill";
 
 const paths: Record<IconName, ReactNode> = {
+  chevron: <path d="M9 18l6-6-6-6" />,
+  pill: (
+    <>
+      <path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z" />
+      <path d="M8.5 8.5l7 7" />
+    </>
+  ),
   heart: <path d="M12 21s-7.5-4.9-10-9.3C.6 8.9 2 5 5.5 5 7.6 5 9 6.3 12 9c3-2.7 4.4-4 6.5-4C22 5 23.4 8.9 22 11.7 19.5 16.1 12 21 12 21z" />,
   globe: (
     <>

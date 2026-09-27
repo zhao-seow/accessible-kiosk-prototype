@@ -61,7 +61,12 @@ export function ActionCard({ icon, title, desc, badge, speech, onSelect, selecte
         {desc ? <span className={["text-muted-foreground leading-snug", large ? "text-xl" : "text-lg"].join(" ")}>{desc}</span> : null}
       </span>
       {badge ? (
-        <span className={["mt-auto inline-flex items-center rounded-full bg-warning-soft font-semibold text-warning", large ? "px-5 py-2 text-xl" : "px-4 py-1.5 text-lg"].join(" ")}>
+        <span
+          className={[
+            "mt-auto inline-flex items-center rounded-full border border-warning/30 bg-warning-soft font-bold tabular-nums text-warning",
+            large ? "px-5 py-2 text-xl" : "px-4 py-1.5 text-lg",
+          ].join(" ")}
+        >
           {badge}
         </span>
       ) : null}

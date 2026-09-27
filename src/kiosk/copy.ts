@@ -13,6 +13,11 @@ export const SESSION = {
   bill: {
     consultation: "$45.00",
     medication: "$12.40",
+    medications: [
+      { name: "Paracetamol 500mg", qty: "20 tablets", price: "$4.20" },
+      { name: "Cetirizine 10mg", qty: "10 tablets", price: "$3.80" },
+      { name: "Promethazine Cough Syrup 100ml", qty: "1 bottle", price: "$4.40" },
+    ],
     subsidy: "-$39.00",
     total: "$18.40",
   },
@@ -130,6 +135,10 @@ export interface Copy {
   b1Title: string;
   b1LineConsultation: string;
   b1LineMedication: string;
+  b1MedItemsCount: (n: number) => string;
+  b1ExpandMeds: string;
+  b1CollapseMeds: string;
+  b1MedAccordionSpeech: (expanded: boolean, count: number) => string;
   b1LineSubsidy: string;
   b1Total: string;
   b1MethodHeading: string;
@@ -306,6 +315,11 @@ const en: Copy = {
   b1Title: "Outstanding Bill Details",
   b1LineConsultation: "Consultation (General Medical)",
   b1LineMedication: "Medication (Standard Subsidy)",
+  b1MedItemsCount: (n) => `${n} items`,
+  b1ExpandMeds: "View items",
+  b1CollapseMeds: "Hide items",
+  b1MedAccordionSpeech: (expanded, count) =>
+    `Button, ${expanded ? "expanded" : "collapsed"}. Press Enter to ${expanded ? "hide" : "view"} ${count} medication items.`,
   b1LineSubsidy: "Government Subsidy (CHAS / Pioneer)",
   b1Total: "Total amount due",
   b1MethodHeading: "Select payment method:",
@@ -473,6 +487,11 @@ const zh: Copy = {
   b1Title: "未付账单明细",
   b1LineConsultation: "门诊（普通内科）",
   b1LineMedication: "药物（标准津贴）",
+  b1MedItemsCount: (n) => `${n} 项药物`,
+  b1ExpandMeds: "查看详情",
+  b1CollapseMeds: "收起详情",
+  b1MedAccordionSpeech: (expanded, count) =>
+    `按钮，${expanded ? "已展开" : "已折叠"}。按 Enter 键${expanded ? "收起" : "展开"} ${count} 项药物详情。`,
   b1LineSubsidy: "政府津贴（CHAS / 建国一代）",
   b1Total: "应付总额",
   b1MethodHeading: "选择付款方式：",
@@ -644,6 +663,11 @@ const ms: Copy = {
   b1Title: "Butiran Bil Tertunggak",
   b1LineConsultation: "Perundingan (Perubatan Am)",
   b1LineMedication: "Ubat (Subsidi Standard)",
+  b1MedItemsCount: (n) => `${n} item`,
+  b1ExpandMeds: "Lihat item",
+  b1CollapseMeds: "Sembunyi item",
+  b1MedAccordionSpeech: (expanded, count) =>
+    `Butang, ${expanded ? "dibuka" : "ditutup"}。Tekan Enter untuk ${expanded ? "sembunyikan" : "melihat"} ${count} item ubat.`,
   b1LineSubsidy: "Subsidi Kerajaan (CHAS / Pioneer)",
   b1Total: "Jumlah perlu dibayar",
   b1MethodHeading: "Pilih kaedah pembayaran:",
@@ -817,6 +841,11 @@ const ta: Copy = {
   b1Title: "நிலுவை கட்டண விவரங்கள்",
   b1LineConsultation: "ஆலோசனை (பொது மருத்துவம்)",
   b1LineMedication: "மருந்து (நிலையான மானியம்)",
+  b1MedItemsCount: (n) => `${n} மருந்துகள்`,
+  b1ExpandMeds: "பொருட்களைப் பார்க்கவும்",
+  b1CollapseMeds: "பொருட்களை மறைக்கவும்",
+  b1MedAccordionSpeech: (expanded, count) =>
+    `பொத்தான், ${expanded ? "விரிவாக்கப்பட்டது" : "சுருக்கப்பட்டது"}. ${count} மருந்துப் பொருட்களை ${expanded ? "மறைக்க" : "பார்க்க"} Enter அழுத்தவும்.`,
   b1LineSubsidy: "அரசு மானியம் (CHAS / Pioneer)",
   b1Total: "செலுத்த வேண்டிய மொத்தம்",
   b1MethodHeading: "கட்டண முறையைத் தேர்ந்தெடுக்கவும்:",

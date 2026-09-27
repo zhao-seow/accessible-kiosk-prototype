@@ -146,14 +146,9 @@ export function Step1Identify() {
   const submit = () => goTo("fork");
 
   const branding = (
-    <div className="flex items-center gap-4">
-      <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-        <Icon name="heart" className="h-9 w-9" />
-      </span>
-      <div>
-        <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground">{t.brandKicker}</p>
-        <p className="font-display text-3xl font-bold text-foreground">{t.brandName}</p>
-      </div>
+    <div>
+      <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground">{t.brandKicker}</p>
+      <p className="font-display text-3xl font-bold text-foreground">{t.brandName}</p>
     </div>
   );
 

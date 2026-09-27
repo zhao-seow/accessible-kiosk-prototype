@@ -71,7 +71,7 @@ export function BranchB2FollowUp() {
           onFocus={noteRead.start}
           onBlur={noteRead.stop}
           onPointerEnter={noteRead.start}
-          className={["flex items-center gap-3 rounded-xl bg-success-soft px-5 py-2.5 text-xl font-semibold text-success outline-none", noteRead.readingClass].join(" ")}
+          className={["flex items-center gap-3 rounded-2xl border border-success/30 bg-success-soft px-5 py-3 text-xl font-bold text-success outline-none", noteRead.readingClass].join(" ")}
         >
           <Icon name="check" className="h-6 w-6 shrink-0" />
           {t.b2Note}

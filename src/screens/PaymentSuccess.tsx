@@ -134,7 +134,7 @@ export function PaymentSuccess() {
                 <span className="block text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                   {t.psStatusLabel}
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-success/15 px-4 py-1.5 text-lg font-semibold text-success">
+                <span className="inline-flex items-center gap-2 rounded-full border border-success/35 bg-success-soft px-4 py-1.5 text-lg font-bold text-success">
                   <Icon name="check" className="h-5 w-5" />
                   {t.psStatusSuccess}
                 </span>
