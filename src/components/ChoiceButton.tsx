@@ -7,9 +7,10 @@ interface ChoiceButtonProps {
   onSelect: () => void;
   selected?: boolean;
   tone?: "primary" | "neutral";
+  compact?: boolean;
 }
 
-export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutral" }: ChoiceButtonProps) {
+export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutral", compact }: ChoiceButtonProps) {
   const { start, stop, readingClass } = useReadAloud(speech, "interactive");
   const guarded = useTapGuard(onSelect);
 
@@ -23,7 +24,8 @@ export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutra
       aria-pressed={selected}
       className={[
         "flex items-center justify-center w-full rounded-2xl border-2 font-display font-semibold",
-        "min-h-[7rem] px-8 text-3xl transition-all duration-150 outline-none",
+        compact ? "min-h-[4.5rem] px-8 text-2xl" : "min-h-[7rem] px-8 text-3xl",
+        "transition-all duration-150 outline-none",
         "hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(33,32,29,0.4)]",
         selected || tone === "primary"
           ? "border-primary bg-primary text-primary-foreground"

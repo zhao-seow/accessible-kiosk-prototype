@@ -8,9 +8,10 @@ interface CheckboxTileProps {
   label: string;
   checked: boolean;
   onToggle: () => void;
+  className?: string;
 }
 
-export function CheckboxTile({ label, checked, onToggle }: CheckboxTileProps) {
+export function CheckboxTile({ label, checked, onToggle, className }: CheckboxTileProps) {
   const { speak } = useSpeech();
   const { t } = useKiosk();
   const [reading, setReading] = useState(false);
@@ -49,10 +50,11 @@ export function CheckboxTile({ label, checked, onToggle }: CheckboxTileProps) {
         }
       }}
       className={[
-        "flex items-center gap-5 w-full rounded-2xl border-2 bg-card px-6 py-5 text-left",
-        "min-h-[5.5rem] transition-all duration-150 outline-none",
+        "flex items-center gap-5 w-full rounded-2xl border-2 bg-card px-6 py-4 text-left",
+        "min-h-[4.5rem] transition-all duration-150 outline-none",
         checked ? "border-primary bg-primary-soft" : "border-border hover:border-primary hover:bg-primary-soft",
         reading ? "is-active-reading" : "",
+        className ?? "",
       ].join(" ")}
     >
       <span
