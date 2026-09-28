@@ -8,14 +8,16 @@ interface ChoiceButtonProps {
   selected?: boolean;
   tone?: "primary" | "neutral";
   compact?: boolean;
+  buttonRef?: React.Ref<HTMLButtonElement>;
 }
 
-export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutral", compact }: ChoiceButtonProps) {
+export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutral", compact, buttonRef }: ChoiceButtonProps) {
   const { start, stop, readingClass } = useReadAloud(speech, "interactive");
   const guarded = useTapGuard(onSelect);
 
   return (
     <button
+      ref={buttonRef}
       type="button"
       onFocus={start}
       onBlur={stop}

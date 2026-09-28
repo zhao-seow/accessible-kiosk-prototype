@@ -197,6 +197,17 @@ export interface Copy {
   rcPrintConfirm: string;
   rcStaffGuidance: string;
   rcStaffGuidanceSub: string;
+  rcGuidanceQuestion: string;
+  rcGuidancePromptSpeech: string;
+  rcGuidanceYes: string;
+  rcGuidanceNo: string;
+  rcGuidanceYesAction: string;
+  rcGuidanceNoAction: string;
+  rcGuidanceStaffAlertedTitle: string;
+  rcGuidanceNoHelpTitle: string;
+  rcGuidanceNoHelpDesc: string;
+  rcGuidanceYesChosen: string;
+  rcGuidanceNoChosen: string;
 
   // Payment flow end — thank you
   tyTitle: string;
@@ -376,6 +387,17 @@ const en: Copy = {
   rcPrintConfirm: "Your queue ticket is printing from the printer below the shelf.",
   rcStaffGuidance: "A staff will be with you shortly to guide you to the clinic.",
   rcStaffGuidanceSub: "Please remain seated in the waiting area.",
+  rcGuidanceQuestion: "Do you need help finding the clinic?",
+  rcGuidancePromptSpeech: "Do you need help finding the clinic? Press Tab to choose Yes or No.",
+  rcGuidanceYes: "Yes, need guidance",
+  rcGuidanceNo: "No, I'm okay",
+  rcGuidanceYesAction: "request staff to guide you to the clinic",
+  rcGuidanceNoAction: "proceed to the waiting area on your own",
+  rcGuidanceStaffAlertedTitle: "Staff Alerted",
+  rcGuidanceNoHelpTitle: "Proceed to Waiting Area",
+  rcGuidanceNoHelpDesc: "Please take a seat in the waiting area. Your queue number will be called on the clinic display.",
+  rcGuidanceYesChosen: "Staff has been alerted to guide you to the clinic. Please remain seated in the waiting area.",
+  rcGuidanceNoChosen: "You have chosen to proceed on your own. Please take a seat in the waiting area.",
 
   tyTitle: "Thank you",
   tySubtitle: "Your payment is complete. Have a good day.",
@@ -546,6 +568,17 @@ const zh: Copy = {
   rcPrintConfirm: "您的轮候票正在下方的打印机打印。",
   rcStaffGuidance: "工作人员将很快前来引导您前往诊室。",
   rcStaffGuidanceSub: "请在候诊区就座等待。",
+  rcGuidanceQuestion: "您需要指引前往诊室吗？",
+  rcGuidancePromptSpeech: "您需要指引前往诊室吗？按 Tab 键选择是或否。",
+  rcGuidanceYes: "是，需要指引",
+  rcGuidanceNo: "否，我可以自行前往",
+  rcGuidanceYesAction: "请求工作人员引导您前往诊室",
+  rcGuidanceNoAction: "自行前往候诊区",
+  rcGuidanceStaffAlertedTitle: "已通知工作人员",
+  rcGuidanceNoHelpTitle: "请前往候诊区",
+  rcGuidanceNoHelpDesc: "请在候诊区就座。诊所显示屏将呼叫您的轮候号码。",
+  rcGuidanceYesChosen: "已通知工作人员前来引导您。请在候诊区就座等待。",
+  rcGuidanceNoChosen: "您选择自行前往。请在候诊区就座等待叫号。",
 
   tyTitle: "谢谢",
   tySubtitle: "您的付款已完成。祝您有美好的一天。",
@@ -724,6 +757,17 @@ const ms: Copy = {
   rcPrintConfirm: "Tiket giliran anda sedang dicetak dari pencetak di bawah rak.",
   rcStaffGuidance: "Seorang kakitangan akan bersama anda sebentar lagi untuk membimbing anda ke klinik.",
   rcStaffGuidanceSub: "Sila duduk di kawasan menunggu.",
+  rcGuidanceQuestion: "Adakah anda memerlukan bantuan untuk mencari klinik?",
+  rcGuidancePromptSpeech: "Adakah anda memerlukan bantuan untuk mencari klinik? Tekan Tab untuk pilih Ya atau Tidak.",
+  rcGuidanceYes: "Ya, perlukan panduan",
+  rcGuidanceNo: "Tidak, saya boleh sendiri",
+  rcGuidanceYesAction: "meminta kakitangan membimbing anda ke klinik",
+  rcGuidanceNoAction: "pergi ke kawasan menunggu sendiri",
+  rcGuidanceStaffAlertedTitle: "Kakitangan Dimaklumkan",
+  rcGuidanceNoHelpTitle: "Sila ke Kawasan Menunggu",
+  rcGuidanceNoHelpDesc: "Sila duduk di kawasan menunggu. Nombor giliran anda akan dipanggil pada paparan klinik.",
+  rcGuidanceYesChosen: "Kakitangan telah dimaklumkan untuk membimbing anda. Sila duduk di kawasan menunggu.",
+  rcGuidanceNoChosen: "Anda memilih untuk pergi sendiri. Sila duduk di kawasan menunggu.",
 
   tyTitle: "Terima kasih",
   tySubtitle: "Pembayaran anda telah selesai. Semoga hari anda baik.",
@@ -902,6 +946,17 @@ const ta: Copy = {
   rcPrintConfirm: "அலமாரியின் கீழே உள்ள அச்சுப்பொறியிலிருந்து உங்கள் வரிசைச் சீட்டு அச்சிடப்படுகிறது.",
   rcStaffGuidance: "உங்களை மருந்தகத்திற்கு வழிநடத்த ஒரு ஊழியர் விரைவில் உங்களிடம் வருவார்.",
   rcStaffGuidanceSub: "தயவுசெய்து காத்திருப்பு பகுதியில் அமர்ந்திருக்கவும்.",
+  rcGuidanceQuestion: "மருத்துவமனையைக் கண்டறிய உங்களுக்கு உதவி தேவையா?",
+  rcGuidancePromptSpeech: "மருத்துவமனையைக் கண்டறிய உங்களுக்கு உதவி தேவையா? ஆம் அல்லது இல்லை என்பதைத் தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
+  rcGuidanceYes: "ஆம், உதவி தேவை",
+  rcGuidanceNo: "இல்லை, நானே செல்ல முடியும்",
+  rcGuidanceYesAction: "உங்களை மருத்துவமனைக்கு வழிநடத்த ஊழியர் உதவியைக் கோர",
+  rcGuidanceNoAction: "காத்திருப்பு பகுதிக்கு நீங்களாகவே செல்ல",
+  rcGuidanceStaffAlertedTitle: "ஊழியருக்கு தெரிவிக்கப்பட்டது",
+  rcGuidanceNoHelpTitle: "காத்திருப்பு பகுதிக்குச் செல்லவும்",
+  rcGuidanceNoHelpDesc: "தயவுசெய்து காத்திருப்பு பகுதியில் அமருங்கள். உங்கள் வரிசை எண் மருத்துவமனை திரையில் அழைக்கப்படும்.",
+  rcGuidanceYesChosen: "உங்களை வழிநடத்த ஊழியருக்கு தெரிவிக்கப்பட்டுள்ளது. காத்திருப்பு பகுதியில் அமர்ந்திருக்கவும்.",
+  rcGuidanceNoChosen: "நீங்களாகவே செல்ல தேர்வு செய்துள்ளீர்கள். தயவுசெய்து காத்திருப்பு பகுதியில் அமருங்கள்.",
 
   tyTitle: "நன்றி",
   tySubtitle: "உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும்.",
