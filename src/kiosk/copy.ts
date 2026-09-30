@@ -358,7 +358,7 @@ const en: Copy = {
   b2Select: (n) => `Select Option ${n}`,
   b2Skip: "Skip — book later via HealthHub",
   b2Announce:
-    "Payment successful. Select follow-up appointment. Heading level 1. The doctor has requested a Fasting Blood Lab. Three pre-arranged options are available. Press Tab to review options.",
+    "Payment successful. Select follow-up appointment. Heading level 1. The doctor has requested a Fasting Blood Lab. Four options are available: three pre-arranged appointment dates, or skip to book later. Press Tab to review options.",
 
   psTitle: "Payment Successful",
   psSubtitle: `You paid ${SESSION.outstanding}. How would you like your receipt?`,
@@ -539,7 +539,7 @@ const zh: Copy = {
   b2ConsultLabel: "复诊",
   b2Select: (n) => `选择方案 ${n}`,
   b2Skip: "跳过——稍后通过 HealthHub 预约",
-  b2Announce: "付款成功。选择复诊预约。标题一级。医生要求进行空腹血液检查。现有三个预设方案。按 Tab 键浏览方案。",
+  b2Announce: "付款成功。选择复诊预约。标题一级。医生要求进行空腹血液检查。共有四个方案：三个预设预约时间，或跳过稍后预约。按 Tab 键浏览方案。",
 
   psTitle: "付款成功",
   psSubtitle: `您已支付 ${SESSION.outstanding}。您希望如何领取收据？`,
@@ -728,7 +728,7 @@ const ms: Copy = {
   b2Select: (n) => `Pilih Pilihan ${n}`,
   b2Skip: "Langkau — tempah kemudian melalui HealthHub",
   b2Announce:
-    "Pembayaran berjaya. Pilih temu janji susulan. Tajuk tahap 1. Doktor telah meminta Ujian Makmal Darah Berpuasa. Tiga pilihan telah disediakan. Tekan Tab untuk menyemak pilihan.",
+    "Pembayaran berjaya. Pilih temu janji susulan. Tajuk tahap 1. Doktor telah meminta Ujian Makmal Darah Berpuasa. Empat pilihan tersedia: tiga tarikh temu janji yang telah diatur, atau langkau untuk menempah kemudian. Tekan Tab untuk menyemak pilihan.",
 
   psTitle: "Pembayaran Berjaya",
   psSubtitle: `Anda telah membayar ${SESSION.outstanding}. Bagaimana anda mahu resit anda?`,
@@ -917,7 +917,7 @@ const ta: Copy = {
   b2Select: (n) => `விருப்பம் ${n} தேர்ந்தெடு`,
   b2Skip: "தவிர் — பின்னர் HealthHub மூலம் முன்பதிவு செய்யவும்",
   b2Announce:
-    "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது. தொடர் சந்திப்பைத் தேர்ந்தெடுக்கவும். தலைப்பு நிலை 1. மருத்துவர் பட்டினி இரத்த பரிசோதனையைக் கோரினார். மூன்று விருப்பங்கள் உள்ளன. விருப்பங்களைப் பார்க்க Tab-ஐ அழுத்தவும்.",
+    "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது. தொடர் சந்திப்பைத் தேர்ந்தெடுக்கவும். தலைப்பு நிலை 1. மருத்துவர் பட்டினி இரத்த பரிசோதனையைக் கோரினார். நான்கு விருப்பங்கள் உள்ளன: மூன்று முன்பே ஏற்பாடு செய்யப்பட்ட சந்திப்பு தேதிகள், அல்லது பின்னர் முன்பதிவு செய்ய தவிர்க்கலாம். விருப்பங்களை மதிப்பாய்வு செய்ய Tab-ஐ அழுத்தவும்.",
 
   psTitle: "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது",
   psSubtitle: `நீங்கள் ${SESSION.outstanding} செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்?`,

@@ -60,8 +60,12 @@ export function BranchB2FollowUp() {
     setFollowUp(null);
     goTo("thankYou");
   };
+  const guardedSkip = useTapGuard(skipFollowUp);
+  const totalOptions = SESSION.followUp.length + 1;
+  const skipOptionIndex = totalOptions;
   const noteRead = useReadAloud(`${t.b2Note} ${t.b2NoteInstruction}`, "static");
-  const skip = useReadAloud(`${t.asButton(t.b2Skip)} ${t.pressEnterTo(t.b2SkipAction)}`, "interactive");
+  const skipSpeech = `${t.optionOf(skipOptionIndex, totalOptions)}${t.asButton(t.b2Skip)} ${t.pressEnterTo(t.b2SkipAction)}`;
+  const skip = useReadAloud(skipSpeech, "interactive");
 
   return (
     <KioskChrome title={t.b2Title} announce={t.b2Announce}>
@@ -78,7 +82,7 @@ export function BranchB2FollowUp() {
         </p>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {SESSION.followUp.map((_, i) => (
-            <OptionCard key={i} index={i} total={SESSION.followUp.length} onSelect={() => pick(i)} />
+            <OptionCard key={i} index={i} total={totalOptions} onSelect={() => pick(i)} />
           ))}
         </div>
         <button
@@ -86,7 +90,7 @@ export function BranchB2FollowUp() {
           onFocus={skip.start}
           onBlur={skip.stop}
           onPointerEnter={skip.start}
-          onClick={skipFollowUp}
+          onClick={(e) => guardedSkip(e)}
           className={[
             "mx-auto rounded-full border-2 border-border bg-card px-8 py-3.5 text-xl font-semibold text-muted-foreground outline-none transition-colors hover:border-primary hover:text-foreground",
             skip.readingClass,
