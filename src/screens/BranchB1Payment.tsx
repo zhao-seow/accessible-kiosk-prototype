@@ -1,10 +1,10 @@
-import { useRef, useState, type RefObject } from "react";
-import { KioskChrome } from "../components/KioskChrome";
-import { ActionCard } from "../components/ActionCard";
-import { Icon } from "../components/Icons";
-import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION, moneySpeech, type Copy } from "../kiosk/copy";
-import { useReadAloud } from "../hooks/useSpeech";
+import { useRef, useState, type RefObject } from "react"
+import { KioskChrome } from "../components/KioskChrome"
+import { ActionCard } from "../components/ActionCard"
+import { Icon } from "../components/Icons"
+import { useKiosk } from "../kiosk/KioskContext"
+import { SESSION, moneySpeech, type Copy } from "../kiosk/copy"
+import { useReadAloud } from "../hooks/useSpeech"
 
 function BillRow({
   label,
@@ -15,18 +15,20 @@ function BillRow({
   selfRef,
   nextRef,
 }: {
-  label: string;
-  value: string;
-  muted?: boolean;
-  t: Copy;
-  emphasis?: boolean;
-  selfRef: RefObject<HTMLDivElement | null>;
-  nextRef: RefObject<HTMLElement | null>;
+  label: string
+  value: string
+  muted?: boolean
+  t: Copy
+  emphasis?: boolean
+  selfRef: RefObject<HTMLDivElement | null>
+  nextRef: RefObject<HTMLElement | null>
 }) {
   const advance = () => {
-    if (document.activeElement === selfRef.current) nextRef.current?.focus();
-  };
-  const read = useReadAloud(`${label}, ${moneySpeech(value, t)}`, "static", { onEnd: advance });
+    if (document.activeElement === selfRef.current) nextRef.current?.focus()
+  }
+  const read = useReadAloud(`${label}, ${moneySpeech(value, t)}`, "static", {
+    onEnd: advance,
+  })
   return (
     <div
       ref={selfRef}
@@ -41,7 +43,9 @@ function BillRow({
     >
       <span
         className={[
-          emphasis ? "font-display text-2xl font-bold text-foreground" : "text-lg font-semibold",
+          emphasis
+            ? "font-display text-2xl font-bold text-foreground"
+            : "text-lg font-semibold",
           muted ? "text-success font-semibold" : "text-foreground",
         ].join(" ")}
       >
@@ -57,7 +61,7 @@ function BillRow({
         {value}
       </span>
     </div>
-  );
+  )
 }
 
 function MedSubItem({
@@ -66,16 +70,16 @@ function MedSubItem({
   selfRef,
   nextRef,
 }: {
-  item: { name: string; qty: string; price: string };
-  t: Copy;
-  selfRef: RefObject<HTMLDivElement | null>;
-  nextRef: RefObject<HTMLElement | null>;
+  item: { name: string qty: string price: string }
+  t: Copy
+  selfRef: RefObject<HTMLDivElement | null>
+  nextRef: RefObject<HTMLElement | null>
 }) {
   const advance = () => {
-    if (document.activeElement === selfRef.current) nextRef.current?.focus();
-  };
-  const speech = `${item.name}, ${item.qty}, ${moneySpeech(item.price, t)}`;
-  const read = useReadAloud(speech, "static", { onEnd: advance });
+    if (document.activeElement === selfRef.current) nextRef.current?.focus()
+  }
+  const speech = `${item.name}, ${item.qty}, ${moneySpeech(item.price, t)}`
+  const read = useReadAloud(speech, "static", { onEnd: advance })
 
   return (
     <div
@@ -92,7 +96,9 @@ function MedSubItem({
       <div className="flex items-center gap-2.5 min-w-0">
         <Icon name="pill" className="h-5 w-5 shrink-0 text-primary/70" />
         <div className="min-w-0">
-          <p className="text-base font-semibold text-foreground truncate">{item.name}</p>
+          <p className="text-base font-semibold text-foreground truncate">
+            {item.name}
+          </p>
           <p className="text-sm text-muted-foreground">{item.qty}</p>
         </div>
       </div>
@@ -100,51 +106,55 @@ function MedSubItem({
         {item.price}
       </span>
     </div>
-  );
+  )
 }
 
 export function BranchB1Payment() {
-  const { goTo, setPaymentMethod, voiceGuide, t } = useKiosk();
+  const { goTo, setPaymentMethod, voiceGuide, t } = useKiosk()
   // If voice guide is ON, accordion starts collapsed. If voice guide is OFF, starts open by default.
-  const [medsOpen, setMedsOpen] = useState(!voiceGuide);
+  const [medsOpen, setMedsOpen] = useState(!voiceGuide)
 
   const pay = (method: string) => {
-    setPaymentMethod(method);
-    goTo("paymentInstructions");
-  };
+    setPaymentMethod(method)
+    goTo("paymentInstructions")
+  }
 
   // Refs form the guided auto-read chain:
   // Consultation -> Medication Summary Header -> (if open: Med 0 -> Med 1 -> Med 2) -> Subsidy
   // -> Total Amount Due -> "Select payment method" prompt (stops here).
-  const consultRef = useRef<HTMLDivElement>(null);
-  const medHeaderRef = useRef<HTMLButtonElement>(null);
-  const med0Ref = useRef<HTMLDivElement>(null);
-  const med1Ref = useRef<HTMLDivElement>(null);
-  const med2Ref = useRef<HTMLDivElement>(null);
-  const subsidyRef = useRef<HTMLDivElement>(null);
-  const totalRef = useRef<HTMLDivElement>(null);
-  const methodRef = useRef<HTMLParagraphElement>(null);
+  const consultRef = useRef<HTMLDivElement>(null)
+  const medHeaderRef = useRef<HTMLButtonElement>(null)
+  const med0Ref = useRef<HTMLDivElement>(null)
+  const med1Ref = useRef<HTMLDivElement>(null)
+  const med2Ref = useRef<HTMLDivElement>(null)
+  const subsidyRef = useRef<HTMLDivElement>(null)
+  const totalRef = useRef<HTMLDivElement>(null)
+  const methodRef = useRef<HTMLParagraphElement>(null)
 
   const advanceFromMedHeader = () => {
     if (document.activeElement === medHeaderRef.current) {
       if (medsOpen && med0Ref.current) {
-        med0Ref.current.focus();
+        med0Ref.current.focus()
       } else {
-        subsidyRef.current?.focus();
+        subsidyRef.current?.focus()
       }
     }
-  };
+  }
 
-  const medHeaderSpeech = `${t.b1LineMedication}, ${moneySpeech(SESSION.bill.medication, t)}. ${t.b1MedAccordionSpeech(medsOpen, SESSION.bill.medications.length)}`;
-  const medHeaderRead = useReadAloud(medHeaderSpeech, "static", { onEnd: advanceFromMedHeader });
+  const medHeaderSpeech = `${t.b1LineMedication}, ${moneySpeech(SESSION.bill.medication, t)}. ${t.b1MedAccordionSpeech(medsOpen, SESSION.bill.medications.length)}`
+  const medHeaderRead = useReadAloud(medHeaderSpeech, "static", {
+    onEnd: advanceFromMedHeader,
+  })
 
   const advanceFromTotal = () => {
-    if (document.activeElement === totalRef.current) methodRef.current?.focus();
-  };
-  const totalSpeech = `${t.b1Total}, ${moneySpeech(SESSION.bill.total, t)}.`;
-  const totalRead = useReadAloud(totalSpeech, "static", { onEnd: advanceFromTotal });
+    if (document.activeElement === totalRef.current) methodRef.current?.focus()
+  }
+  const totalSpeech = `${t.b1Total}, ${moneySpeech(SESSION.bill.total, t)}.`
+  const totalRead = useReadAloud(totalSpeech, "static", {
+    onEnd: advanceFromTotal,
+  })
 
-  const methodRead = useReadAloud(t.b1MethodSpeech, "static");
+  const methodRead = useReadAloud(t.b1MethodSpeech, "static")
 
   return (
     <KioskChrome title={t.b1Title} announce={t.b1Announce}>
@@ -295,5 +305,5 @@ export function BranchB1Payment() {
         </div>
       </div>
     </KioskChrome>
-  );
+  )
 }

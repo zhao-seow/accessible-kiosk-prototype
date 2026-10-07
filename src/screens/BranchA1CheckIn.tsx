@@ -1,10 +1,10 @@
-import { useRef, type RefObject } from "react";
-import { KioskChrome } from "../components/KioskChrome";
-import { ActionCard } from "../components/ActionCard";
-import { Icon } from "../components/Icons";
-import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION, expandPhoneForSpeech } from "../kiosk/copy";
-import { useReadAloud } from "../hooks/useSpeech";
+import { useRef, type RefObject } from "react"
+import { KioskChrome } from "../components/KioskChrome"
+import { ActionCard } from "../components/ActionCard"
+import { Icon } from "../components/Icons"
+import { useKiosk } from "../kiosk/KioskContext"
+import { SESSION, expandPhoneForSpeech } from "../kiosk/copy"
+import { useReadAloud } from "../hooks/useSpeech"
 
 function SummaryRow({
   label,
@@ -13,16 +13,16 @@ function SummaryRow({
   selfRef,
   nextRef,
 }: {
-  label: string;
-  value: string;
-  speech: string;
-  selfRef: RefObject<HTMLDivElement | null>;
-  nextRef: RefObject<HTMLElement | null>;
+  label: string
+  value: string
+  speech: string
+  selfRef: RefObject<HTMLDivElement | null>
+  nextRef: RefObject<HTMLElement | null>
 }) {
   const advance = () => {
-    if (document.activeElement === selfRef.current) nextRef.current?.focus();
-  };
-  const read = useReadAloud(speech, "static", { onEnd: advance });
+    if (document.activeElement === selfRef.current) nextRef.current?.focus()
+  }
+  const read = useReadAloud(speech, "static", { onEnd: advance })
 
   return (
     <div
@@ -37,33 +37,40 @@ function SummaryRow({
       ].join(" ")}
     >
       <span className="text-xl text-muted-foreground">{label}</span>
-      <span className="font-display text-2xl font-semibold text-foreground text-right">{value}</span>
+      <span className="font-display text-2xl font-semibold text-foreground text-right">
+        {value}
+      </span>
     </div>
-  );
+  )
 }
 
 export function BranchA1CheckIn() {
-  const { goTo, setPaymentMethod, setTicketDelivery, t } = useKiosk();
+  const { goTo, setPaymentMethod, setTicketDelivery, t } = useKiosk()
   const finish = (mode: "sms" | "print") => {
-    setTicketDelivery(mode);
-    setPaymentMethod(mode);
-    goTo("receipt");
-  };
+    setTicketDelivery(mode)
+    setPaymentMethod(mode)
+    goTo("receipt")
+  }
 
-  const queueRef = useRef<HTMLDivElement>(null);
-  const timeRef = useRef<HTMLDivElement>(null);
-  const clinicRef = useRef<HTMLDivElement>(null);
-  const deliveryRef = useRef<HTMLParagraphElement>(null);
+  const queueRef = useRef<HTMLDivElement>(null)
+  const timeRef = useRef<HTMLDivElement>(null)
+  const clinicRef = useRef<HTMLDivElement>(null)
+  const deliveryRef = useRef<HTMLParagraphElement>(null)
 
   // Guided auto-read chain: Queue Number -> Time -> Clinic -> "Get your queue ticket:"
   const advanceFromQueue = () => {
-    if (document.activeElement === queueRef.current) timeRef.current?.focus();
-  };
-  const queueSpeech = `${t.a1QueueLabel}: ${SESSION.queueNumber}.`;
-  const queueRead = useReadAloud(queueSpeech, "static", { onEnd: advanceFromQueue });
+    if (document.activeElement === queueRef.current) timeRef.current?.focus()
+  }
+  const queueSpeech = `${t.a1QueueLabel}: ${SESSION.queueNumber}.`
+  const queueRead = useReadAloud(queueSpeech, "static", {
+    onEnd: advanceFromQueue,
+  })
 
   // The delivery heading is keyboard-focusable and stops the guided chain here
-  const deliveryRead = useReadAloud(`${t.a1DeliveryHeading} ${t.a1DeliveryInstruction}`, "static");
+  const deliveryRead = useReadAloud(
+    `${t.a1DeliveryHeading} ${t.a1DeliveryInstruction}`,
+    "static",
+  )
 
   return (
     <KioskChrome title={t.a1Title} announce={t.a1Announce}>
@@ -147,5 +154,5 @@ export function BranchA1CheckIn() {
         </div>
       </div>
     </KioskChrome>
-  );
+  )
 }

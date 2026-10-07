@@ -1,12 +1,17 @@
-import { KioskChrome } from "../components/KioskChrome";
-import { ActionCard } from "../components/ActionCard";
-import { useKiosk } from "../kiosk/KioskContext";
+import { KioskChrome } from "../components/KioskChrome"
+import { ActionCard } from "../components/ActionCard"
+import { useKiosk } from "../kiosk/KioskContext"
 
 export function Step2Fork() {
-  const { goTo, t } = useKiosk();
+  const { goTo, t } = useKiosk()
 
   return (
-    <KioskChrome title={t.s2Welcome} titleSpeech={t.s2WelcomeSpeech} announce={t.s2Announce} skipAutoFocus>
+    <KioskChrome
+      title={t.s2Welcome}
+      titleSpeech={t.s2WelcomeSpeech}
+      announce={t.s2Announce}
+      skipAutoFocus
+    >
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center gap-10">
         <p className="text-2xl text-muted-foreground">{t.s2Subtitle}</p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -33,5 +38,5 @@ export function Step2Fork() {
         </div>
       </div>
     </KioskChrome>
-  );
+  )
 }

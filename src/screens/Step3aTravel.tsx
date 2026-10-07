@@ -1,14 +1,14 @@
-import { KioskChrome } from "../components/KioskChrome";
-import { ChoiceButton } from "../components/ChoiceButton";
-import { QuestionText } from "../components/QuestionText";
-import { useKiosk } from "../kiosk/KioskContext";
+import { KioskChrome } from "../components/KioskChrome"
+import { ChoiceButton } from "../components/ChoiceButton"
+import { QuestionText } from "../components/QuestionText"
+import { useKiosk } from "../kiosk/KioskContext"
 
 export function Step3aTravel() {
-  const { goTo, setTravelled, travelled, t } = useKiosk();
+  const { goTo, setTravelled, travelled, t } = useKiosk()
   const choose = (v: boolean) => {
-    setTravelled(v);
-    goTo("q2");
-  };
+    setTravelled(v)
+    goTo("q2")
+  }
 
   return (
     <KioskChrome title={t.hdStep(1)} announce={t.q1Announce}>
@@ -30,5 +30,5 @@ export function Step3aTravel() {
         </div>
       </div>
     </KioskChrome>
-  );
+  )
 }

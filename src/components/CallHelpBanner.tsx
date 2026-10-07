@@ -1,21 +1,21 @@
-import { useEffect } from "react";
-import { useKiosk } from "../kiosk/KioskContext";
-import { useSpeech } from "../hooks/useSpeech";
-import { Icon } from "./Icons";
+import { useEffect } from "react"
+import { useKiosk } from "../kiosk/KioskContext"
+import { useSpeech } from "../hooks/useSpeech"
+import { Icon } from "./Icons"
 
 export function CallHelpBanner() {
-  const { helpRequested, dismissHelp, t } = useKiosk();
-  const { speak } = useSpeech();
+  const { helpRequested, dismissHelp, t } = useKiosk()
+  const { speak } = useSpeech()
 
   // Announce the banner the moment it appears. speak() cancels any in-progress
   // utterance first, so this interrupts and reads immediately — not a polite
   // aria-live region.
   useEffect(() => {
-    if (helpRequested) speak(t.helpBanner);
+    if (helpRequested) speak(t.helpBanner)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [helpRequested]);
+  }, [helpRequested])
 
-  if (!helpRequested) return null;
+  if (!helpRequested) return null
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center gap-4 border-b-2 border-warning bg-warning-soft px-6 py-4 text-warning">
@@ -29,5 +29,5 @@ export function CallHelpBanner() {
         OK
       </button>
     </div>
-  );
+  )
 }

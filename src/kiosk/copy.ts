@@ -1,4 +1,4 @@
-import type { Lang } from "./i18n";
+import type { Lang } from "./i18n"
 
 // Session data — not translated (proper nouns / numbers), except honorifics handled in copy.
 export const SESSION = {
@@ -16,210 +16,229 @@ export const SESSION = {
     medications: [
       { name: "Paracetamol 500mg", qty: "20 tablets", price: "$4.20" },
       { name: "Cetirizine 10mg", qty: "10 tablets", price: "$3.80" },
-      { name: "Promethazine Cough Syrup 100ml", qty: "1 bottle", price: "$4.40" },
+      {
+        name: "Promethazine Cough Syrup 100ml",
+        qty: "1 bottle",
+        price: "$4.40",
+      },
     ],
     subsidy: "-$39.00",
     total: "$18.40",
   },
   followUp: [
-    { lab: "2 Jan 2027 (Mon) · 8:05 AM", consult: "13 Jan 2027 (Mon) · 8:00 AM" },
-    { lab: "4 Jan 2027 (Wed) · 8:10 AM", consult: "13 Jan 2027 (Mon) · 2:00 PM" },
-    { lab: "5 Jan 2027 (Thu) · 8:00 AM", consult: "14 Jan 2027 (Tue) · 8:00 AM" },
+    {
+      lab: "2 Jan 2027 (Mon) · 8:05 AM",
+      consult: "13 Jan 2027 (Mon) · 8:00 AM",
+    },
+    {
+      lab: "4 Jan 2027 (Wed) · 8:10 AM",
+      consult: "13 Jan 2027 (Mon) · 2:00 PM",
+    },
+    {
+      lab: "5 Jan 2027 (Thu) · 8:00 AM",
+      consult: "14 Jan 2027 (Tue) · 8:00 AM",
+    },
   ],
-};
+}
 
 export interface Copy {
   // Global chrome
-  brandKicker: string;
-  brandName: string;
-  voiceGuide: string;
-  on: string;
-  off: string;
-  back: string;
-  callHelp: string;
-  startOver: string;
-  continue: string;
+  brandKicker: string
+  brandName: string
+  voiceGuide: string
+  on: string
+  off: string
+  back: string
+  callHelp: string
+  startOver: string
+  continue: string
   // "Option X of N: " prefix spoken before each card in a set.
-  optionOf: (n: number, total: number) => string;
-  helpBanner: string;
-  vgTurnOn: string;
-  vgTurnOff: string;
-  callHelpAnnounce: string;
-  startOverAnnounce: string;
+  optionOf: (n: number, total: number) => string
+  helpBanner: string
+  vgTurnOn: string
+  vgTurnOff: string
+  callHelpAnnounce: string
+  startOverAnnounce: string
   // Currency words for spoken amounts (so "$" is never read as "US dollar").
-  curDollar: string;
-  curCent: string;
-  curMinus: string;
+  curDollar: string
+  curCent: string
+  curMinus: string
 
   // Reusable spoken-boilerplate helpers so screen speech is fully translated.
-  pressEnterTo: (action: string) => string;
-  asButton: (label: string) => string;
-  toMobileNumber: (digits: string) => string;
-  checkboxState: (label: string, checked: boolean) => string;
-  pressSpaceToToggle: string;
-  a1SmsAction: string;
-  a1PrintAction: string;
-  b1CreditAction: string;
-  b1PayNowAction: string;
-  b2BookAction: string;
-  b2SkipAction: string;
-  b2NoteInstruction: string;
-  psSmsAction: string;
-  psPrintAction: string;
-  tySmsAction: string;
-  tyPrintAction: string;
-  startOverAction: string;
-  backAction: string;
-  continueAction: string;
-  q1YesAction: string;
-  q1NoAction: string;
-  q2ContinueAction: string;
-  selectAction: string;
-  appt1Of2: string;
-  appt2Of2: string;
-  s2ClinicAction: string;
-  s2BillAction: string;
-  s2BillOutstandingSpeech: (amount: string) => string;
+  pressEnterTo: (action: string) => string
+  asButton: (label: string) => string
+  toMobileNumber: (digits: string) => string
+  checkboxState: (label: string, checked: boolean) => string
+  pressSpaceToToggle: string
+  a1SmsAction: string
+  a1PrintAction: string
+  b1CreditAction: string
+  b1PayNowAction: string
+  b2BookAction: string
+  b2SkipAction: string
+  b2NoteInstruction: string
+  psSmsAction: string
+  psPrintAction: string
+  tySmsAction: string
+  tyPrintAction: string
+  startOverAction: string
+  backAction: string
+  continueAction: string
+  q1YesAction: string
+  q1NoAction: string
+  q2ContinueAction: string
+  selectAction: string
+  appt1Of2: string
+  appt2Of2: string
+  s2ClinicAction: string
+  s2BillAction: string
+  s2BillOutstandingSpeech: (amount: string) => string
 
   // Step 1
-  s1Instruction: string;
-  s1NricLabel: string;
-  s1NricHint: string;
-  s1NricAnnounce: string;
-  s1Deleted: string;
-  s1EnterAnnounce: string;
-  s1Announce: string;
+  s1Instruction: string
+  s1NricLabel: string
+  s1NricHint: string
+  s1NricAnnounce: string
+  s1Deleted: string
+  s1EnterAnnounce: string
+  s1Announce: string
 
   // Step 2
-  s2Welcome: string;
-  s2WelcomeSpeech: string;
-  s2Subtitle: string;
-  s2ClinicTitle: string;
-  s2ClinicDesc: string;
-  s2BillTitle: string;
-  s2BillOutstanding: string;
-  s2BillAmountSpeech: string;
-  s2Announce: string;
+  s2Welcome: string
+  s2WelcomeSpeech: string
+  s2Subtitle: string
+  s2ClinicTitle: string
+  s2ClinicDesc: string
+  s2BillTitle: string
+  s2BillOutstanding: string
+  s2BillAmountSpeech: string
+  s2Announce: string
 
   // Health declaration
-  hdStep: (n: number) => string;
-  q1Question: string;
-  q2Question: string;
-  q2Subtitle: string;
-  q3Question: string;
-  yes: string;
-  no: string;
-  notSure: string;
-  symptoms: { cough: string; fever: string; soreThroat: string; runnyNose: string; none: string };
-  q1Announce: string;
-  q2Announce: string;
-  q3Announce: string;
-  q1Instruction: string;
-  q2Instruction: string;
-  q3Instruction: string;
+  hdStep: (n: number) => string
+  q1Question: string
+  q2Question: string
+  q2Subtitle: string
+  q3Question: string
+  yes: string
+  no: string
+  notSure: string
+  symptoms: {
+    cough: string
+    fever: string
+    soreThroat: string
+    runnyNose: string
+    none: string
+  }
+  q1Announce: string
+  q2Announce: string
+  q3Announce: string
+  q1Instruction: string
+  q2Instruction: string
+  q3Instruction: string
 
   // Branch A1 — check-in
-  a1Title: string;
-  a1TimeLabel: string;
-  a1ClinicLabel: string;
-  a1QueueLabel: string;
-  a1DeliveryHeading: string;
-  a1DeliveryInstruction: string;
-  a1SmsTitle: string;
-  a1SmsDesc: string;
-  a1PrintTitle: string;
-  a1PrintDesc: string;
-  a1Announce: string;
+  a1Title: string
+  a1TimeLabel: string
+  a1ClinicLabel: string
+  a1QueueLabel: string
+  a1DeliveryHeading: string
+  a1DeliveryInstruction: string
+  a1SmsTitle: string
+  a1SmsDesc: string
+  a1PrintTitle: string
+  a1PrintDesc: string
+  a1Announce: string
 
   // Branch B1 — payment
-  b1Title: string;
-  b1LineConsultation: string;
-  b1LineMedication: string;
-  b1MedItemsCount: (n: number) => string;
-  b1ExpandMeds: string;
-  b1CollapseMeds: string;
-  b1MedAccordionSpeech: (expanded: boolean, count: number) => string;
-  b1LineSubsidy: string;
-  b1Total: string;
-  b1MethodHeading: string;
-  b1MethodSpeech: string;
-  b1Credit: string;
-  b1CreditDesc: string;
-  b1PayNow: string;
-  b1PayNowDesc: string;
-  b1Announce: string;
+  b1Title: string
+  b1LineConsultation: string
+  b1LineMedication: string
+  b1MedItemsCount: (n: number) => string
+  b1ExpandMeds: string
+  b1CollapseMeds: string
+  b1MedAccordionSpeech: (expanded: boolean, count: number) => string
+  b1LineSubsidy: string
+  b1Total: string
+  b1MethodHeading: string
+  b1MethodSpeech: string
+  b1Credit: string
+  b1CreditDesc: string
+  b1PayNow: string
+  b1PayNowDesc: string
+  b1Announce: string
 
   // Payment instructions (how-to before success)
-  piQrTitle: string;
-  piQrInstruction: string;
-  piQrAnnounce: string;
-  piCardTitle: string;
-  piCardInstruction: string;
-  piCardAnnounce: string;
-  piContinueHint: string;
+  piQrTitle: string
+  piQrInstruction: string
+  piQrAnnounce: string
+  piCardTitle: string
+  piCardInstruction: string
+  piCardAnnounce: string
+  piContinueHint: string
 
   // Branch B2 — follow-up
-  b2Title: string;
-  b2Note: string;
-  b2Option: (n: number) => string;
-  b2LabLabel: string;
-  b2ConsultLabel: string;
-  b2Select: (n: number) => string;
-  b2Skip: string;
-  b2Announce: string;
+  b2Title: string
+  b2Note: string
+  b2Option: (n: number) => string
+  b2LabLabel: string
+  b2ConsultLabel: string
+  b2Select: (n: number) => string
+  b2Skip: string
+  b2Announce: string
 
   // Payment successful (receipt delivery choice)
-  psTitle: string;
-  psSubtitle: string;
-  psIntro: string;
-  psSms: string;
-  psPrint: string;
-  psAnnounce: string;
-  psSmsConfirm: string;
-  psPrintConfirm: string;
-  psSmsTitle: string;
-  psPrintTitle: string;
-  psPaidLabel: string;
-  psStatusLabel: string;
-  psStatusSuccess: string;
+  psTitle: string
+  psSubtitle: string
+  psIntro: string
+  psSms: string
+  psPrint: string
+  psAnnounce: string
+  psSmsConfirm: string
+  psPrintConfirm: string
+  psSmsTitle: string
+  psPrintTitle: string
+  psPaidLabel: string
+  psStatusLabel: string
+  psStatusSuccess: string
 
   // Receipt
-  rcTitle: string;
-  rcQueueLabel: string;
-  rcThanks: string;
-  rcSms: string;
-  rcPrint: string;
-  rcDone: string;
-  rcAnnounce: string;
-  rcSmsTitle: string;
-  rcPrintTitle: string;
-  rcSmsConfirm: string;
-  rcPrintConfirm: string;
-  rcStaffGuidance: string;
-  rcStaffGuidanceSub: string;
-  rcGuidanceQuestion: string;
-  rcGuidancePromptSpeech: string;
-  rcGuidanceYes: string;
-  rcGuidanceNo: string;
-  rcGuidanceYesAction: string;
-  rcGuidanceNoAction: string;
-  rcGuidanceStaffAlertedTitle: string;
-  rcGuidanceNoHelpTitle: string;
-  rcGuidanceNoHelpDesc: string;
-  rcGuidanceYesChosen: string;
-  rcGuidanceNoChosen: string;
+  rcTitle: string
+  rcQueueLabel: string
+  rcThanks: string
+  rcSms: string
+  rcPrint: string
+  rcDone: string
+  rcAnnounce: string
+  rcSmsTitle: string
+  rcPrintTitle: string
+  rcSmsConfirm: string
+  rcPrintConfirm: string
+  rcStaffGuidance: string
+  rcStaffGuidanceSub: string
+  rcGuidanceQuestion: string
+  rcGuidancePromptSpeech: string
+  rcGuidanceYes: string
+  rcGuidanceNo: string
+  rcGuidanceYesAction: string
+  rcGuidanceNoAction: string
+  rcGuidanceStaffAlertedTitle: string
+  rcGuidanceNoHelpTitle: string
+  rcGuidanceNoHelpDesc: string
+  rcGuidanceYesChosen: string
+  rcGuidanceNoChosen: string
 
   // Payment flow end — thank you
-  tyTitle: string;
-  tySubtitle: string;
-  tyAnnounce: string;
-  tyFollowUpHeading: string;
-  tySms: string;
-  tyPrint: string;
-  tySmsConfirm: string;
-  tyPrintConfirm: string;
-  tySmsTitle: string;
-  tyPrintTitle: string;
+  tyTitle: string
+  tySubtitle: string
+  tyAnnounce: string
+  tyFollowUpHeading: string
+  tySms: string
+  tyPrint: string
+  tySmsConfirm: string
+  tyPrintConfirm: string
+  tySmsTitle: string
+  tyPrintTitle: string
 }
 
 const en: Copy = {
@@ -236,7 +255,8 @@ const en: Copy = {
   helpBanner: "Please wait — a staff ambassador will attend to you shortly.",
   vgTurnOn: "Press Enter to turn on.",
   vgTurnOff: "Press Enter to turn off.",
-  callHelpAnnounce: "Call Help, button. Press Enter to request staff assistance.",
+  callHelpAnnounce:
+    "Call Help, button. Press Enter to request staff assistance.",
   startOverAnnounce: "Start Over, button. Press Enter to reset the kiosk.",
   curDollar: "dollars",
   curCent: "cents",
@@ -245,7 +265,8 @@ const en: Copy = {
   pressEnterTo: (action) => `Press Enter to ${action}.`,
   asButton: (label) => `${label}, button.`,
   toMobileNumber: (digits) => ` to mobile number ${digits},`,
-  checkboxState: (label, checked) => `${label}, checkbox, ${checked ? "checked" : "unchecked"}.`,
+  checkboxState: (label, checked) =>
+    `${label}, checkbox, ${checked ? "checked" : "unchecked"}.`,
   pressSpaceToToggle: "Press Space to toggle.",
   a1SmsAction: "receive your queue ticket on your phone",
   a1PrintAction: "print a paper ticket from the printer below",
@@ -271,18 +292,22 @@ const en: Copy = {
   s2BillAction: "review and pay",
   s2BillOutstandingSpeech: (amount) => `Outstanding balance ${amount}.`,
 
-  s1Instruction: "Select your language, then scan your card or type your NRIC below.",
+  s1Instruction:
+    "Select your language, then scan your card or type your NRIC below.",
   s1NricLabel: "NRIC number",
-  s1NricHint: "Type your 9-character NRIC and press Enter, or rest your card face-down on the scanner below.",
+  s1NricHint:
+    "Type your 9-character NRIC and press Enter, or rest your card face-down on the scanner below.",
   s1NricAnnounce:
     "NRIC number, edit text. Type your 9-character NRIC and press Enter, or scan your card on the scanner below.",
   s1Deleted: "deleted",
-  s1EnterAnnounce: "Enter, button. Press Enter to submit your NRIC number and continue.",
+  s1EnterAnnounce:
+    "Enter, button. Press Enter to submit your NRIC number and continue.",
   s1Announce:
     "Language selection. Use Tab to move through options and Enter to select, or scan your identity card or phone barcode face-down on the scanner below the screen.",
 
   s2Welcome: `Welcome, MR ${SESSION.patientFull}`,
-  s2WelcomeSpeech: "Welcome, Mr Tan, what would you like to do today? Press Tab to select.",
+  s2WelcomeSpeech:
+    "Welcome, Mr Tan, what would you like to do today? Press Tab to select.",
   s2Subtitle: "What would you like to do today?",
   s2ClinicTitle: "Clinic Appointment & Check-In",
   s2ClinicDesc: "Confirm today's booking and get your queue ticket.",
@@ -300,7 +325,13 @@ const en: Copy = {
   yes: "Yes",
   no: "No",
   notSure: "I'm not sure",
-  symptoms: { cough: "Cough", fever: "Fever", soreThroat: "Sore throat", runnyNose: "Runny nose", none: "None of the above" },
+  symptoms: {
+    cough: "Cough",
+    fever: "Fever",
+    soreThroat: "Sore throat",
+    runnyNose: "Runny nose",
+    none: "None of the above",
+  },
   q1Announce:
     "Health declaration, question 1 of 3. Heading level 1. Have you travelled overseas in the last 14 days? Press Tab to choose Yes or No.",
   q2Announce:
@@ -308,7 +339,8 @@ const en: Copy = {
   q3Announce:
     "Health declaration, question 3 of 3. Heading level 1. Do you have a fever of 38 degrees Celsius or higher? Press Tab to select an option.",
   q1Instruction: "Press Tab to choose Yes or No.",
-  q2Instruction: "You can choose more than one. Press Tab to review the symptoms, then choose Continue.",
+  q2Instruction:
+    "You can choose more than one. Press Tab to review the symptoms, then choose Continue.",
   q3Instruction: "Press Tab to choose Yes, No, or I'm not sure.",
 
   a1Title: "Clinic Appointment",
@@ -330,7 +362,9 @@ const en: Copy = {
   b1ExpandMeds: "View items",
   b1CollapseMeds: "Hide items",
   b1MedAccordionSpeech: (expanded, count) =>
-    `Button, ${expanded ? "expanded" : "collapsed"}. Press Enter to ${expanded ? "hide" : "view"} ${count} medication items.`,
+    `Button, ${expanded ? "expanded" : "collapsed"}. Press Enter to ${
+      expanded ? "hide" : "view"
+    } ${count} medication items.`,
   b1LineSubsidy: "Government Subsidy (CHAS / Pioneer)",
   b1Total: "Total amount due",
   b1MethodHeading: "Select payment method:",
@@ -346,8 +380,10 @@ const en: Copy = {
   piQrInstruction: "Scan this QR code with your bank app to make payment.",
   piQrAnnounce: "Scan this QR code with your bank app to make payment.",
   piCardTitle: "Pay by card",
-  piCardInstruction: "Tap or insert your card into the terminal to the left of the keyboard.",
-  piCardAnnounce: "Tap or insert your card into the terminal to the left of the keyboard.",
+  piCardInstruction:
+    "Tap or insert your card into the terminal to the left of the keyboard.",
+  piCardAnnounce:
+    "Tap or insert your card into the terminal to the left of the keyboard.",
   piContinueHint: "Tap anywhere or press Enter once payment is complete.",
 
   b2Title: "Select Follow-Up Appointment",
@@ -362,7 +398,8 @@ const en: Copy = {
 
   psTitle: "Payment Successful",
   psSubtitle: `You paid ${SESSION.outstanding}. How would you like your receipt?`,
-  psIntro: "You paid 18 dollars and 40 cents. How would you like your receipt? Press Tab to select.",
+  psIntro:
+    "You paid 18 dollars and 40 cents. How would you like your receipt? Press Tab to select.",
   psSms: "Send via SMS",
   psPrint: "Print receipt",
   psAnnounce: `Payment successful. Heading level 1. You paid ${SESSION.outstanding}. How would you like your receipt? Press Tab to send it by S M S or print a paper receipt.`,
@@ -376,7 +413,8 @@ const en: Copy = {
 
   rcTitle: "You're all set",
   rcQueueLabel: "Your queue number",
-  rcThanks: "Please take a seat. Your number will be called on the clinic display.",
+  rcThanks:
+    "Please take a seat. Your number will be called on the clinic display.",
   rcSms: "Send via SMS",
   rcPrint: "Print paper slip",
   rcDone: "Done",
@@ -384,24 +422,31 @@ const en: Copy = {
   rcSmsTitle: "Queue Ticket Sent via SMS",
   rcPrintTitle: "Printing Paper Slip...",
   rcSmsConfirm: `Your queue ticket has been sent by S M S to ${SESSION.mobile}.`,
-  rcPrintConfirm: "Your queue ticket is printing from the printer below the shelf.",
-  rcStaffGuidance: "A staff will be with you shortly to guide you to the clinic.",
+  rcPrintConfirm:
+    "Your queue ticket is printing from the printer below the shelf.",
+  rcStaffGuidance:
+    "A staff will be with you shortly to guide you to the clinic.",
   rcStaffGuidanceSub: "Please remain seated in the waiting area.",
   rcGuidanceQuestion: "Do you need help finding the clinic?",
-  rcGuidancePromptSpeech: "Do you need help finding the clinic? Press Tab to choose Yes or No.",
+  rcGuidancePromptSpeech:
+    "Do you need help finding the clinic? Press Tab to choose Yes or No.",
   rcGuidanceYes: "Yes, need guidance",
   rcGuidanceNo: "No, I'm okay",
   rcGuidanceYesAction: "request staff to guide you to the clinic",
   rcGuidanceNoAction: "proceed to the waiting area on your own",
   rcGuidanceStaffAlertedTitle: "Staff Alerted",
   rcGuidanceNoHelpTitle: "Proceed to Waiting Area",
-  rcGuidanceNoHelpDesc: "Please take a seat in the waiting area. Your queue number will be called on the clinic display.",
-  rcGuidanceYesChosen: "Staff has been alerted to guide you to the clinic. Please remain seated in the waiting area.",
-  rcGuidanceNoChosen: "You have chosen to proceed on your own. Please take a seat in the waiting area.",
+  rcGuidanceNoHelpDesc:
+    "Please take a seat in the waiting area. Your queue number will be called on the clinic display.",
+  rcGuidanceYesChosen:
+    "Staff has been alerted to guide you to the clinic. Please remain seated in the waiting area.",
+  rcGuidanceNoChosen:
+    "You have chosen to proceed on your own. Please take a seat in the waiting area.",
 
   tyTitle: "Thank you",
   tySubtitle: "Your payment is complete. Have a good day.",
-  tyAnnounce: "Thank you. Heading level 1. Your payment is complete. Have a good day. Press Tab to start over for the next patient.",
+  tyAnnounce:
+    "Thank you. Heading level 1. Your payment is complete. Have a good day. Press Tab to start over for the next patient.",
   tyFollowUpHeading: "Your follow-up appointment is booked:",
   tySms: "Send via SMS",
   tyPrint: "Print slip",
@@ -409,7 +454,7 @@ const en: Copy = {
   tyPrintConfirm: "Your appointment slip is printing from the printer below.",
   tySmsTitle: "Appointment Slip Sent via SMS",
   tyPrintTitle: "Printing Appointment Slip...",
-};
+}
 
 const zh: Copy = {
   brandKicker: "综合诊疗所登记",
@@ -434,7 +479,8 @@ const zh: Copy = {
   pressEnterTo: (action) => `按 Enter 键${action}。`,
   asButton: (label) => `${label}，按钮。`,
   toMobileNumber: (digits) => `，发送至手机号码 ${digits}，`,
-  checkboxState: (label, checked) => `${label}，复选框，${checked ? "已选中" : "未选中"}。`,
+  checkboxState: (label, checked) =>
+    `${label}，复选框，${checked ? "已选中" : "未选中"}。`,
   pressSpaceToToggle: "按空格键切换。",
   a1SmsAction: "接收手机上的轮候票",
   a1PrintAction: "从下方打印机打印纸质票",
@@ -462,11 +508,14 @@ const zh: Copy = {
 
   s1Instruction: "请选择语言，然后扫描您的证件或在下方输入身份证号码。",
   s1NricLabel: "身份证号码",
-  s1NricHint: "请输入9位身份证号码并按 Enter 键，或将证件正面朝下放在下方的扫描器上。",
-  s1NricAnnounce: "身份证号码，编辑框。请输入9位身份证号码并按 Enter 键，或将证件放在下方的扫描器上扫描。",
+  s1NricHint:
+    "请输入9位身份证号码并按 Enter 键，或将证件正面朝下放在下方的扫描器上。",
+  s1NricAnnounce:
+    "身份证号码，编辑框。请输入9位身份证号码并按 Enter 键，或将证件放在下方的扫描器上扫描。",
   s1Deleted: "已删除",
   s1EnterAnnounce: "确认，按钮。按 Enter 键提交您的身份证号码并继续。",
-  s1Announce: "语言选择。使用 Tab 键浏览选项，按 Enter 键选择，或将身份证或手机条码正面朝下放在屏幕下方的扫描器上。",
+  s1Announce:
+    "语言选择。使用 Tab 键浏览选项，按 Enter 键选择，或将身份证或手机条码正面朝下放在屏幕下方的扫描器上。",
 
   s2Welcome: "欢迎，陈亚德先生",
   s2WelcomeSpeech: "欢迎，陈先生，请问您今天想办理什么？按 Tab 键选择。",
@@ -476,7 +525,8 @@ const zh: Copy = {
   s2BillTitle: "缴付账单",
   s2BillOutstanding: `未付款项：${SESSION.outstanding}`,
   s2BillAmountSpeech: "18 元 40 分",
-  s2Announce: "欢迎，陈亚德先生。标题一级。请问今天需要办理什么？按 Tab 键浏览选项，或按 Shift-Tab 键前往语音导览设置。",
+  s2Announce:
+    "欢迎，陈亚德先生。标题一级。请问今天需要办理什么？按 Tab 键浏览选项，或按 Shift-Tab 键前往语音导览设置。",
 
   hdStep: (n) => `健康申报（第 ${n} / 3 项）`,
   q1Question: "您在过去14天内是否曾出国？",
@@ -486,10 +536,19 @@ const zh: Copy = {
   yes: "是",
   no: "否",
   notSure: "不确定",
-  symptoms: { cough: "咳嗽", fever: "发烧", soreThroat: "喉咙痛", runnyNose: "流鼻涕", none: "以上皆无" },
-  q1Announce: "健康申报，第1项，共3项。标题一级。您在过去14天内是否曾出国？按 Tab 键选择“是”或“否”。",
-  q2Announce: "健康申报，第2项，共3项。标题一级。您目前是否有以下任何症状？按 Tab 键浏览症状选项。",
-  q3Announce: "健康申报，第3项，共3项。标题一级。您是否发烧达38摄氏度或以上？按 Tab 键选择。",
+  symptoms: {
+    cough: "咳嗽",
+    fever: "发烧",
+    soreThroat: "喉咙痛",
+    runnyNose: "流鼻涕",
+    none: "以上皆无",
+  },
+  q1Announce:
+    "健康申报，第1项，共3项。标题一级。您在过去14天内是否曾出国？按 Tab 键选择“是”或“否”。",
+  q2Announce:
+    "健康申报，第2项，共3项。标题一级。您目前是否有以下任何症状？按 Tab 键浏览症状选项。",
+  q3Announce:
+    "健康申报，第3项，共3项。标题一级。您是否发烧达38摄氏度或以上？按 Tab 键选择。",
   q1Instruction: "按 Tab 键选择是或否。",
   q2Instruction: "您可以选择多项。按 Tab 键查看症状选项，然后选择继续。",
   q3Instruction: "按 Tab 键选择是、否或不确定。",
@@ -513,7 +572,9 @@ const zh: Copy = {
   b1ExpandMeds: "查看详情",
   b1CollapseMeds: "收起详情",
   b1MedAccordionSpeech: (expanded, count) =>
-    `按钮，${expanded ? "已展开" : "已折叠"}。按 Enter 键${expanded ? "收起" : "展开"} ${count} 项药物详情。`,
+    `按钮，${expanded ? "已展开" : "已折叠"}。按 Enter 键${
+      expanded ? "收起" : "展开"
+    } ${count} 项药物详情。`,
   b1LineSubsidy: "政府津贴（CHAS / 建国一代）",
   b1Total: "应付总额",
   b1MethodHeading: "选择付款方式：",
@@ -522,7 +583,8 @@ const zh: Copy = {
   b1CreditDesc: "挥卡或感应",
   b1PayNow: "PayNow 二维码",
   b1PayNowDesc: "扫码付款",
-  b1Announce: "未付账单明细。标题一级。门诊45元。药物12元4角。政府建国一代津贴减39元。应付总额为18元4角。按 Tab 键选择付款方式。",
+  b1Announce:
+    "未付账单明细。标题一级。门诊45元。药物12元4角。政府建国一代津贴减39元。应付总额为18元4角。按 Tab 键选择付款方式。",
 
   piQrTitle: "使用 PayNow 扫码付款",
   piQrInstruction: "请用您的银行应用程序扫描此二维码进行付款。",
@@ -539,7 +601,8 @@ const zh: Copy = {
   b2ConsultLabel: "复诊",
   b2Select: (n) => `选择方案 ${n}`,
   b2Skip: "跳过——稍后通过 HealthHub 预约",
-  b2Announce: "付款成功。选择复诊预约。标题一级。医生要求进行空腹血液检查。共有四个方案：三个预设预约时间，或跳过稍后预约。按 Tab 键浏览方案。",
+  b2Announce:
+    "付款成功。选择复诊预约。标题一级。医生要求进行空腹血液检查。共有四个方案：三个预设预约时间，或跳过稍后预约。按 Tab 键浏览方案。",
 
   psTitle: "付款成功",
   psSubtitle: `您已支付 ${SESSION.outstanding}。您希望如何领取收据？`,
@@ -582,7 +645,8 @@ const zh: Copy = {
 
   tyTitle: "谢谢",
   tySubtitle: "您的付款已完成。祝您有美好的一天。",
-  tyAnnounce: "谢谢。标题一级。您的付款已完成。祝您有美好的一天。按 Tab 键为下一位病人重新开始。",
+  tyAnnounce:
+    "谢谢。标题一级。您的付款已完成。祝您有美好的一天。按 Tab 键为下一位病人重新开始。",
   tyFollowUpHeading: "您的复诊预约已确认：",
   tySms: "以短信发送",
   tyPrint: "打印纸质票",
@@ -590,7 +654,7 @@ const zh: Copy = {
   tyPrintConfirm: "您的复诊单正在下方的打印机打印。",
   tySmsTitle: "复诊单已通过短信发送",
   tyPrintTitle: "正在打印复诊单...",
-};
+}
 
 const ms: Copy = {
   brandKicker: "PENDAFTARAN POLIKLINIK",
@@ -606,8 +670,10 @@ const ms: Copy = {
   helpBanner: "Sila tunggu — seorang petugas akan membantu anda sebentar lagi.",
   vgTurnOn: "Tekan Enter untuk hidupkan.",
   vgTurnOff: "Tekan Enter untuk matikan.",
-  callHelpAnnounce: "Panggil Bantuan, butang. Tekan Enter untuk meminta bantuan kakitangan.",
-  startOverAnnounce: "Mula Semula, butang. Tekan Enter untuk menetapkan semula kiosk.",
+  callHelpAnnounce:
+    "Panggil Bantuan, butang. Tekan Enter untuk meminta bantuan kakitangan.",
+  startOverAnnounce:
+    "Mula Semula, butang. Tekan Enter untuk menetapkan semula kiosk.",
   curDollar: "dolar",
   curCent: "sen",
   curMinus: "tolak",
@@ -615,12 +681,15 @@ const ms: Copy = {
   pressEnterTo: (action) => `Tekan Enter untuk ${action}.`,
   asButton: (label) => `${label}, butang.`,
   toMobileNumber: (digits) => ` ke nombor mudah alih ${digits},`,
-  checkboxState: (label, checked) => `${label}, kotak semak, ${checked ? "ditanda" : "tidak ditanda"}.`,
+  checkboxState: (label, checked) =>
+    `${label}, kotak semak, ${checked ? "ditanda" : "tidak ditanda"}.`,
   pressSpaceToToggle: "Tekan Ruang untuk togol.",
   a1SmsAction: "menerima tiket giliran anda di telefon anda",
   a1PrintAction: "mencetak tiket kertas dari pencetak di bawah",
-  b1CreditAction: "membayar menggunakan terminal kad di sebelah kiri papan kekunci",
-  b1PayNowAction: "memaparkan kod Q R untuk diimbas dengan aplikasi perbankan mudah alih anda",
+  b1CreditAction:
+    "membayar menggunakan terminal kad di sebelah kiri papan kekunci",
+  b1PayNowAction:
+    "memaparkan kod Q R untuk diimbas dengan aplikasi perbankan mudah alih anda",
   b2BookAction: "menempah",
   b2SkipAction: "menempah kemudian menggunakan aplikasi HealthHub",
   b2NoteInstruction: "Tekan Tab untuk menyemak pilihan anda.",
@@ -641,18 +710,22 @@ const ms: Copy = {
   s2BillAction: "menyemak dan membayar",
   s2BillOutstandingSpeech: (amount) => `Tertunggak ${amount}.`,
 
-  s1Instruction: "Pilih bahasa anda, kemudian imbas kad atau taip nombor NRIC di bawah.",
+  s1Instruction:
+    "Pilih bahasa anda, kemudian imbas kad atau taip nombor NRIC di bawah.",
   s1NricLabel: "Nombor NRIC",
-  s1NricHint: "Taip NRIC 9 aksara anda dan tekan Enter, atau letakkan kad anda menghadap ke bawah pada pengimbas di bawah.",
+  s1NricHint:
+    "Taip NRIC 9 aksara anda dan tekan Enter, atau letakkan kad anda menghadap ke bawah pada pengimbas di bawah.",
   s1NricAnnounce:
     "Nombor NRIC, kotak teks. Taip NRIC 9 aksara anda dan tekan Enter, atau imbas kad anda pada pengimbas di bawah.",
   s1Deleted: "dipadam",
-  s1EnterAnnounce: "Enter, butang. Tekan Enter untuk menghantar nombor NRIC anda dan teruskan.",
+  s1EnterAnnounce:
+    "Enter, butang. Tekan Enter untuk menghantar nombor NRIC anda dan teruskan.",
   s1Announce:
     "Pemilihan bahasa. Gunakan Tab untuk bergerak melalui pilihan dan Enter untuk memilih, atau imbas kad pengenalan atau kod bar telefon anda menghadap ke bawah pada pengimbas di bawah skrin.",
 
   s2Welcome: "Selamat datang, Encik Tan Ah Teck",
-  s2WelcomeSpeech: "Selamat datang, Encik Tan, apa yang anda ingin lakukan hari ini? Tekan Tab untuk pilih.",
+  s2WelcomeSpeech:
+    "Selamat datang, Encik Tan, apa yang anda ingin lakukan hari ini? Tekan Tab untuk pilih.",
   s2Subtitle: "Apa yang anda ingin lakukan hari ini?",
   s2ClinicTitle: "Temu Janji Klinik & Daftar Masuk",
   s2ClinicDesc: "Sahkan tempahan hari ini dan dapatkan tiket giliran anda.",
@@ -663,14 +736,21 @@ const ms: Copy = {
     "Selamat datang, Encik Tan Ah Teck. Tajuk tahap 1. Apa yang anda ingin lakukan hari ini? Tekan Tab untuk menavigasi pilihan anda, atau Shift-Tab untuk ke tetapan panduan suara.",
 
   hdStep: (n) => `Perisytiharan Kesihatan (${n} daripada 3)`,
-  q1Question: "Adakah anda melancong ke luar negara dalam tempoh 14 hari lepas?",
+  q1Question:
+    "Adakah anda melancong ke luar negara dalam tempoh 14 hari lepas?",
   q2Question: "Adakah anda mempunyai mana-mana gejala ini sekarang?",
   q2Subtitle: "Anda boleh pilih lebih daripada satu.",
   q3Question: "Adakah anda demam 38°C atau lebih tinggi?",
   yes: "Ya",
   no: "Tidak",
   notSure: "Saya tidak pasti",
-  symptoms: { cough: "Batuk", fever: "Demam", soreThroat: "Sakit tekak", runnyNose: "Hidung berair", none: "Tiada satu pun di atas" },
+  symptoms: {
+    cough: "Batuk",
+    fever: "Demam",
+    soreThroat: "Sakit tekak",
+    runnyNose: "Hidung berair",
+    none: "Tiada satu pun di atas",
+  },
   q1Announce:
     "Perisytiharan kesihatan, soalan 1 daripada 3. Tajuk tahap 1. Adakah anda melancong ke luar negara dalam tempoh 14 hari lepas? Tekan Tab untuk pilih Ya atau Tidak.",
   q2Announce:
@@ -678,7 +758,8 @@ const ms: Copy = {
   q3Announce:
     "Perisytiharan kesihatan, soalan 3 daripada 3. Tajuk tahap 1. Adakah anda demam 38 darjah Celsius atau lebih tinggi? Tekan Tab untuk memilih.",
   q1Instruction: "Tekan Tab untuk memilih Ya atau Tidak.",
-  q2Instruction: "Anda boleh pilih lebih daripada satu. Tekan Tab untuk menyemak gejala, kemudian pilih Teruskan.",
+  q2Instruction:
+    "Anda boleh pilih lebih daripada satu. Tekan Tab untuk menyemak gejala, kemudian pilih Teruskan.",
   q3Instruction: "Tekan Tab untuk memilih Ya, Tidak, atau Saya tidak pasti.",
 
   a1Title: "Temu Janji Klinik",
@@ -700,7 +781,9 @@ const ms: Copy = {
   b1ExpandMeds: "Lihat item",
   b1CollapseMeds: "Sembunyi item",
   b1MedAccordionSpeech: (expanded, count) =>
-    `Butang, ${expanded ? "dibuka" : "ditutup"}。Tekan Enter untuk ${expanded ? "sembunyikan" : "melihat"} ${count} item ubat.`,
+    `Butang, ${expanded ? "dibuka" : "ditutup"}。Tekan Enter untuk ${
+      expanded ? "sembunyikan" : "melihat"
+    } ${count} item ubat.`,
   b1LineSubsidy: "Subsidi Kerajaan (CHAS / Pioneer)",
   b1Total: "Jumlah perlu dibayar",
   b1MethodHeading: "Pilih kaedah pembayaran:",
@@ -713,12 +796,17 @@ const ms: Copy = {
     "Butiran bil tertunggak. Tajuk tahap 1. Perundingan 45 dolar. Ubat 12 dolar 40 sen. Subsidi Kerajaan Pioneer tolak 39 dolar. Jumlah perlu dibayar ialah lapan belas dolar empat puluh sen. Tekan Tab untuk memilih kaedah pembayaran.",
 
   piQrTitle: "Imbas untuk bayar dengan PayNow",
-  piQrInstruction: "Imbas kod QR ini dengan aplikasi bank anda untuk membuat pembayaran.",
-  piQrAnnounce: "Imbas kod QR ini dengan aplikasi bank anda untuk membuat pembayaran.",
+  piQrInstruction:
+    "Imbas kod QR ini dengan aplikasi bank anda untuk membuat pembayaran.",
+  piQrAnnounce:
+    "Imbas kod QR ini dengan aplikasi bank anda untuk membuat pembayaran.",
   piCardTitle: "Bayar dengan kad",
-  piCardInstruction: "Tepuk atau masukkan kad anda ke dalam terminal di sebelah kiri papan kekunci.",
-  piCardAnnounce: "Tepuk atau masukkan kad anda ke dalam terminal di sebelah kiri papan kekunci.",
-  piContinueHint: "Ketik di mana-mana atau tekan Enter setelah pembayaran selesai.",
+  piCardInstruction:
+    "Tepuk atau masukkan kad anda ke dalam terminal di sebelah kiri papan kekunci.",
+  piCardAnnounce:
+    "Tepuk atau masukkan kad anda ke dalam terminal di sebelah kiri papan kekunci.",
+  piContinueHint:
+    "Ketik di mana-mana atau tekan Enter setelah pembayaran selesai.",
 
   b2Title: "Pilih Temu Janji Susulan",
   b2Note: "Doktor meminta Ujian Makmal Darah Berpuasa.",
@@ -732,7 +820,8 @@ const ms: Copy = {
 
   psTitle: "Pembayaran Berjaya",
   psSubtitle: `Anda telah membayar ${SESSION.outstanding}. Bagaimana anda mahu resit anda?`,
-  psIntro: "Anda telah membayar 18 dolar dan 40 sen. Bagaimana anda mahu resit anda? Tekan Tab untuk memilih.",
+  psIntro:
+    "Anda telah membayar 18 dolar dan 40 sen. Bagaimana anda mahu resit anda? Tekan Tab untuk memilih.",
   psSms: "Hantar melalui SMS",
   psPrint: "Cetak resit",
   psAnnounce: `Pembayaran berjaya. Tajuk tahap 1. Anda telah membayar ${SESSION.outstanding}. Bagaimana anda mahu resit anda? Tekan Tab untuk menghantar melalui S M S atau mencetak resit kertas.`,
@@ -754,24 +843,31 @@ const ms: Copy = {
   rcSmsTitle: "Tiket Giliran Dihantar Melalui SMS",
   rcPrintTitle: "Sedang Mencetak Slip Kertas...",
   rcSmsConfirm: `Tiket giliran anda telah dihantar melalui SMS ke ${SESSION.mobile}.`,
-  rcPrintConfirm: "Tiket giliran anda sedang dicetak dari pencetak di bawah rak.",
-  rcStaffGuidance: "Seorang kakitangan akan bersama anda sebentar lagi untuk membimbing anda ke klinik.",
+  rcPrintConfirm:
+    "Tiket giliran anda sedang dicetak dari pencetak di bawah rak.",
+  rcStaffGuidance:
+    "Seorang kakitangan akan bersama anda sebentar lagi untuk membimbing anda ke klinik.",
   rcStaffGuidanceSub: "Sila duduk di kawasan menunggu.",
   rcGuidanceQuestion: "Adakah anda memerlukan bantuan untuk mencari klinik?",
-  rcGuidancePromptSpeech: "Adakah anda memerlukan bantuan untuk mencari klinik? Tekan Tab untuk pilih Ya atau Tidak.",
+  rcGuidancePromptSpeech:
+    "Adakah anda memerlukan bantuan untuk mencari klinik? Tekan Tab untuk pilih Ya atau Tidak.",
   rcGuidanceYes: "Ya, perlukan panduan",
   rcGuidanceNo: "Tidak, saya boleh sendiri",
   rcGuidanceYesAction: "meminta kakitangan membimbing anda ke klinik",
   rcGuidanceNoAction: "pergi ke kawasan menunggu sendiri",
   rcGuidanceStaffAlertedTitle: "Kakitangan Dimaklumkan",
   rcGuidanceNoHelpTitle: "Sila ke Kawasan Menunggu",
-  rcGuidanceNoHelpDesc: "Sila duduk di kawasan menunggu. Nombor giliran anda akan dipanggil pada paparan klinik.",
-  rcGuidanceYesChosen: "Kakitangan telah dimaklumkan untuk membimbing anda. Sila duduk di kawasan menunggu.",
-  rcGuidanceNoChosen: "Anda memilih untuk pergi sendiri. Sila duduk di kawasan menunggu.",
+  rcGuidanceNoHelpDesc:
+    "Sila duduk di kawasan menunggu. Nombor giliran anda akan dipanggil pada paparan klinik.",
+  rcGuidanceYesChosen:
+    "Kakitangan telah dimaklumkan untuk membimbing anda. Sila duduk di kawasan menunggu.",
+  rcGuidanceNoChosen:
+    "Anda memilih untuk pergi sendiri. Sila duduk di kawasan menunggu.",
 
   tyTitle: "Terima kasih",
   tySubtitle: "Pembayaran anda telah selesai. Semoga hari anda baik.",
-  tyAnnounce: "Terima kasih. Tajuk tahap 1. Pembayaran anda telah selesai. Semoga hari anda baik. Tekan Tab untuk mula semula bagi pesakit seterusnya.",
+  tyAnnounce:
+    "Terima kasih. Tajuk tahap 1. Pembayaran anda telah selesai. Semoga hari anda baik. Tekan Tab untuk mula semula bagi pesakit seterusnya.",
   tyFollowUpHeading: "Temu janji susulan anda telah ditempah:",
   tySms: "Hantar melalui SMS",
   tyPrint: "Cetak slip",
@@ -779,7 +875,7 @@ const ms: Copy = {
   tyPrintConfirm: "Slip temu janji anda sedang dicetak dari pencetak di bawah.",
   tySmsTitle: "Slip Temu Janji Dihantar Melalui SMS",
   tyPrintTitle: "Sedang Mencetak Slip Temu Janji...",
-};
+}
 
 const ta: Copy = {
   brandKicker: "பாலிகிளினிக் பதிவு",
@@ -795,7 +891,8 @@ const ta: Copy = {
   helpBanner: "தயவுசெய்து காத்திருங்கள் — ஊழியர் விரைவில் உங்களுக்கு உதவுவார்.",
   vgTurnOn: "இயக்க Enter-ஐ அழுத்தவும்.",
   vgTurnOff: "முடக்க Enter-ஐ அழுத்தவும்.",
-  callHelpAnnounce: "உதவியை அழைக்கவும், பொத்தான். ஊழியர் உதவியைக் கோர Enter-ஐ அழுத்தவும்.",
+  callHelpAnnounce:
+    "உதவியை அழைக்கவும், பொத்தான். ஊழியர் உதவியைக் கோர Enter-ஐ அழுத்தவும்.",
   startOverAnnounce: "மீண்டும் தொடங்கு, பொத்தான். கியோஸ்கை மீட்டமைக்க Enter-ஐ அழுத்தவும்.",
   curDollar: "டாலர்",
   curCent: "சதம்",
@@ -804,7 +901,8 @@ const ta: Copy = {
   pressEnterTo: (action) => `${action} Enter-ஐ அழுத்தவும்.`,
   asButton: (label) => `${label}, பொத்தான்.`,
   toMobileNumber: (digits) => ` மொபைல் எண் ${digits}-க்கு,`,
-  checkboxState: (label, checked) => `${label}, செக்பாக்ஸ், ${checked ? "தேர்ந்தெடுக்கப்பட்டது" : "தேர்ந்தெடுக்கப்படவில்லை"}.`,
+  checkboxState: (label, checked) =>
+    `${label}, செக்பாக்ஸ், ${checked ? "தேர்ந்தெடுக்கப்பட்டது" : "தேர்ந்தெடுக்கப்படவில்லை"}.`,
   pressSpaceToToggle: "மாற்ற Space-ஐ அழுத்தவும்.",
   a1SmsAction: "உங்கள் தொலைபேசியில் வரிசை டிக்கெட்டைப் பெற",
   a1PrintAction: "கீழே உள்ள அச்சுப்பொறியிலிருந்து காகித டிக்கெட்டை அச்சிட",
@@ -830,18 +928,22 @@ const ta: Copy = {
   s2BillAction: "பார்த்து செலுத்த",
   s2BillOutstandingSpeech: (amount) => `நிலுவை ${amount}.`,
 
-  s1Instruction: "உங்கள் மொழியைத் தேர்ந்தெடுத்து, உங்கள் அட்டையை ஸ்கேன் செய்யவும் அல்லது கீழே NRIC-ஐ தட்டச்சு செய்யவும்.",
+  s1Instruction:
+    "உங்கள் மொழியைத் தேர்ந்தெடுத்து, உங்கள் அட்டையை ஸ்கேன் செய்யவும் அல்லது கீழே NRIC-ஐ தட்டச்சு செய்யவும்.",
   s1NricLabel: "NRIC எண்",
-  s1NricHint: "உங்கள் 9 எழுத்து NRIC-ஐ தட்டச்சு செய்து Enter அழுத்தவும், அல்லது கீழே உள்ள ஸ்கேனரில் அட்டையை முகம் கீழாக வைக்கவும்.",
+  s1NricHint:
+    "உங்கள் 9 எழுத்து NRIC-ஐ தட்டச்சு செய்து Enter அழுத்தவும், அல்லது கீழே உள்ள ஸ்கேனரில் அட்டையை முகம் கீழாக வைக்கவும்.",
   s1NricAnnounce:
     "NRIC எண், திருத்தும் புலம். உங்கள் 9 எழுத்து NRIC-ஐ தட்டச்சு செய்து Enter அழுத்தவும், அல்லது கீழே உள்ள ஸ்கேனரில் உங்கள் அட்டையை ஸ்கேன் செய்யவும்.",
   s1Deleted: "நீக்கப்பட்டது",
-  s1EnterAnnounce: "Enter, பொத்தான். உங்கள் NRIC எண்ணைச் சமர்ப்பித்துத் தொடர Enter-ஐ அழுத்தவும்.",
+  s1EnterAnnounce:
+    "Enter, பொத்தான். உங்கள் NRIC எண்ணைச் சமர்ப்பித்துத் தொடர Enter-ஐ அழுத்தவும்.",
   s1Announce:
     "மொழி தேர்வு. விருப்பங்களை நகர்த்த Tab-ஐயும் தேர்ந்தெடுக்க Enter-ஐயும் பயன்படுத்தவும், அல்லது திரைக்கு கீழே உள்ள ஸ்கேனரில் உங்கள் அடையாள அட்டை அல்லது தொலைபேசி பார்கோடை முகம் கீழாக வைக்கவும்.",
 
   s2Welcome: "வரவேற்கிறோம், திரு. டான் ஆ தெக்",
-  s2WelcomeSpeech: "வரவேற்கிறோம், திரு டான், இன்று நீங்கள் என்ன செய்ய விரும்புகிறீர்கள்? தேர்ந்தெடுக்க Tab-ஐ அழுத்தவும்.",
+  s2WelcomeSpeech:
+    "வரவேற்கிறோம், திரு டான், இன்று நீங்கள் என்ன செய்ய விரும்புகிறீர்கள்? தேர்ந்தெடுக்க Tab-ஐ அழுத்தவும்.",
   s2Subtitle: "இன்று நீங்கள் என்ன செய்ய விரும்புகிறீர்கள்?",
   s2ClinicTitle: "மருத்துவமனை சந்திப்பு & பதிவு",
   s2ClinicDesc: "இன்றைய முன்பதிவை உறுதிசெய்து உங்கள் வரிசை டிக்கெட்டைப் பெறுங்கள்.",
@@ -859,7 +961,13 @@ const ta: Copy = {
   yes: "ஆம்",
   no: "இல்லை",
   notSure: "எனக்குத் தெரியவில்லை",
-  symptoms: { cough: "இருமல்", fever: "காய்ச்சல்", soreThroat: "தொண்டை வலி", runnyNose: "மூக்கு ஒழுகுதல்", none: "மேற்கண்ட எதுவும் இல்லை" },
+  symptoms: {
+    cough: "இருமல்",
+    fever: "காய்ச்சல்",
+    soreThroat: "தொண்டை வலி",
+    runnyNose: "மூக்கு ஒழுகுதல்",
+    none: "மேற்கண்ட எதுவும் இல்லை",
+  },
   q1Announce:
     "உடல்நல அறிவிப்பு, கேள்வி 1 / 3. தலைப்பு நிலை 1. கடந்த 14 நாட்களில் நீங்கள் வெளிநாடு பயணம் செய்தீர்களா? ஆம் அல்லது இல்லை என்பதைத் தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
   q2Announce:
@@ -867,8 +975,10 @@ const ta: Copy = {
   q3Announce:
     "உடல்நல அறிவிப்பு, கேள்வி 3 / 3. தலைப்பு நிலை 1. உங்களுக்கு 38 டிகிரி செல்சியஸ் அல்லது அதற்கு மேல் காய்ச்சல் உள்ளதா? தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
   q1Instruction: "ஆம் அல்லது இல்லை என்பதைத் தேர்ந்தெடுக்க Tab-ஐ அழுத்தவும்.",
-  q2Instruction: "நீங்கள் ஒன்றுக்கு மேற்பட்டவற்றைத் தேர்ந்தெடுக்கலாம். அறிகுறிகளைப் பார்க்க Tab-ஐ அழுத்தி, பின்னர் தொடரவும் என்பதைத் தேர்ந்தெடுக்கவும்.",
-  q3Instruction: "ஆம், இல்லை, அல்லது எனக்குத் தெரியவில்லை என்பதைத் தேர்ந்தெடுக்க Tab-ஐ அழுத்தவும்.",
+  q2Instruction:
+    "நீங்கள் ஒன்றுக்கு மேற்பட்டவற்றைத் தேர்ந்தெடுக்கலாம். அறிகுறிகளைப் பார்க்க Tab-ஐ அழுத்தி, பின்னர் தொடரவும் என்பதைத் தேர்ந்தெடுக்கவும்.",
+  q3Instruction:
+    "ஆம், இல்லை, அல்லது எனக்குத் தெரியவில்லை என்பதைத் தேர்ந்தெடுக்க Tab-ஐ அழுத்தவும்.",
 
   a1Title: "மருத்துவமனை சந்திப்பு",
   a1TimeLabel: "நேரம்",
@@ -889,11 +999,16 @@ const ta: Copy = {
   b1ExpandMeds: "பொருட்களைப் பார்க்கவும்",
   b1CollapseMeds: "பொருட்களை மறைக்கவும்",
   b1MedAccordionSpeech: (expanded, count) =>
-    `பொத்தான், ${expanded ? "விரிவாக்கப்பட்டது" : "சுருக்கப்பட்டது"}. ${count} மருந்துப் பொருட்களை ${expanded ? "மறைக்க" : "பார்க்க"} Enter அழுத்தவும்.`,
+    `பொத்தான், ${
+      expanded ? "விரிவாக்கப்பட்டது" : "சுருக்கப்பட்டது"
+    }. ${count} மருந்துப் பொருட்களை ${
+      expanded ? "மறைக்க" : "பார்க்க"
+    } Enter அழுத்தவும்.`,
   b1LineSubsidy: "அரசு மானியம் (CHAS / Pioneer)",
   b1Total: "செலுத்த வேண்டிய மொத்தம்",
   b1MethodHeading: "கட்டண முறையைத் தேர்ந்தெடுக்கவும்:",
-  b1MethodSpeech: "கட்டண முறையைத் தேர்ந்தெடுக்கவும். ஒரு விருப்பத்தைத் தேர்ந்தெடுக்க Tab-ஐ பயன்படுத்தவும்.",
+  b1MethodSpeech:
+    "கட்டண முறையைத் தேர்ந்தெடுக்கவும். ஒரு விருப்பத்தைத் தேர்ந்தெடுக்க Tab-ஐ பயன்படுத்தவும்.",
   b1Credit: "கிரெடிட் கார்டு",
   b1CreditDesc: "அசைக்கவும் அல்லது தொடவும்",
   b1PayNow: "PayNow QR",
@@ -902,12 +1017,16 @@ const ta: Copy = {
     "நிலுவை கட்டண விவரங்கள். தலைப்பு நிலை 1. ஆலோசனை 45 டாலர். மருந்து 12 டாலர் 40 சென்ட். அரசு Pioneer மானியம் கழித்து 39 டாலர். செலுத்த வேண்டிய மொத்தம் பதினெட்டு டாலர் நாற்பது சென்ட். கட்டண முறையைத் தேர்ந்தெடுக்க Tab-ஐ அழுத்தவும்.",
 
   piQrTitle: "PayNow மூலம் ஸ்கேன் செய்து செலுத்துங்கள்",
-  piQrInstruction: "கட்டணம் செலுத்த உங்கள் வங்கி செயலியால் இந்த QR குறியீட்டை ஸ்கேன் செய்யவும்.",
+  piQrInstruction:
+    "கட்டணம் செலுத்த உங்கள் வங்கி செயலியால் இந்த QR குறியீட்டை ஸ்கேன் செய்யவும்.",
   piQrAnnounce: "கட்டணம் செலுத்த உங்கள் வங்கி செயலியால் இந்த QR குறியீட்டை ஸ்கேன் செய்யவும்.",
   piCardTitle: "அட்டை மூலம் செலுத்துங்கள்",
-  piCardInstruction: "விசைப்பலகையின் இடதுபுறத்தில் உள்ள முனையத்தில் உங்கள் அட்டையைத் தட்டவும் அல்லது செருகவும்.",
-  piCardAnnounce: "விசைப்பலகையின் இடதுபுறத்தில் உள்ள முனையத்தில் உங்கள் அட்டையைத் தட்டவும் அல்லது செருகவும்.",
-  piContinueHint: "கட்டணம் முடிந்ததும் திரையில் எங்கு வேண்டுமானாலும் தட்டவும் அல்லது Enter அழுத்தவும்.",
+  piCardInstruction:
+    "விசைப்பலகையின் இடதுபுறத்தில் உள்ள முனையத்தில் உங்கள் அட்டையைத் தட்டவும் அல்லது செருகவும்.",
+  piCardAnnounce:
+    "விசைப்பலகையின் இடதுபுறத்தில் உள்ள முனையத்தில் உங்கள் அட்டையைத் தட்டவும் அல்லது செருகவும்.",
+  piContinueHint:
+    "கட்டணம் முடிந்ததும் திரையில் எங்கு வேண்டுமானாலும் தட்டவும் அல்லது Enter அழுத்தவும்.",
 
   b2Title: "தொடர் சந்திப்பு(களை)த் தேர்ந்தெடுக்கவும்",
   b2Note: "மருத்துவர் பட்டினி இரத்த பரிசோதனையைக் கோரினார்.",
@@ -921,7 +1040,8 @@ const ta: Copy = {
 
   psTitle: "கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது",
   psSubtitle: `நீங்கள் ${SESSION.outstanding} செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்?`,
-  psIntro: "நீங்கள் 18 டாலர் 40 சதம் செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்? தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
+  psIntro:
+    "நீங்கள் 18 டாலர் 40 சதம் செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்? தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
   psSms: "SMS மூலம் அனுப்பு",
   psPrint: "ரசீதை அச்சிடு",
   psAnnounce: `கட்டணம் வெற்றிகரமாக செலுத்தப்பட்டது. தலைப்பு நிலை 1. நீங்கள் ${SESSION.outstanding} செலுத்தினீர்கள். உங்கள் ரசீதை எப்படி பெற விரும்புகிறீர்கள்? S M S மூலம் அனுப்ப அல்லது காகித ரசீதை அச்சிட Tab-ஐ அழுத்தவும்.`,
@@ -943,24 +1063,31 @@ const ta: Copy = {
   rcSmsTitle: "வரிசைச் சீட்டு SMS மூலம் அனுப்பப்பட்டது",
   rcPrintTitle: "காகித சீட்டு அச்சிடப்படுகிறது...",
   rcSmsConfirm: `உங்கள் வரிசைச் சீட்டு ${SESSION.mobile} என்ற எண்ணிற்கு எஸ்எம்எஸ் மூலம் அனுப்பப்பட்டுள்ளது.`,
-  rcPrintConfirm: "அலமாரியின் கீழே உள்ள அச்சுப்பொறியிலிருந்து உங்கள் வரிசைச் சீட்டு அச்சிடப்படுகிறது.",
-  rcStaffGuidance: "உங்களை மருந்தகத்திற்கு வழிநடத்த ஒரு ஊழியர் விரைவில் உங்களிடம் வருவார்.",
+  rcPrintConfirm:
+    "அலமாரியின் கீழே உள்ள அச்சுப்பொறியிலிருந்து உங்கள் வரிசைச் சீட்டு அச்சிடப்படுகிறது.",
+  rcStaffGuidance:
+    "உங்களை மருந்தகத்திற்கு வழிநடத்த ஒரு ஊழியர் விரைவில் உங்களிடம் வருவார்.",
   rcStaffGuidanceSub: "தயவுசெய்து காத்திருப்பு பகுதியில் அமர்ந்திருக்கவும்.",
   rcGuidanceQuestion: "மருத்துவமனையைக் கண்டறிய உங்களுக்கு உதவி தேவையா?",
-  rcGuidancePromptSpeech: "மருத்துவமனையைக் கண்டறிய உங்களுக்கு உதவி தேவையா? ஆம் அல்லது இல்லை என்பதைத் தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
+  rcGuidancePromptSpeech:
+    "மருத்துவமனையைக் கண்டறிய உங்களுக்கு உதவி தேவையா? ஆம் அல்லது இல்லை என்பதைத் தேர்வு செய்ய Tab-ஐ அழுத்தவும்.",
   rcGuidanceYes: "ஆம், உதவி தேவை",
   rcGuidanceNo: "இல்லை, நானே செல்ல முடியும்",
   rcGuidanceYesAction: "உங்களை மருத்துவமனைக்கு வழிநடத்த ஊழியர் உதவியைக் கோர",
   rcGuidanceNoAction: "காத்திருப்பு பகுதிக்கு நீங்களாகவே செல்ல",
   rcGuidanceStaffAlertedTitle: "ஊழியருக்கு தெரிவிக்கப்பட்டது",
   rcGuidanceNoHelpTitle: "காத்திருப்பு பகுதிக்குச் செல்லவும்",
-  rcGuidanceNoHelpDesc: "தயவுசெய்து காத்திருப்பு பகுதியில் அமருங்கள். உங்கள் வரிசை எண் மருத்துவமனை திரையில் அழைக்கப்படும்.",
-  rcGuidanceYesChosen: "உங்களை வழிநடத்த ஊழியருக்கு தெரிவிக்கப்பட்டுள்ளது. காத்திருப்பு பகுதியில் அமர்ந்திருக்கவும்.",
-  rcGuidanceNoChosen: "நீங்களாகவே செல்ல தேர்வு செய்துள்ளீர்கள். தயவுசெய்து காத்திருப்பு பகுதியில் அமருங்கள்.",
+  rcGuidanceNoHelpDesc:
+    "தயவுசெய்து காத்திருப்பு பகுதியில் அமருங்கள். உங்கள் வரிசை எண் மருத்துவமனை திரையில் அழைக்கப்படும்.",
+  rcGuidanceYesChosen:
+    "உங்களை வழிநடத்த ஊழியருக்கு தெரிவிக்கப்பட்டுள்ளது. காத்திருப்பு பகுதியில் அமர்ந்திருக்கவும்.",
+  rcGuidanceNoChosen:
+    "நீங்களாகவே செல்ல தேர்வு செய்துள்ளீர்கள். தயவுசெய்து காத்திருப்பு பகுதியில் அமருங்கள்.",
 
   tyTitle: "நன்றி",
   tySubtitle: "உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும்.",
-  tyAnnounce: "நன்றி. தலைப்பு நிலை 1. உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும். அடுத்த நோயாளிக்கு மீண்டும் தொடங்க Tab-ஐ அழுத்தவும்.",
+  tyAnnounce:
+    "நன்றி. தலைப்பு நிலை 1. உங்கள் கட்டணம் முடிந்தது. இனிய நாள் அமையட்டும். அடுத்த நோயாளிக்கு மீண்டும் தொடங்க Tab-ஐ அழுத்தவும்.",
   tyFollowUpHeading: "உங்கள் தொடர் சந்திப்பு பதிவு செய்யப்பட்டது:",
   tySms: "SMS மூலம் அனுப்பு",
   tyPrint: "சீட்டை அச்சிடு",
@@ -968,11 +1095,11 @@ const ta: Copy = {
   tyPrintConfirm: "உங்கள் சந்திப்பு சீட்டு கீழே உள்ள அச்சுப்பொறியில் அச்சிடப்படுகிறது.",
   tySmsTitle: "சந்திப்பு சீட்டு SMS மூலம் அனுப்பப்பட்டது",
   tyPrintTitle: "சந்திப்பு சீட்டு அச்சிடப்படுகிறது...",
-};
+}
 
-const dict: Record<Lang, Copy> = { en, zh, ms, ta };
+const dict: Record<Lang, Copy> = { en, zh, ms, ta }
 
-export const copyFor = (lang: Lang): Copy => dict[lang];
+export const copyFor = (lang: Lang): Copy => dict[lang]
 
 // Convert a displayed amount like "$45.00" or "-$39.00" into a spoken phrase in
 // the active language ("45 dollars", "12 dollars 40 cents", "minus 39 dollars"),
@@ -981,26 +1108,37 @@ export const copyFor = (lang: Lang): Copy => dict[lang];
 // "(Mon) · 8:05 AM" → "Monday at 8:05 AM"; "Jan" → "January", etc.
 export const expandDateForSpeech = (date: string): string =>
   date
-    .replace(/\(Mon\)/g, "Monday").replace(/\(Tue\)/g, "Tuesday").replace(/\(Wed\)/g, "Wednesday")
-    .replace(/\(Thu\)/g, "Thursday").replace(/\(Fri\)/g, "Friday")
-    .replace(/\(Sat\)/g, "Saturday").replace(/\(Sun\)/g, "Sunday")
-    .replace(/\bJan\b/g, "January").replace(/\bFeb\b/g, "February").replace(/\bMar\b/g, "March")
-    .replace(/\bApr\b/g, "April").replace(/\bJun\b/g, "June").replace(/\bJul\b/g, "July")
-    .replace(/\bAug\b/g, "August").replace(/\bSep\b/g, "September").replace(/\bOct\b/g, "October")
-    .replace(/\bNov\b/g, "November").replace(/\bDec\b/g, "December")
-    .replace(/·/g, "at");
+    .replace(/\(Mon\)/g, "Monday")
+    .replace(/\(Tue\)/g, "Tuesday")
+    .replace(/\(Wed\)/g, "Wednesday")
+    .replace(/\(Thu\)/g, "Thursday")
+    .replace(/\(Fri\)/g, "Friday")
+    .replace(/\(Sat\)/g, "Saturday")
+    .replace(/\(Sun\)/g, "Sunday")
+    .replace(/\bJan\b/g, "January")
+    .replace(/\bFeb\b/g, "February")
+    .replace(/\bMar\b/g, "March")
+    .replace(/\bApr\b/g, "April")
+    .replace(/\bJun\b/g, "June")
+    .replace(/\bJul\b/g, "July")
+    .replace(/\bAug\b/g, "August")
+    .replace(/\bSep\b/g, "September")
+    .replace(/\bOct\b/g, "October")
+    .replace(/\bNov\b/g, "November")
+    .replace(/\bDec\b/g, "December")
+    .replace(/·/g, "at")
 
 // "9123 1234" -> "9, 1, 2, 3, 1, 2, 3, 4" so TTS reads phone numbers digit by digit.
 export const expandPhoneForSpeech = (phone: string): string =>
-  phone.replace(/\D/g, "").split("").join(", ");
+  phone.replace(/\D/g, "").split("").join(", ")
 
 export const moneySpeech = (value: string, t: Copy): string => {
-  const negative = value.trim().startsWith("-");
-  const digits = value.replace(/[^0-9.]/g, "");
-  const [whole, frac = ""] = digits.split(".");
-  const dollars = parseInt(whole || "0", 10);
-  const cents = parseInt((frac + "00").slice(0, 2), 10);
-  let phrase = `${dollars} ${t.curDollar}`;
-  if (cents > 0) phrase += ` ${cents} ${t.curCent}`;
-  return negative ? `${t.curMinus} ${phrase}` : phrase;
-};
+  const negative = value.trim().startsWith("-")
+  const digits = value.replace(/[^0-9.]/g, "")
+  const [whole, frac = ""] = digits.split(".")
+  const dollars = parseInt(whole || "0", 10)
+  const cents = parseInt((frac + "00").slice(0, 2), 10)
+  let phrase = `${dollars} ${t.curDollar}`
+  if (cents > 0) phrase += ` ${cents} ${t.curCent}`
+  return negative ? `${t.curMinus} ${phrase}` : phrase
+}

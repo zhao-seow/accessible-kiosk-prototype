@@ -1,59 +1,71 @@
-import { useEffect, useRef, useState } from "react";
-import { KioskChrome } from "../components/KioskChrome";
-import { ActionCard } from "../components/ActionCard";
-import { Icon } from "../components/Icons";
-import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION, expandDateForSpeech, expandPhoneForSpeech } from "../kiosk/copy";
-import { useReadAloud } from "../hooks/useSpeech";
+import { useEffect, useRef, useState } from "react"
+import { KioskChrome } from "../components/KioskChrome"
+import { ActionCard } from "../components/ActionCard"
+import { Icon } from "../components/Icons"
+import { useKiosk } from "../kiosk/KioskContext"
+import {
+  SESSION,
+  expandDateForSpeech,
+  expandPhoneForSpeech,
+} from "../kiosk/copy"
+import { useReadAloud } from "../hooks/useSpeech"
 
 export function ThankYou() {
-  const { startOver, followUp, t } = useKiosk();
-  const [delivery, setDelivery] = useState<null | "sms" | "print">(null);
+  const { startOver, followUp, t } = useKiosk()
+  const [delivery, setDelivery] = useState<null | "sms" | "print">(null)
 
-  const slot = followUp != null ? SESSION.followUp[followUp] : null;
+  const slot = followUp != null ? SESSION.followUp[followUp] : null
 
   // --- Phase 1 (Selection) Refs & Auto-read Chain ---
-  const initialInfoRef = useRef<HTMLDivElement>(null);
-  const promptRef = useRef<HTMLParagraphElement>(null);
+  const initialInfoRef = useRef<HTMLDivElement>(null)
+  const promptRef = useRef<HTMLParagraphElement>(null)
 
   const advanceFromInitialInfo = () => {
-    if (document.activeElement === initialInfoRef.current) promptRef.current?.focus();
-  };
+    if (document.activeElement === initialInfoRef.current)
+      promptRef.current?.focus()
+  }
   const detailsSpeech = slot
     ? `${t.tyFollowUpHeading} ${t.b2LabLabel}: ${expandDateForSpeech(slot.lab)}.`
-    : "";
-  const initialInfoRead = useReadAloud(detailsSpeech, "static", { onEnd: advanceFromInitialInfo });
+    : ""
+  const initialInfoRead = useReadAloud(detailsSpeech, "static", {
+    onEnd: advanceFromInitialInfo,
+  })
 
-  const promptSpeech = `${t.tyFollowUpHeading} ${t.b2NoteInstruction}`;
-  const promptRead = useReadAloud(promptSpeech, "static");
+  const promptSpeech = `${t.tyFollowUpHeading} ${t.b2NoteInstruction}`
+  const promptRead = useReadAloud(promptSpeech, "static")
 
   // --- Phase 2 (Confirmation) Refs & Auto-read Chain ---
-  const messageRef = useRef<HTMLDivElement>(null);
-  const startOverRef = useRef<HTMLButtonElement>(null);
+  const messageRef = useRef<HTMLDivElement>(null)
+  const startOverRef = useRef<HTMLButtonElement>(null)
 
-  const isSms = delivery === "sms";
+  const isSms = delivery === "sms"
   const messageSpeech = slot
     ? isSms
-      ? t.tySmsConfirm.replace(SESSION.mobile, expandPhoneForSpeech(SESSION.mobile))
+      ? t.tySmsConfirm.replace(
+          SESSION.mobile,
+          expandPhoneForSpeech(SESSION.mobile),
+        )
       : t.tyPrintConfirm
-    : t.tySubtitle;
+    : t.tySubtitle
 
   const advanceFromMessage = () => {
     if (document.activeElement === messageRef.current) {
-      startOverRef.current?.focus();
+      startOverRef.current?.focus()
     }
-  };
-  const messageRead = useReadAloud(messageSpeech, "static", { onEnd: advanceFromMessage });
+  }
+  const messageRead = useReadAloud(messageSpeech, "static", {
+    onEnd: advanceFromMessage,
+  })
 
-  const choose = (method: "sms" | "print") => setDelivery(method);
+  const choose = (method: "sms" | "print") => setDelivery(method)
 
   // When delivery method is selected, focus the confirmation card so it auto-reads first,
   // then cascades to the start over button.
   useEffect(() => {
     if (delivery) {
-      messageRef.current?.focus();
+      messageRef.current?.focus()
     }
-  }, [delivery]);
+  }, [delivery])
 
   return (
     <KioskChrome title={t.tyTitle}>
@@ -80,8 +92,12 @@ export function ThankYou() {
                 <Icon name="flask" className="h-7 w-7" />
               </span>
               <div>
-                <span className="block text-base font-semibold text-muted-foreground">{t.b2LabLabel}</span>
-                <span className="block text-2xl font-bold text-foreground mt-0.5">{slot.lab}</span>
+                <span className="block text-base font-semibold text-muted-foreground">
+                  {t.b2LabLabel}
+                </span>
+                <span className="block text-2xl font-bold text-foreground mt-0.5">
+                  {slot.lab}
+                </span>
               </div>
             </div>
 
@@ -179,5 +195,5 @@ export function ThankYou() {
         )}
       </div>
     </KioskChrome>
-  );
+  )
 }

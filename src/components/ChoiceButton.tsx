@@ -1,19 +1,27 @@
-import { useReadAloud } from "../hooks/useSpeech";
-import { useTapGuard } from "../hooks/useMotorFilters";
+import { useReadAloud } from "../hooks/useSpeech"
+import { useTapGuard } from "../hooks/useMotorFilters"
 
 interface ChoiceButtonProps {
-  label: string;
-  speech: string;
-  onSelect: () => void;
-  selected?: boolean;
-  tone?: "primary" | "neutral";
-  compact?: boolean;
-  buttonRef?: React.Ref<HTMLButtonElement>;
+  label: string
+  speech: string
+  onSelect: () => void
+  selected?: boolean
+  tone?: "primary" | "neutral"
+  compact?: boolean
+  buttonRef?: React.Ref<HTMLButtonElement>
 }
 
-export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutral", compact, buttonRef }: ChoiceButtonProps) {
-  const { start, stop, readingClass } = useReadAloud(speech, "interactive");
-  const guarded = useTapGuard(onSelect);
+export function ChoiceButton({
+  label,
+  speech,
+  onSelect,
+  selected,
+  tone = "neutral",
+  compact,
+  buttonRef,
+}: ChoiceButtonProps) {
+  const { start, stop, readingClass } = useReadAloud(speech, "interactive")
+  const guarded = useTapGuard(onSelect)
 
   return (
     <button
@@ -37,5 +45,5 @@ export function ChoiceButton({ label, speech, onSelect, selected, tone = "neutra
     >
       {label}
     </button>
-  );
+  )
 }

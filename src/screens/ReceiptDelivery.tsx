@@ -1,117 +1,128 @@
-import { useEffect, useRef, useState } from "react";
-import { KioskChrome } from "../components/KioskChrome";
-import { ActionCard } from "../components/ActionCard";
-import { ChoiceButton } from "../components/ChoiceButton";
-import { Icon } from "../components/Icons";
-import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION, expandPhoneForSpeech } from "../kiosk/copy";
-import { useReadAloud, useSpeech } from "../hooks/useSpeech";
+import { useEffect, useRef, useState } from "react"
+import { KioskChrome } from "../components/KioskChrome"
+import { ActionCard } from "../components/ActionCard"
+import { ChoiceButton } from "../components/ChoiceButton"
+import { Icon } from "../components/Icons"
+import { useKiosk } from "../kiosk/KioskContext"
+import { SESSION, expandPhoneForSpeech } from "../kiosk/copy"
+import { useReadAloud, useSpeech } from "../hooks/useSpeech"
 
 export function ReceiptDelivery() {
-  const { startOver, ticketDelivery, paymentMethod, voiceGuide, t } = useKiosk();
-  const { speak } = useSpeech();
-  const isSms = ticketDelivery === "sms" || paymentMethod === "sms";
+  const { startOver, ticketDelivery, paymentMethod, voiceGuide, t } = useKiosk()
+  const { speak } = useSpeech()
+  const isSms = ticketDelivery === "sms" || paymentMethod === "sms"
 
-  const [guidanceChoice, setGuidanceChoice] = useState<null | "yes" | "no">(null);
-  const [popup, setPopup] = useState<null | "yes" | "no">(null);
+  const [guidanceChoice, setGuidanceChoice] = useState<null | "yes" | "no">(
+    null,
+  )
+  const [popup, setPopup] = useState<null | "yes" | "no">(null)
 
-  const queueRef = useRef<HTMLDivElement>(null);
-  const messageRef = useRef<HTMLDivElement>(null);
-  const guidancePromptRef = useRef<HTMLParagraphElement>(null);
-  const yesBtnRef = useRef<HTMLButtonElement>(null);
-  const noBtnRef = useRef<HTMLButtonElement>(null);
-  const staffRef = useRef<HTMLDivElement>(null);
-  const startOverRef = useRef<HTMLButtonElement>(null);
-  const popupOkRef = useRef<HTMLButtonElement>(null);
+  const queueRef = useRef<HTMLDivElement>(null)
+  const messageRef = useRef<HTMLDivElement>(null)
+  const guidancePromptRef = useRef<HTMLParagraphElement>(null)
+  const yesBtnRef = useRef<HTMLButtonElement>(null)
+  const noBtnRef = useRef<HTMLButtonElement>(null)
+  const staffRef = useRef<HTMLDivElement>(null)
+  const startOverRef = useRef<HTMLButtonElement>(null)
+  const popupOkRef = useRef<HTMLButtonElement>(null)
 
   // Guided reading chain:
   // Title -> Queue Number -> SMS / Print Message -> Guidance Question (if Voice Guide on) -> Start Over
   const advanceFromQueue = () => {
-    if (document.activeElement === queueRef.current) messageRef.current?.focus();
-  };
-  const queueSpeech = `${t.rcQueueLabel}: ${SESSION.queueNumber}.`;
-  const queueRead = useReadAloud(queueSpeech, "static", { onEnd: advanceFromQueue });
+    if (document.activeElement === queueRef.current) messageRef.current?.focus()
+  }
+  const queueSpeech = `${t.rcQueueLabel}: ${SESSION.queueNumber}.`
+  const queueRead = useReadAloud(queueSpeech, "static", {
+    onEnd: advanceFromQueue,
+  })
 
   const advanceFromMessage = () => {
     if (document.activeElement === messageRef.current) {
       if (voiceGuide) {
         if (guidanceChoice) {
-          staffRef.current?.focus();
+          staffRef.current?.focus()
         } else {
-          guidancePromptRef.current?.focus();
+          guidancePromptRef.current?.focus()
         }
       } else {
-        startOverRef.current?.focus();
+        startOverRef.current?.focus()
       }
     }
-  };
+  }
 
   const messageSpeech = isSms
-    ? t.rcSmsConfirm.replace(SESSION.mobile, expandPhoneForSpeech(SESSION.mobile))
-    : t.rcPrintConfirm;
-  const messageRead = useReadAloud(messageSpeech, "static", { onEnd: advanceFromMessage });
+    ? t.rcSmsConfirm.replace(
+        SESSION.mobile,
+        expandPhoneForSpeech(SESSION.mobile),
+      )
+    : t.rcPrintConfirm
+  const messageRead = useReadAloud(messageSpeech, "static", {
+    onEnd: advanceFromMessage,
+  })
 
   const advanceFromGuidancePrompt = () => {
     if (document.activeElement === guidancePromptRef.current) {
-      yesBtnRef.current?.focus();
+      yesBtnRef.current?.focus()
     }
-  };
+  }
   const guidancePromptRead = useReadAloud(t.rcGuidancePromptSpeech, "static", {
     onEnd: advanceFromGuidancePrompt,
-  });
+  })
 
   const advanceFromStaff = () => {
     if (document.activeElement === staffRef.current && startOverRef.current) {
-      startOverRef.current.focus();
+      startOverRef.current.focus()
     }
-  };
+  }
   const chosenSpeech =
     guidanceChoice === "yes"
       ? `${t.rcGuidanceStaffAlertedTitle}. ${t.rcGuidanceYesChosen}`
-      : `${t.rcGuidanceNoHelpTitle}. ${t.rcGuidanceNoChosen}`;
-  const chosenRead = useReadAloud(chosenSpeech, "static", { onEnd: advanceFromStaff });
+      : `${t.rcGuidanceNoHelpTitle}. ${t.rcGuidanceNoChosen}`
+  const chosenRead = useReadAloud(chosenSpeech, "static", {
+    onEnd: advanceFromStaff,
+  })
 
   const handleSelectGuidance = (choice: "yes" | "no") => {
-    setGuidanceChoice(choice);
-    setPopup(choice);
+    setGuidanceChoice(choice)
+    setPopup(choice)
     const speechText =
       choice === "yes"
         ? `${t.rcGuidanceStaffAlertedTitle}. ${t.rcGuidanceYesChosen}. ${t.pressEnterTo(t.rcDone)}`
-        : `${t.rcGuidanceNoHelpTitle}. ${t.rcGuidanceNoHelpDesc}. ${t.pressEnterTo(t.rcDone)}`;
-    speak(speechText, { force: true, priority: true });
-  };
+        : `${t.rcGuidanceNoHelpTitle}. ${t.rcGuidanceNoHelpDesc}. ${t.pressEnterTo(t.rcDone)}`
+    speak(speechText, { force: true, priority: true })
+  }
 
   const closePopup = () => {
-    setPopup(null);
-    window.speechSynthesis?.cancel();
+    setPopup(null)
+    window.speechSynthesis?.cancel()
     setTimeout(() => {
       if (startOverRef.current) {
-        startOverRef.current.focus();
+        startOverRef.current.focus()
       } else {
-        staffRef.current?.focus();
+        staffRef.current?.focus()
       }
-    }, 50);
-  };
+    }, 50)
+  }
 
   // Auto-focus the OK button when confirmation popup appears
   useEffect(() => {
     if (popup) {
-      popupOkRef.current?.focus();
+      popupOkRef.current?.focus()
     }
-  }, [popup]);
+  }, [popup])
 
   // Allow Enter or Escape to dismiss modal
   useEffect(() => {
-    if (!popup) return;
+    if (!popup) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === "Enter") {
-        e.preventDefault();
-        closePopup();
+        e.preventDefault()
+        closePopup()
       }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [popup]);
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [popup])
 
   return (
     <KioskChrome title={t.rcTitle}>
@@ -198,14 +209,21 @@ export function ReceiptDelivery() {
                   guidanceChoice === "yes" ? "bg-primary" : "bg-success",
                 ].join(" ")}
               >
-                <Icon name={guidanceChoice === "yes" ? "help" : "check"} className="h-8 w-8" />
+                <Icon
+                  name={guidanceChoice === "yes" ? "help" : "check"}
+                  className="h-8 w-8"
+                />
               </span>
               <div>
                 <p className="font-display text-2xl font-bold text-foreground">
-                  {guidanceChoice === "yes" ? t.rcGuidanceStaffAlertedTitle : t.rcGuidanceNoHelpTitle}
+                  {guidanceChoice === "yes"
+                    ? t.rcGuidanceStaffAlertedTitle
+                    : t.rcGuidanceNoHelpTitle}
                 </p>
                 <p className="text-lg text-muted-foreground mt-0.5">
-                  {guidanceChoice === "yes" ? t.rcGuidanceYesChosen : t.rcGuidanceNoChosen}
+                  {guidanceChoice === "yes"
+                    ? t.rcGuidanceYesChosen
+                    : t.rcGuidanceNoChosen}
                 </p>
               </div>
             </div>
@@ -269,7 +287,7 @@ export function ReceiptDelivery() {
           aria-labelledby="guidance-popup-title"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6 backdrop-blur-xs"
           onClick={(e) => {
-            if (e.target === e.currentTarget) closePopup();
+            if (e.target === e.currentTarget) closePopup()
           }}
         >
           <div className="flex w-full max-w-lg flex-col items-center gap-5 rounded-3xl border-2 border-primary bg-card p-8 text-center shadow-2xl">
@@ -279,15 +297,25 @@ export function ReceiptDelivery() {
                 popup === "yes" ? "bg-primary" : "bg-success",
               ].join(" ")}
             >
-              <Icon name={popup === "yes" ? "help" : "check"} className="h-10 w-10" />
+              <Icon
+                name={popup === "yes" ? "help" : "check"}
+                className="h-10 w-10"
+              />
             </div>
 
             <div>
-              <h2 id="guidance-popup-title" className="font-display text-3xl font-bold text-foreground">
-                {popup === "yes" ? t.rcGuidanceStaffAlertedTitle : t.rcGuidanceNoHelpTitle}
+              <h2
+                id="guidance-popup-title"
+                className="font-display text-3xl font-bold text-foreground"
+              >
+                {popup === "yes"
+                  ? t.rcGuidanceStaffAlertedTitle
+                  : t.rcGuidanceNoHelpTitle}
               </h2>
               <p className="mt-2 text-xl leading-relaxed text-muted-foreground">
-                {popup === "yes" ? t.rcGuidanceYesChosen : t.rcGuidanceNoHelpDesc}
+                {popup === "yes"
+                  ? t.rcGuidanceYesChosen
+                  : t.rcGuidanceNoHelpDesc}
               </p>
             </div>
 
@@ -303,6 +331,5 @@ export function ReceiptDelivery() {
         </div>
       ) : null}
     </KioskChrome>
-  );
+  )
 }
-

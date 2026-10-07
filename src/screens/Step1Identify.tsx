@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
-import { KioskChrome } from "../components/KioskChrome";
-import { Icon } from "../components/Icons";
-import { useKiosk } from "../kiosk/KioskContext";
-import { LANGUAGES, type Lang } from "../kiosk/i18n";
-import { type SpeechContent, useReadAloud, useSpeech } from "../hooks/useSpeech";
+import { useEffect, useRef } from "react"
+import { KioskChrome } from "../components/KioskChrome"
+import { Icon } from "../components/Icons"
+import { useKiosk } from "../kiosk/KioskContext"
+import { LANGUAGES, type Lang } from "../kiosk/i18n"
+import { type SpeechContent, useReadAloud, useSpeech } from "../hooks/useSpeech"
 
 // Dual-voice on-focus announcements:
 // For non-English languages, the English voice announces the language name first,
@@ -13,10 +13,12 @@ function langAnnounce(code: Lang, selected: boolean): SpeechContent {
     case "en":
       return [
         {
-          text: `Please select your language. English, ${selected ? "currently selected. " : ""}Press Enter to select. Press Tab to move to the next language.`,
+          text: `Please select your language. English, ${
+            selected ? "currently selected. " : ""
+          }Press Enter to select. Press Tab to move to the next language.`,
           lang: "en",
         },
-      ];
+      ]
     case "zh":
       return [
         {
@@ -27,7 +29,7 @@ function langAnnounce(code: Lang, selected: boolean): SpeechContent {
           text: `中文，按钮。${selected ? "已选择。" : ""}按 Enter 键选择。`,
           lang: "zh",
         },
-      ];
+      ]
     case "ms":
       return [
         {
@@ -35,10 +37,12 @@ function langAnnounce(code: Lang, selected: boolean): SpeechContent {
           lang: "en",
         },
         {
-          text: `Bahasa Melayu, butang. ${selected ? "sedang dipilih. " : ""}Tekan Enter untuk pilih.`,
+          text: `Bahasa Melayu, butang. ${
+            selected ? "sedang dipilih. " : ""
+          }Tekan Enter untuk pilih.`,
           lang: "ms",
         },
-      ];
+      ]
     case "ta":
       return [
         {
@@ -46,10 +50,12 @@ function langAnnounce(code: Lang, selected: boolean): SpeechContent {
           lang: "en",
         },
         {
-          text: `தமிழ், பொத்தான். ${selected ? "தற்போது தேர்ந்தெடுக்கப்பட்டது. " : ""}தேர்ந்தெடுக்க Enter-ஐ அழுத்தவும்.`,
+          text: `தமிழ், பொத்தான். ${
+            selected ? "தற்போது தேர்ந்தெடுக்கப்பட்டது. " : ""
+          }தேர்ந்தெடுக்க Enter-ஐ அழுத்தவும்.`,
           lang: "ta",
         },
-      ];
+      ]
   }
 }
 
@@ -60,13 +66,16 @@ function LangButton({
   onSelect,
   buttonRef,
 }: {
-  code: Lang;
-  label: string;
-  active: boolean;
-  onSelect: () => void;
-  buttonRef?: React.Ref<HTMLButtonElement>;
+  code: Lang
+  label: string
+  active: boolean
+  onSelect: () => void
+  buttonRef?: React.Ref<HTMLButtonElement>
 }) {
-  const { start, stop, readingClass } = useReadAloud(langAnnounce(code, active), "interactive");
+  const { start, stop, readingClass } = useReadAloud(
+    langAnnounce(code, active),
+    "interactive",
+  )
   return (
     <button
       ref={buttonRef}
@@ -79,78 +88,84 @@ function LangButton({
       aria-pressed={active}
       className={[
         "flex items-center justify-center rounded-2xl border-2 min-h-[6.5rem] px-6 font-display text-3xl font-semibold transition-all duration-150 outline-none",
-        active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-card-foreground hover:border-primary hover:bg-primary-soft",
+        active
+          ? "border-primary bg-primary text-primary-foreground"
+          : "border-border bg-card text-card-foreground hover:border-primary hover:bg-primary-soft",
         readingClass,
       ].join(" ")}
     >
       {label}
     </button>
-  );
+  )
 }
 
 export function Step1Identify() {
-  const { lang, setLang, nric, setNric, goTo, voiceGuide, t } = useKiosk();
-  const { speak } = useSpeech();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const englishBtnRef = useRef<HTMLButtonElement>(null);
+  const { lang, setLang, nric, setNric, goTo, voiceGuide, t } = useKiosk()
+  const { speak } = useSpeech()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const englishBtnRef = useRef<HTMLButtonElement>(null)
   // Latest NRIC value for the window keydown handler (avoids stale closure).
-  const nricRef = useRef(nric);
-  nricRef.current = nric;
+  const nricRef = useRef(nric)
+  nricRef.current = nric
 
   // Announce each character as it is typed, and what was removed on backspace.
   // Interrupts any in-progress speech (the controller cancels before speaking).
-  const prevNricRef = useRef(nric);
+  const prevNricRef = useRef(nric)
   useEffect(() => {
-    const prev = prevNricRef.current;
-    prevNricRef.current = nric;
-    if (nric === prev) return;
+    const prev = prevNricRef.current
+    prevNricRef.current = nric
+    if (nric === prev) return
     if (nric.length > prev.length) {
       // Added characters (usually one) — read the newly appended text.
-      speak(nric.slice(prev.length).split("").join(" "));
+      speak(nric.slice(prev.length).split("").join(" "))
     } else {
       // Deleted characters — announce what was removed.
-      const removed = prev.slice(nric.length).split("").join(" ");
-      speak(`${removed} ${t.s1Deleted}`);
+      const removed = prev.slice(nric.length).split("").join(" ")
+      speak(`${removed} ${t.s1Deleted}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nric]);
+  }, [nric])
 
   // Announce in the currently-selected language so switching language updates the voiceover.
-  const nricRead = useReadAloud(t.s1NricAnnounce, "interactive", { lang });
-  const enterRead = useReadAloud(t.s1EnterAnnounce, "interactive", { lang });
+  const nricRead = useReadAloud(t.s1NricAnnounce, "interactive", { lang })
+  const enterRead = useReadAloud(t.s1EnterAnnounce, "interactive", { lang })
 
   // Do NOT auto-focus anything on load. When Voice Guide is turned on, move focus
   // to the English language button so the assistive flow starts from language selection.
   useEffect(() => {
-    if (voiceGuide) englishBtnRef.current?.focus();
+    if (voiceGuide) englishBtnRef.current?.focus()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [voiceGuide]);
+  }, [voiceGuide])
 
   // Type-to-fill: any alphanumeric key (typed or from the drop-scanner wedge) routes
   // into the NRIC field, even when it isn't focused yet. Enter / Shift / Tab / modifiers
   // are left alone so navigation and submission still work.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-      if (e.key.length !== 1 || !/[a-zA-Z0-9]/.test(e.key)) return;
-      if (document.activeElement === inputRef.current) return; // already typing in field
-      e.preventDefault();
-      setNric((nricRef.current + e.key).toUpperCase());
-      inputRef.current?.focus();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [setNric]);
+      if (e.ctrlKey || e.metaKey || e.altKey) return
+      if (e.key.length !== 1 || !/[a-zA-Z0-9]/.test(e.key)) return
+      if (document.activeElement === inputRef.current) return // already typing in field
+      e.preventDefault()
+      setNric((nricRef.current + e.key).toUpperCase())
+      inputRef.current?.focus()
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [setNric])
 
   // No validation — pressing Enter always advances to the next screen.
-  const submit = () => goTo("fork");
+  const submit = () => goTo("fork")
 
   const branding = (
     <div>
-      <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground">{t.brandKicker}</p>
-      <p className="font-display text-3xl font-bold text-foreground">{t.brandName}</p>
+      <p className="text-sm font-semibold tracking-[0.18em] text-muted-foreground">
+        {t.brandKicker}
+      </p>
+      <p className="font-display text-3xl font-bold text-foreground">
+        {t.brandName}
+      </p>
     </div>
-  );
+  )
 
   return (
     <KioskChrome headerLeft={branding}>
@@ -166,11 +181,11 @@ export function Step1Identify() {
               active={lang === l.code}
               buttonRef={l.code === "en" ? englishBtnRef : undefined}
               onSelect={() => {
-                setLang(l.code);
+                setLang(l.code)
                 // Selecting any language moves focus to the NRIC input for entry.
                 // Defer to the next tick so React commits the new-language render first;
                 // otherwise onFocus speaks the previously-selected language's announcement.
-                setTimeout(() => inputRef.current?.focus(), 0);
+                setTimeout(() => inputRef.current?.focus(), 0)
               }}
             />
           ))}
@@ -179,7 +194,10 @@ export function Step1Identify() {
         <div className="h-px w-full bg-border" />
 
         <div className="flex flex-col items-center gap-5">
-          <label htmlFor="nric" className="font-display text-2xl font-semibold tracking-wide text-foreground">
+          <label
+            htmlFor="nric"
+            className="font-display text-2xl font-semibold tracking-wide text-foreground"
+          >
             {t.s1NricLabel}
           </label>
           <input
@@ -190,7 +208,7 @@ export function Step1Identify() {
             onFocus={nricRead.start}
             onBlur={nricRead.stop}
             onKeyDown={(e) => {
-              if (e.key === "Enter") submit();
+              if (e.key === "Enter") submit()
             }}
             inputMode="text"
             autoComplete="off"
@@ -202,7 +220,10 @@ export function Step1Identify() {
               "border-border focus:border-primary",
             ].join(" ")}
           />
-          <p id="nric-hint" className="text-center text-xl text-muted-foreground">
+          <p
+            id="nric-hint"
+            className="text-center text-xl text-muted-foreground"
+          >
             {t.s1NricHint}
           </p>
 
@@ -224,5 +245,5 @@ export function Step1Identify() {
         </div>
       </div>
     </KioskChrome>
-  );
+  )
 }

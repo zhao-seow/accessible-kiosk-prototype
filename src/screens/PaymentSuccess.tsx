@@ -1,56 +1,64 @@
-import { useEffect, useRef, useState } from "react";
-import { KioskChrome } from "../components/KioskChrome";
-import { ActionCard } from "../components/ActionCard";
-import { Icon } from "../components/Icons";
-import { useKiosk } from "../kiosk/KioskContext";
-import { SESSION, expandPhoneForSpeech, moneySpeech } from "../kiosk/copy";
-import { useReadAloud } from "../hooks/useSpeech";
+import { useEffect, useRef, useState } from "react"
+import { KioskChrome } from "../components/KioskChrome"
+import { ActionCard } from "../components/ActionCard"
+import { Icon } from "../components/Icons"
+import { useKiosk } from "../kiosk/KioskContext"
+import { SESSION, expandPhoneForSpeech, moneySpeech } from "../kiosk/copy"
+import { useReadAloud } from "../hooks/useSpeech"
 
 export function PaymentSuccess() {
-  const { goTo, setTicketDelivery, t } = useKiosk();
-  const [confirmed, setConfirmed] = useState<null | "sms" | "print">(null);
+  const { goTo, setTicketDelivery, t } = useKiosk()
+  const [confirmed, setConfirmed] = useState<null | "sms" | "print">(null)
 
   // --- Phase 1 (Selection) Refs & Auto-read Chain ---
-  const initialInfoRef = useRef<HTMLDivElement>(null);
-  const promptRef = useRef<HTMLParagraphElement>(null);
+  const initialInfoRef = useRef<HTMLDivElement>(null)
+  const promptRef = useRef<HTMLParagraphElement>(null)
 
   const advanceFromInitialInfo = () => {
-    if (document.activeElement === initialInfoRef.current) promptRef.current?.focus();
-  };
-  const initialInfoSpeech = `${t.psPaidLabel}: ${moneySpeech(SESSION.outstanding, t)}. ${t.psStatusLabel}: ${t.psStatusSuccess}.`;
-  const initialInfoRead = useReadAloud(initialInfoSpeech, "static", { onEnd: advanceFromInitialInfo });
+    if (document.activeElement === initialInfoRef.current)
+      promptRef.current?.focus()
+  }
+  const initialInfoSpeech = `${t.psPaidLabel}: ${moneySpeech(SESSION.outstanding, t)}. ${t.psStatusLabel}: ${t.psStatusSuccess}.`
+  const initialInfoRead = useReadAloud(initialInfoSpeech, "static", {
+    onEnd: advanceFromInitialInfo,
+  })
 
-  const promptSpeech = `${t.psSubtitle} ${t.b2NoteInstruction}`;
-  const promptRead = useReadAloud(promptSpeech, "static");
+  const promptSpeech = `${t.psSubtitle} ${t.b2NoteInstruction}`
+  const promptRead = useReadAloud(promptSpeech, "static")
 
   // --- Phase 2 (Confirmation) Refs & Auto-read Chain ---
-  const messageRef = useRef<HTMLDivElement>(null);
-  const continueRef = useRef<HTMLButtonElement>(null);
+  const messageRef = useRef<HTMLDivElement>(null)
+  const continueRef = useRef<HTMLButtonElement>(null)
 
-  const isSms = confirmed === "sms";
+  const isSms = confirmed === "sms"
   const messageSpeech = isSms
-    ? t.psSmsConfirm.replace(SESSION.mobile, expandPhoneForSpeech(SESSION.mobile))
-    : t.psPrintConfirm;
+    ? t.psSmsConfirm.replace(
+        SESSION.mobile,
+        expandPhoneForSpeech(SESSION.mobile),
+      )
+    : t.psPrintConfirm
 
   const advanceFromMessage = () => {
     if (document.activeElement === messageRef.current) {
-      continueRef.current?.focus();
+      continueRef.current?.focus()
     }
-  };
-  const messageRead = useReadAloud(messageSpeech, "static", { onEnd: advanceFromMessage });
+  }
+  const messageRead = useReadAloud(messageSpeech, "static", {
+    onEnd: advanceFromMessage,
+  })
 
   const choose = (method: "sms" | "print") => {
-    setTicketDelivery(method);
-    setConfirmed(method);
-  };
+    setTicketDelivery(method)
+    setConfirmed(method)
+  }
 
   // When delivery method is selected, focus the confirmation card so it auto-reads first,
   // then cascades to the continue button.
   useEffect(() => {
     if (confirmed) {
-      messageRef.current?.focus();
+      messageRef.current?.focus()
     }
-  }, [confirmed]);
+  }, [confirmed])
 
   return (
     <KioskChrome title={t.psTitle}>
@@ -180,5 +188,5 @@ export function PaymentSuccess() {
         )}
       </div>
     </KioskChrome>
-  );
+  )
 }

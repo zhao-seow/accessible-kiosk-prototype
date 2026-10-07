@@ -66,7 +66,6 @@ input:focus-visible,
   outline: 2px solid var(--color-foreground) !important;
   outline-offset: 3px !important;
   box-shadow: 0 0 0 3px var(--focus-yellow) !important;
-  border-radius: calc(var(--radius) - 2px);
 }
 
 /* Speech-synchronized visual state — spec §5.3 */

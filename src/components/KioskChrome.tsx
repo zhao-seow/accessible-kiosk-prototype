@@ -1,26 +1,26 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useKiosk } from "../kiosk/KioskContext";
-import { hasBack } from "../kiosk/steps";
-import { Icon, type IconName } from "./Icons";
-import { VoiceGuideToggle } from "./VoiceGuideToggle";
-import { useReadAloud, useSpeech } from "../hooks/useSpeech";
+import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useKiosk } from "../kiosk/KioskContext"
+import { hasBack } from "../kiosk/steps"
+import { Icon, type IconName } from "./Icons"
+import { VoiceGuideToggle } from "./VoiceGuideToggle"
+import { useReadAloud, useSpeech } from "../hooks/useSpeech"
 
 interface KioskChromeProps {
-  title?: string;
+  title?: string
   // Optional spoken override for the title (e.g. a warmer greeting than the
   // displayed heading). Falls back to the displayed `title` when omitted.
-  titleSpeech?: string;
-  announce?: string;
+  titleSpeech?: string
+  announce?: string
   // Optional page contents spoken after the title and before focus jumps to the
   // first content element. Used by pages that need the details read aloud first
   // (e.g. the check-in summary: appointment time, clinic, queue number).
-  intro?: string;
+  intro?: string
   // When true, focus stays on the title heading after it's read instead of
   // auto-advancing to the first content control. Used by screens where the
   // user should choose when to move on via Tab, not be jumped there.
-  skipAutoFocus?: boolean;
-  headerLeft?: ReactNode;
-  children: ReactNode;
+  skipAutoFocus?: boolean
+  headerLeft?: ReactNode
+  children: ReactNode
 }
 
 function FooterButton({
@@ -30,13 +30,13 @@ function FooterButton({
   onClick,
   emphasis,
 }: {
-  label: string;
-  speech: string;
-  icon?: IconName;
-  onClick: () => void;
-  emphasis?: boolean;
+  label: string
+  speech: string
+  icon?: IconName
+  onClick: () => void
+  emphasis?: boolean
 }) {
-  const { start, stop, readingClass } = useReadAloud(speech, "interactive");
+  const { start, stop, readingClass } = useReadAloud(speech, "interactive")
   return (
     <button
       type="button"
@@ -55,78 +55,89 @@ function FooterButton({
       {icon ? <Icon name={icon} className="w-7 h-7" /> : null}
       {label}
     </button>
-  );
+  )
 }
 
-export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLeft, children }: KioskChromeProps) {
-  const { step, back, startOver, requestHelp, voiceGuide, t } = useKiosk();
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const mainRef = useRef<HTMLElement>(null);
-  const { speak } = useSpeech();
-  const [reading, setReading] = useState(false);
+export function KioskChrome({
+  title,
+  titleSpeech,
+  intro,
+  skipAutoFocus,
+  headerLeft,
+  children,
+}: KioskChromeProps) {
+  const { step, back, startOver, requestHelp, voiceGuide, t } = useKiosk()
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const mainRef = useRef<HTMLElement>(null)
+  const { speak } = useSpeech()
+  const [reading, setReading] = useState(false)
 
   // Speak only the title's displayed text (spec: title reads its label, not the
   // full instructions). Runs onDone once speech finishes.
   const speakTitle = (onDone?: () => void) => {
-    if (!title) return false;
+    if (!title) return false
     return speak(titleSpeech ?? title, {
       onStart: () => setReading(true),
       onEnd: () => {
-        setReading(false);
-        onDone?.();
+        setReading(false)
+        onDone?.()
       },
       onError: () => {
-        setReading(false);
-        onDone?.();
+        setReading(false)
+        onDone?.()
       },
-    });
-  };
+    })
+  }
 
   // Move focus to the first focusable content element in <main> (the question or
   // first control), which then reads itself.
   const focusFirstContent = () => {
-    const main = mainRef.current;
-    if (!main) return;
+    const main = mainRef.current
+    if (!main) return
     const focusables = main.querySelectorAll<HTMLElement>(
       'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    );
-    const target = Array.from(focusables).find((el) => el !== headingRef.current);
-    target?.focus();
-  };
+    )
+    const target = Array.from(focusables).find(
+      (el) => el !== headingRef.current,
+    )
+    target?.focus()
+  }
 
   // Heading-first focus + entry announcement. When Voice Guide is on, read the
   // title, then automatically move focus to the content and read the question.
   useEffect(() => {
-    mainRef.current?.scrollTo({ top: 0 });
+    mainRef.current?.scrollTo({ top: 0 })
     if (!title) {
-      // No heading on this screen (e.g. the identify screen) — still reset focus to
-      // the top of the page instead of leaving it on whatever was focused before
-      // (e.g. the Start Over button that triggered the navigation).
-      focusFirstContent();
-      return;
+      // Step 1 / screens without a heading: do NOT auto-focus content on load
+      // so the initial Tab press starts from the top of the DOM (the Voice Guide button).
+      // If returning from another screen (e.g. Start Over), clear focus from the previous control.
+      if (document.activeElement && document.activeElement !== document.body) {
+        ;(document.activeElement as HTMLElement).blur?.()
+      }
+      return
     }
-    headingRef.current?.focus({ preventScroll: true });
+    headingRef.current?.focus({ preventScroll: true })
     if (voiceGuide) {
       // Read the title, then jump focus to the first content element (which reads
       // itself). The debounce in the controller collapses this with the onFocus
       // call triggered by focusing the heading above, so the title speaks once.
       // If the page supplies `intro`, read those contents first, then jump focus.
       speakTitle(() => {
-        if (skipAutoFocus) return;
+        if (skipAutoFocus) return
         if (intro) {
           speak(intro, {
             onEnd: () => focusFirstContent(),
             onError: () => focusFirstContent(),
-          });
+          })
         } else {
-          focusFirstContent();
+          focusFirstContent()
         }
-      });
+      })
     }
-    return () => setReading(false);
+    return () => setReading(false)
     // Re-run whenever we land on a new screen.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step]);
+  }, [step])
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
@@ -139,7 +150,10 @@ export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLe
         </div>
       </header>
 
-      <main ref={mainRef} className="flex flex-1 flex-col overflow-y-auto px-10 py-5">
+      <main
+        ref={mainRef}
+        className="flex flex-1 flex-col overflow-y-auto px-10 py-5"
+      >
         {title ? (
           <h1
             ref={headingRef}
@@ -160,7 +174,12 @@ export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLe
       <footer className="flex items-center justify-between gap-4 border-t border-border px-10 py-4">
         <div>
           {hasBack(step) ? (
-            <FooterButton label={t.back} icon="back" speech={`${t.asButton(t.back)} ${t.pressEnterTo(t.backAction)}`} onClick={back} />
+            <FooterButton
+              label={t.back}
+              icon="back"
+              speech={`${t.asButton(t.back)} ${t.pressEnterTo(t.backAction)}`}
+              onClick={back}
+            />
           ) : null}
         </div>
         <div className="flex items-center gap-4">
@@ -176,12 +195,12 @@ export function KioskChrome({ title, titleSpeech, intro, skipAutoFocus, headerLe
             emphasis
             speech={t.startOverAnnounce}
             onClick={() => {
-              window.speechSynthesis?.cancel();
-              startOver();
+              window.speechSynthesis?.cancel()
+              startOver()
             }}
           />
         </div>
       </footer>
     </div>
-  );
+  )
 }

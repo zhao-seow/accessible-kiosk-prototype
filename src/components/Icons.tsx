@@ -1,29 +1,11 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from "react"
 
 interface IconProps {
-  name: IconName;
-  className?: string;
+  name: IconName
+  className?: string
 }
 
-export type IconName =
-  | "heart"
-  | "globe"
-  | "help"
-  | "back"
-  | "clinic"
-  | "bill"
-  | "mobile"
-  | "printer"
-  | "nets"
-  | "credit"
-  | "paynow"
-  | "check"
-  | "clock"
-  | "speaker"
-  | "flask"
-  | "calendar"
-  | "chevron"
-  | "pill";
+export type IconName = "heart" | "globe" | "help" | "back" | "clinic" | "bill" | "mobile" | "printer" | "nets" | "credit" | "paynow" | "check" | "clock" | "speaker" | "flask" | "calendar" | "chevron" | "pill"
 
 const paths: Record<IconName, ReactNode> = {
   chevron: <path d="M9 18l6-6-6-6" />,
@@ -33,7 +15,9 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M8.5 8.5l7 7" />
     </>
   ),
-  heart: <path d="M12 21s-7.5-4.9-10-9.3C.6 8.9 2 5 5.5 5 7.6 5 9 6.3 12 9c3-2.7 4.4-4 6.5-4C22 5 23.4 8.9 22 11.7 19.5 16.1 12 21 12 21z" />,
+  heart: (
+    <path d="M12 21s-7.5-4.9-10-9.3C.6 8.9 2 5 5.5 5 7.6 5 9 6.3 12 9c3-2.7 4.4-4 6.5-4C22 5 23.4 8.9 22 11.7 19.5 16.1 12 21 12 21z" />
+  ),
   globe: (
     <>
       <circle cx="12" cy="12" r="9" />
@@ -106,14 +90,16 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M16 8.5a4 4 0 0 1 0 7M18.5 6a7 7 0 0 1 0 12" />
     </>
   ),
-  flask: <path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3M7.5 14h9" />,
+  flask: (
+    <path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3M7.5 14h9" />
+  ),
   calendar: (
     <>
       <rect x="4" y="5" width="16" height="16" rx="2" />
       <path d="M4 9h16M8 3v4M16 3v4" />
     </>
   ),
-};
+}
 
 export function Icon({ name, className = "w-8 h-8" }: IconProps) {
   return (
@@ -129,5 +115,5 @@ export function Icon({ name, className = "w-8 h-8" }: IconProps) {
     >
       {paths[name]}
     </svg>
-  );
+  )
 }
