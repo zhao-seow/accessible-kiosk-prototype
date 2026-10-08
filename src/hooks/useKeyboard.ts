@@ -176,21 +176,37 @@ export function handleSpatialArrowNavigation(e: KeyboardEvent) {
     const candidates = focusables.filter((el) => {
       if (el === current) return false
       const r = el.getBoundingClientRect()
-      return (
-        r.top >= currentRect.bottom - 15 ||
-        (r.top >= currentRect.top + 20 && r.bottom > currentRect.bottom + 20)
-      )
+      const overlapX =
+        Math.min(currentRect.right, r.right) - Math.max(currentRect.left, r.left)
+      if (overlapX > 10) {
+        return (
+          r.top >= currentRect.bottom - 15 ||
+          r.bottom > currentRect.bottom + 15
+        )
+      }
+      return r.top >= currentRect.bottom - 15
     })
 
     if (candidates.length > 0) {
+      // Prioritize candidates in the same column (sharing horizontal overlap)
+      const inColumnCandidates = candidates.filter((el) => {
+        const r = el.getBoundingClientRect()
+        const overlapX =
+          Math.min(currentRect.right, r.right) - Math.max(currentRect.left, r.left)
+        return overlapX > 10
+      })
+
+      const targetList =
+        inColumnCandidates.length > 0 ? inColumnCandidates : candidates
+
       // If moving down from Voice Guide Toggle, prioritize active language button if on Step 1
-      const activeBtn = candidates.find(
+      const activeBtn = targetList.find(
         (el) => el.getAttribute("aria-pressed") === "true",
       )
       const minTop = Math.min(
-        ...candidates.map((c) => c.getBoundingClientRect().top),
+        ...targetList.map((c) => c.getBoundingClientRect().top),
       )
-      const closestRow = candidates.filter(
+      const closestRow = targetList.filter(
         (c) => c.getBoundingClientRect().top <= minTop + 35,
       )
 
@@ -216,24 +232,40 @@ export function handleSpatialArrowNavigation(e: KeyboardEvent) {
     const candidates = focusables.filter((el) => {
       if (el === current) return false
       const r = el.getBoundingClientRect()
-      return (
-        r.bottom <= currentRect.top + 15 ||
-        (r.bottom <= currentRect.bottom - 20 && r.top < currentRect.top - 20)
-      )
+      const overlapX =
+        Math.min(currentRect.right, r.right) - Math.max(currentRect.left, r.left)
+      if (overlapX > 10) {
+        return (
+          r.bottom <= currentRect.top + 15 ||
+          r.top < currentRect.top - 15
+        )
+      }
+      return r.bottom <= currentRect.top + 15
     })
 
     if (candidates.length > 0) {
+      // Prioritize candidates in the same column (sharing horizontal overlap)
+      const inColumnCandidates = candidates.filter((el) => {
+        const r = el.getBoundingClientRect()
+        const overlapX =
+          Math.min(currentRect.right, r.right) - Math.max(currentRect.left, r.left)
+        return overlapX > 10
+      })
+
+      const targetList =
+        inColumnCandidates.length > 0 ? inColumnCandidates : candidates
+
       // If moving up from an input (e.g. NRIC), prioritize the active language button above it
-      const activeBtn = candidates.find(
+      const activeBtn = targetList.find(
         (el) => el.getAttribute("aria-pressed") === "true",
       )
       if (current instanceof HTMLInputElement && activeBtn) {
         nextTarget = activeBtn
       } else {
         const maxBottom = Math.max(
-          ...candidates.map((c) => c.getBoundingClientRect().bottom),
+          ...targetList.map((c) => c.getBoundingClientRect().bottom),
         )
-        const closestRow = candidates.filter(
+        const closestRow = targetList.filter(
           (c) => c.getBoundingClientRect().bottom >= maxBottom - 35,
         )
         closestRow.sort((a, b) => {
