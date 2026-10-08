@@ -59,6 +59,7 @@ export interface Copy {
   vgTurnOff: string
   callHelpAnnounce: string
   startOverAnnounce: string
+  startOverDone: string
   // Currency words for spoken amounts (so "$" is never read as "US dollar").
   curDollar: string
   curCent: string
@@ -158,6 +159,8 @@ export interface Copy {
   b1ExpandMeds: string
   b1CollapseMeds: string
   b1MedAccordionSpeech: (expanded: boolean, count: number) => string
+  b1MedExpanded: string
+  b1MedCollapsed: string
   b1LineSubsidy: string
   b1Total: string
   b1MethodHeading: string
@@ -258,6 +261,7 @@ const en: Copy = {
   callHelpAnnounce:
     "Call Help, button. Press Enter to request staff assistance.",
   startOverAnnounce: "Start Over, button. Press Enter to reset the kiosk.",
+  startOverDone: "Kiosk has been reset.",
   curDollar: "dollars",
   curCent: "cents",
   curMinus: "minus",
@@ -365,6 +369,8 @@ const en: Copy = {
     `Button, ${expanded ? "expanded" : "collapsed"}. Press Enter to ${
       expanded ? "hide" : "view"
     } ${count} medication items.`,
+  b1MedExpanded: "Medication, expanded.",
+  b1MedCollapsed: "Collapsed.",
   b1LineSubsidy: "Government Subsidy (CHAS / Pioneer)",
   b1Total: "Total amount due",
   b1MethodHeading: "Select payment method:",
@@ -472,6 +478,7 @@ const zh: Copy = {
   vgTurnOff: "按 Enter 键关闭。",
   callHelpAnnounce: "呼叫协助，按钮。按 Enter 键请求工作人员协助。",
   startOverAnnounce: "重新开始，按钮。按 Enter 键重置服务机。",
+  startOverDone: "服务机已重置。",
   curDollar: "元",
   curCent: "分",
   curMinus: "负",
@@ -575,6 +582,8 @@ const zh: Copy = {
     `按钮，${expanded ? "已展开" : "已折叠"}。按 Enter 键${
       expanded ? "收起" : "展开"
     } ${count} 项药物详情。`,
+  b1MedExpanded: "药物明细，已展开。",
+  b1MedCollapsed: "已折叠。",
   b1LineSubsidy: "政府津贴（CHAS / 建国一代）",
   b1Total: "应付总额",
   b1MethodHeading: "选择付款方式：",
@@ -674,6 +683,7 @@ const ms: Copy = {
     "Panggil Bantuan, butang. Tekan Enter untuk meminta bantuan kakitangan.",
   startOverAnnounce:
     "Mula Semula, butang. Tekan Enter untuk menetapkan semula kiosk.",
+  startOverDone: "Kiosk telah ditetapkan semula.",
   curDollar: "dolar",
   curCent: "sen",
   curMinus: "tolak",
@@ -784,6 +794,8 @@ const ms: Copy = {
     `Butang, ${expanded ? "dibuka" : "ditutup"}。Tekan Enter untuk ${
       expanded ? "sembunyikan" : "melihat"
     } ${count} item ubat.`,
+  b1MedExpanded: "Ubat, telah dibuka.",
+  b1MedCollapsed: "Ditutup.",
   b1LineSubsidy: "Subsidi Kerajaan (CHAS / Pioneer)",
   b1Total: "Jumlah perlu dibayar",
   b1MethodHeading: "Pilih kaedah pembayaran:",
@@ -894,6 +906,7 @@ const ta: Copy = {
   callHelpAnnounce:
     "உதவியை அழைக்கவும், பொத்தான். ஊழியர் உதவியைக் கோர Enter-ஐ அழுத்தவும்.",
   startOverAnnounce: "மீண்டும் தொடங்கு, பொத்தான். கியோஸ்கை மீட்டமைக்க Enter-ஐ அழுத்தவும்.",
+  startOverDone: "கியோஸ்க் மீட்டமைக்கப்பட்டது.",
   curDollar: "டாலர்",
   curCent: "சதம்",
   curMinus: "கழித்தல்",
@@ -1004,6 +1017,8 @@ const ta: Copy = {
     }. ${count} மருந்துப் பொருட்களை ${
       expanded ? "மறைக்க" : "பார்க்க"
     } Enter அழுத்தவும்.`,
+  b1MedExpanded: "மருந்து, விரிவாக்கப்பட்டது.",
+  b1MedCollapsed: "சுருக்கப்பட்டது.",
   b1LineSubsidy: "அரசு மானியம் (CHAS / Pioneer)",
   b1Total: "செலுத்த வேண்டிய மொத்தம்",
   b1MethodHeading: "கட்டண முறையைத் தேர்ந்தெடுக்கவும்:",

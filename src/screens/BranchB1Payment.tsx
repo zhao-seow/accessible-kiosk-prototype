@@ -4,7 +4,7 @@ import { ActionCard } from "../components/ActionCard"
 import { Icon } from "../components/Icons"
 import { useKiosk } from "../kiosk/KioskContext"
 import { SESSION, moneySpeech, type Copy } from "../kiosk/copy"
-import { useReadAloud } from "../hooks/useSpeech"
+import { useReadAloud, useSpeech } from "../hooks/useSpeech"
 
 function BillRow({
   label,
@@ -111,8 +111,10 @@ function MedSubItem({
 
 export function BranchB1Payment() {
   const { goTo, setPaymentMethod, voiceGuide, t } = useKiosk()
+  const { speak } = useSpeech()
   // If voice guide is ON, accordion starts collapsed. If voice guide is OFF, starts open by default.
   const [medsOpen, setMedsOpen] = useState(!voiceGuide)
+  const [medHeaderReading, setMedHeaderReading] = useState(false)
 
   const pay = (method: string) => {
     setPaymentMethod(method)
@@ -141,10 +143,46 @@ export function BranchB1Payment() {
     }
   }
 
-  const medHeaderSpeech = `${t.b1LineMedication}, ${moneySpeech(SESSION.bill.medication, t)}. ${t.b1MedAccordionSpeech(medsOpen, SESSION.bill.medications.length)}`
+  const medHeaderSpeech = medsOpen
+    ? `${t.b1LineMedication}, ${moneySpeech(SESSION.bill.medication, t)}. ${t.b1MedExpanded}`
+    : `${t.b1LineMedication}, ${moneySpeech(SESSION.bill.medication, t)}. ${t.b1MedCollapsed}`
   const medHeaderRead = useReadAloud(medHeaderSpeech, "static", {
     onEnd: advanceFromMedHeader,
   })
+
+  const toggleMeds = () => {
+    const nextOpen = !medsOpen
+    setMedsOpen(nextOpen)
+    if (!voiceGuide) return
+
+    setMedHeaderReading(true)
+    if (nextOpen) {
+      // Expanded: voiceover interjects to read that it's expanded, then continues reading medication items
+      speak(t.b1MedExpanded, {
+        priority: true,
+        onStart: () => setMedHeaderReading(true),
+        onEnd: () => {
+          setMedHeaderReading(false)
+          setTimeout(() => {
+            med0Ref.current?.focus()
+          }, 0)
+        },
+        onError: () => setMedHeaderReading(false),
+      })
+    } else {
+      // Closed: read the Medication line, then read Government Subsidy
+      const closedSpeech = `${t.b1LineMedication}, ${moneySpeech(SESSION.bill.medication, t)}. ${t.b1MedCollapsed}`
+      speak(closedSpeech, {
+        priority: true,
+        onStart: () => setMedHeaderReading(true),
+        onEnd: () => {
+          setMedHeaderReading(false)
+          subsidyRef.current?.focus()
+        },
+        onError: () => setMedHeaderReading(false),
+      })
+    }
+  }
 
   const advanceFromTotal = () => {
     if (document.activeElement === totalRef.current) methodRef.current?.focus()
@@ -176,13 +214,16 @@ export function BranchB1Payment() {
             ref={medHeaderRef}
             type="button"
             aria-expanded={medsOpen}
-            onClick={() => setMedsOpen((prev) => !prev)}
+            onClick={toggleMeds}
             onFocus={medHeaderRead.start}
-            onBlur={medHeaderRead.stop}
+            onBlur={() => {
+              setMedHeaderReading(false)
+              medHeaderRead.stop()
+            }}
             onPointerEnter={medHeaderRead.start}
             className={[
               "flex w-full items-center justify-between gap-4 rounded-xl px-3 py-2.5 text-left outline-none transition-all duration-150 cursor-pointer hover:bg-muted/30",
-              medHeaderRead.readingClass,
+              medHeaderReading ? "is-speech-reading" : medHeaderRead.readingClass,
             ].join(" ")}
           >
             <div className="flex items-center gap-2.5">

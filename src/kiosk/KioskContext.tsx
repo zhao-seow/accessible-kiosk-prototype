@@ -26,6 +26,11 @@ interface SessionState {
   helpRequested: boolean
 }
 
+export interface ResetFeedbackState {
+  show: boolean
+  lang: Lang
+}
+
 const initialState: SessionState = {
   lang: "en",
   nric: "",
@@ -43,6 +48,8 @@ interface KioskContextValue extends SessionState {
   step: Step
   history: Step[]
   t: Copy
+  resetFeedback: ResetFeedbackState
+  dismissResetFeedback: () => void
   goTo: (step: Step) => void
   back: () => void
   startOver: () => void
@@ -66,6 +73,10 @@ export function KioskProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<SessionState>(initialState)
   const [step, setStep] = useState<Step>("identify")
   const [history, setHistory] = useState<Step[]>([])
+  const [resetFeedback, setResetFeedback] = useState<ResetFeedbackState>({
+    show: false,
+    lang: "en",
+  })
   // Bumped whenever we move to a new screen so effects re-run on same-step re-entry.
   const navSeq = useRef(0)
 
@@ -91,12 +102,18 @@ export function KioskProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const dismissResetFeedback = useCallback(() => {
+    setResetFeedback((prev) => ({ ...prev, show: false }))
+  }, [])
+
   const startOver = useCallback(() => {
+    const prevLang = state.lang
     // Purge session and reset Voice Guide to OFF for the next patient (spec §4).
     setState(initialState)
     setHistory([])
     setStep("identify")
-  }, [])
+    setResetFeedback({ show: true, lang: prevLang })
+  }, [state.lang])
 
   const value = useMemo<KioskContextValue>(
     () => ({
@@ -104,6 +121,8 @@ export function KioskProvider({ children }: { children: ReactNode }) {
       step,
       history,
       t: copyFor(state.lang),
+      resetFeedback,
+      dismissResetFeedback,
       goTo,
       back,
       startOver,
@@ -136,7 +155,7 @@ export function KioskProvider({ children }: { children: ReactNode }) {
       requestHelp: () => patch({ helpRequested: true }),
       dismissHelp: () => patch({ helpRequested: false }),
     }),
-    [state, step, history, goTo, back, startOver, patch],
+    [state, step, history, resetFeedback, dismissResetFeedback, goTo, back, startOver, patch],
   )
 
   return <KioskContext.Provider value={value}>{children}</KioskContext.Provider>

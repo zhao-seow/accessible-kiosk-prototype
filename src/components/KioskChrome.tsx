@@ -194,10 +194,7 @@ export function KioskChrome({
             label={t.startOver}
             emphasis
             speech={t.startOverAnnounce}
-            onClick={() => {
-              window.speechSynthesis?.cancel()
-              startOver()
-            }}
+            onClick={startOver}
           />
         </div>
       </footer>

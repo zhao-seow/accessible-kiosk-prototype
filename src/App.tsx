@@ -1,5 +1,6 @@
 import { KioskProvider, useKiosk } from "./kiosk/KioskContext"
 import { CallHelpBanner } from "./components/CallHelpBanner"
+import { ResetToast } from "./components/ResetToast"
 import { useGlobalKeyboard } from "./hooks/useKeyboard"
 import { Step1Identify } from "./screens/Step1Identify"
 import { Step2Fork } from "./screens/Step2Fork"
@@ -52,6 +53,7 @@ function Kiosk() {
   return (
     <>
       <CallHelpBanner />
+      <ResetToast />
       {screen}
     </>
   )
