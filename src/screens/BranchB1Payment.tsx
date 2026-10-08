@@ -114,7 +114,6 @@ export function BranchB1Payment() {
   const { speak } = useSpeech()
   // If voice guide is ON, accordion starts collapsed. If voice guide is OFF, starts open by default.
   const [medsOpen, setMedsOpen] = useState(!voiceGuide)
-  const [medHeaderReading, setMedHeaderReading] = useState(false)
 
   const pay = (method: string) => {
     setPaymentMethod(method)
@@ -216,14 +215,11 @@ export function BranchB1Payment() {
             aria-expanded={medsOpen}
             onClick={toggleMeds}
             onFocus={medHeaderRead.start}
-            onBlur={() => {
-              setMedHeaderReading(false)
-              medHeaderRead.stop()
-            }}
+            onBlur={medHeaderRead.stop}
             onPointerEnter={medHeaderRead.start}
             className={[
               "flex w-full items-center justify-between gap-4 rounded-xl px-3 py-2.5 text-left outline-none transition-all duration-150 cursor-pointer hover:bg-muted/30",
-              medHeaderReading ? "is-speech-reading" : medHeaderRead.readingClass,
+              medHeaderRead.readingClass,
             ].join(" ")}
           >
             <div className="flex items-center gap-2.5">

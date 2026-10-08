@@ -11,7 +11,6 @@ interface QuestionTextProps {
 /**
  * A keyboard-focusable question prompt. Being in the tab order lets users move
  * focus back onto the question to hear it (and its navigation hint) read again.
- * While spoken it shows the cyan static-text reading ring.
  */
 export function QuestionText({
   text,

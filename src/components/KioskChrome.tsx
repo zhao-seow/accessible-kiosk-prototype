@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, type ReactNode } from "react"
 import { useKiosk } from "../kiosk/KioskContext"
 import { hasBack } from "../kiosk/steps"
 import { Icon, type IconName } from "./Icons"
@@ -70,20 +70,16 @@ export function KioskChrome({
   const headingRef = useRef<HTMLHeadingElement>(null)
   const mainRef = useRef<HTMLElement>(null)
   const { speak } = useSpeech()
-  const [reading, setReading] = useState(false)
 
   // Speak only the title's displayed text (spec: title reads its label, not the
   // full instructions). Runs onDone once speech finishes.
   const speakTitle = (onDone?: () => void) => {
     if (!title) return false
     return speak(titleSpeech ?? title, {
-      onStart: () => setReading(true),
       onEnd: () => {
-        setReading(false)
         onDone?.()
       },
       onError: () => {
-        setReading(false)
         onDone?.()
       },
     })
@@ -134,7 +130,6 @@ export function KioskChrome({
         }
       })
     }
-    return () => setReading(false)
     // Re-run whenever we land on a new screen.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
@@ -160,10 +155,7 @@ export function KioskChrome({
             tabIndex={0}
             data-screen-heading="true"
             onFocus={() => speakTitle()}
-            className={[
-              "mb-5 font-display text-5xl font-bold leading-tight text-foreground outline-none",
-              reading ? "is-speech-reading" : "",
-            ].join(" ")}
+            className="mb-5 font-display text-5xl font-bold leading-tight text-foreground outline-none"
           >
             {title}
           </h1>

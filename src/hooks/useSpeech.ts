@@ -325,7 +325,7 @@ interface ReadAloudOpts {
  * Speech-synchronized visual state (spec §5.3). While the bound text is spoken,
  * returns the class that lights the element:
  *   - "interactive" → yellow full-container glow (.is-active-reading)
- *   - "static"      → cyan text reading ring (.is-speech-reading)
+ *   - "static"      → no extra ring (relies on standard keyboard focus ring)
  */
 export function useReadAloud(
   content: SpeechContent | undefined,
@@ -357,7 +357,7 @@ export function useReadAloud(
 
   const readingClass = reading
     ? kind === "static"
-      ? "is-speech-reading"
+      ? ""
       : "is-active-reading"
     : ""
 
