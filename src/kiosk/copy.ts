@@ -70,6 +70,7 @@ export interface Copy {
   asButton: (label: string) => string
   toMobileNumber: (digits: string) => string
   checkboxState: (label: string, checked: boolean) => string
+  radioState: (label: string, selected: boolean) => string
   pressSpaceToToggle: string
   a1SmsAction: string
   a1PrintAction: string
@@ -271,6 +272,8 @@ const en: Copy = {
   toMobileNumber: (digits) => ` to mobile number ${digits},`,
   checkboxState: (label, checked) =>
     `${label}, checkbox, ${checked ? "checked" : "unchecked"}.`,
+  radioState: (label, selected) =>
+    `${label}, radio button, ${selected ? "selected" : "not selected"}.`,
   pressSpaceToToggle: "Press Space to toggle.",
   a1SmsAction: "receive your queue ticket on your phone",
   a1PrintAction: "print a paper ticket from the printer below",
@@ -488,6 +491,8 @@ const zh: Copy = {
   toMobileNumber: (digits) => `，发送至手机号码 ${digits}，`,
   checkboxState: (label, checked) =>
     `${label}，复选框，${checked ? "已选中" : "未选中"}。`,
+  radioState: (label, selected) =>
+    `${label}，单选按钮，${selected ? "已选中" : "未选中"}。`,
   pressSpaceToToggle: "按空格键切换。",
   a1SmsAction: "接收手机上的轮候票",
   a1PrintAction: "从下方打印机打印纸质票",
@@ -693,6 +698,8 @@ const ms: Copy = {
   toMobileNumber: (digits) => ` ke nombor mudah alih ${digits},`,
   checkboxState: (label, checked) =>
     `${label}, kotak semak, ${checked ? "ditanda" : "tidak ditanda"}.`,
+  radioState: (label, selected) =>
+    `${label}, butang radio, ${selected ? "dipilih" : "tidak dipilih"}.`,
   pressSpaceToToggle: "Tekan Ruang untuk togol.",
   a1SmsAction: "menerima tiket giliran anda di telefon anda",
   a1PrintAction: "mencetak tiket kertas dari pencetak di bawah",
@@ -916,6 +923,8 @@ const ta: Copy = {
   toMobileNumber: (digits) => ` மொபைல் எண் ${digits}-க்கு,`,
   checkboxState: (label, checked) =>
     `${label}, செக்பாக்ஸ், ${checked ? "தேர்ந்தெடுக்கப்பட்டது" : "தேர்ந்தெடுக்கப்படவில்லை"}.`,
+  radioState: (label, selected) =>
+    `${label}, ரேடியோ பொத்தான், ${selected ? "தேர்ந்தெடுக்கப்பட்டது" : "தேர்ந்தெடுக்கப்படவில்லை"}.`,
   pressSpaceToToggle: "மாற்ற Space-ஐ அழுத்தவும்.",
   a1SmsAction: "உங்கள் தொலைபேசியில் வரிசை டிக்கெட்டைப் பெற",
   a1PrintAction: "கீழே உள்ள அச்சுப்பொறியிலிருந்து காகித டிக்கெட்டை அச்சிட",
